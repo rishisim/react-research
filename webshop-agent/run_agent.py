@@ -186,7 +186,7 @@ Instruction: i would like a 3 ounce bottle of bright citrus deodorant for sensit
 
 Action: search[3 ounce bright citrus deodorant sensitive skin]
 Observation:
-[Back to Search] 
+[Back to Search]
 Page 1 (Total results: 50)
 [B078GWRC1J]
 Bright Citrus Deodorant by Earth Mama | Natural and Safe for Sensitive Skin...
@@ -206,6 +206,58 @@ Action: click[bright citrus]
 Observation: You have clicked bright citrus.
 Action: click[3 ounce (pack of 1)]
 Observation: You have clicked 3 ounce (pack of 1).
+Action: click[Buy Now]
+
+----
+
+Webshop
+Instruction: i need a 1 gallon jug of unscented laundry detergent, and price lower than 25.00 dollars
+[Search]
+
+Action: search[1 gallon unscented laundry detergent]
+Observation:
+[Back to Search]
+Page 1 (Total results: 50)
+[B07FF6259C]
+Molly's Suds Unscented Laundry Detergent Powder... 120 Loads
+$21.99
+[B08149V812]
+ECOS Hypoallergenic Laundry Detergent, Unscented, 1 Gallon
+$18.99
+
+Action: think[B07FF6259C is unscented and under $25, but it is a powder, not a 1 gallon jug. I will check it anyway to see the options.]
+Observation: OK.
+Action: click[B07FF6259C]
+Observation:
+[Back to Search]
+Molly's Suds Unscented Laundry Detergent Powder...
+Price: $21.99
+[Description]
+This is a super-concentrated powder laundry detergent.
+[Buy Now]
+
+Action: think[This is a powder detergent, which is not what the instruction asked for. I need to go back to the search results to find a liquid 1-gallon jug.]
+Observation: OK.
+Action: click[Back to Search]
+Observation:
+[Back to Search]
+Page 1 (Total results: 50)
+[B07FF6259C]
+Molly's Suds Unscented Laundry Detergent Powder... 120 Loads
+$21.99
+[B08149V812]
+ECOS Hypoallergenic Laundry Detergent, Unscented, 1 Gallon
+$18.99
+
+Action: think[B08149V812 is a 1 gallon, unscented detergent and the price is good. This looks like the right item.]
+Observation: OK.
+Action: click[B08149V812]
+Observation:
+[Back to Search]
+ECOS Hypoallergenic Laundry Detergent, Unscented, 1 Gallon
+Price: $18.99
+[Buy Now]
+
 Action: click[Buy Now]
 """
 
