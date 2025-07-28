@@ -261,7 +261,7 @@ Price: $18.99
 Action: click[Buy Now]
 """
 
-def run_single_trace(env, session_id, instruction, to_print=True, max_steps=15):
+def run_single_trace(env, session_id, instruction, to_print=True, max_steps=15, num_traces=1):
     """Run a single reasoning trace for WebShop task."""
     action = 'reset'
     initial_prompt = f"{FEW_SHOT_PROMPT}\nInstruction: {instruction}\n[Search]\n"
@@ -291,7 +291,7 @@ def run_single_trace(env, session_id, instruction, to_print=True, max_steps=15):
         else: prompt_history += f" {action}\nObservation: {observation}\n\nAction:"
         
         full_prompt = initial_prompt + prompt_history[-(6000 - len(initial_prompt)):]
-        action = llm(full_prompt, stop=['\n']).strip()
+        action = llm(full_prompt, stop=['\n'], num_traces=num_traces).strip()
         n_calls += 1
         if not action: break
     
@@ -300,7 +300,7 @@ def run_single_trace(env, session_id, instruction, to_print=True, max_steps=15):
 
 def run_single_episode(env, session_id, instruction, to_print=True, max_steps=15):
     """Backward compatibility wrapper for single episode execution."""
-    reward, trajectory, _ = run_single_trace(env, session_id, instruction, to_print, max_steps)
+    reward, trajectory, _ = run_single_trace(env, session_id, instruction, to_print, max_steps, num_traces=1)
     return reward, trajectory
 
 # --- Synthesis Functions for Multi-Trace ---
@@ -382,7 +382,7 @@ def webthink_webshop(env, session_id, instruction, num_traces=1, to_print=True, 
             print(f"\n=== TRACE {trace_num + 1}/{num_traces} ===")
         
         # Run single trace
-        reward, trajectory, n_calls = run_single_trace(env, session_id, instruction, to_print, max_steps)
+        reward, trajectory, n_calls = run_single_trace(env, session_id, instruction, to_print, max_steps, num_traces)
         
         # Store trace information
         trace_info = {
