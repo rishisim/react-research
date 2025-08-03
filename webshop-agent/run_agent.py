@@ -27,7 +27,7 @@ def llm(prompt, stop=None, num_traces=1):
     temperature_setting = 0.0 if num_traces == 1 else 0.7
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-2.5-flash-lite",
             contents=prompt,
             config=types.GenerateContentConfig(
                 thinking_config=types.ThinkingConfig(thinking_budget=0),
