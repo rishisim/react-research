@@ -23,18 +23,17 @@ except Exception as e:
 
 def llm(prompt, stop=None, num_traces=1):
     if stop is None: stop = ["\n"]
-    time.sleep(4.1)
+    time.sleep(10)
     temperature_setting = 0.0 if num_traces == 1 else 0.7
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash-lite",
+            model="gemini-2.5-flash",
             contents=prompt,
             config=types.GenerateContentConfig(
                 thinking_config=types.ThinkingConfig(thinking_budget=0),
                 stop_sequences=stop,
                 temperature=temperature_setting,
-                max_output_tokens=200,
-                top_p=1.0
+                max_output_tokens=300,
             )
         )
         return response.text
@@ -153,6 +152,9 @@ class WebShopEnv:
                 elif page_type == 'item': 
                     self.sessions[session]['page_type'] = 'search'
                     self.sessions[session]['options'] = {}  # Clear options when going back
+            elif button == 'Next >':
+                assert page_type == 'search'
+                self.sessions[session]['page_num'] += 1
             elif button in ACTION_TO_TEMPLATE:
                 assert page_type == 'item'  # Only from main item page
                 self.sessions[session]['page_type'] = 'item_sub'
