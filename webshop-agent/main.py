@@ -1,11 +1,12 @@
 import argparse
 import json
-import os
 import random
 import re
 from dotenv import load_dotenv
 
-from agent import run_single_trace, run_reflexion_episode
+from agents.single_trace import run_single_trace
+from agents.synthesized import run_synthesized_episode
+from agents.reflexion import run_reflexion_episode
 from webshop_env import WebShopEnv, webshop_text
 from utils import (
     append_to_json,
@@ -18,70 +19,19 @@ from utils import (
 # Load environment variables from .env file
 load_dotenv()
 
-# --- Synthesis Functions for Multi-Trace ---
-def synthesize_decision_deterministic(all_traces_info):
-    """
-    Deterministically selects the best trajectory based on reward and step count.
-    Returns the trajectory number (1-indexed) of the best trajectory.
-    """
-    if not all_traces_info:
-        return 1
-
-    trajectory_metrics = [
-        (
-            trace.get('final_reward', 0.0),
-            len(trace.get('trajectory', [])),
-            i + 1
-        )
-        for i, trace in enumerate(all_traces_info)
-    ]
-    trajectory_metrics.sort(key=lambda x: (-x[0], x[1]))
-    return trajectory_metrics[0][2]
-
-# --- Core Webthink Logic ---
-def webthink_webshop(env, session_id, instruction, num_traces=1, to_print=True, max_steps=15):
-    """
-    Main function for WebShop reasoning. Handles both standard (1 trace) and synthesized (>1 trace) ReAct.
-    """
-    if num_traces <= 0:
-        return 0.0, {'error': 'Invalid num_traces'}
-
-    all_traces_info = []
-    print(f"Running {num_traces} trace(s) for session {session_id} (Synthesized Mode)")
-    for i in range(num_traces):
-        if num_traces > 1: print(f"\n=== TRACE {i + 1}/{num_traces} ===")
-        reward, trajectory, n_calls = run_single_trace(env, session_id, instruction, to_print=to_print, max_steps=max_steps)
-        all_traces_info.append({'trace_num': i + 1, 'n_calls': n_calls, 'trajectory': trajectory, 'final_reward': reward})
-        if num_traces > 1: print(f"Trace {i + 1} completed with reward: {reward}")
-
-    if not all_traces_info:
-        return 0.0, {'error': 'No traces completed'}
-
-    if num_traces == 1:
-        return all_traces_info[0]['final_reward'], all_traces_info[0]
-    else:
-        print(f"\n=== SYNTHESIZING {num_traces} TRACES ===")
-        best_trajectory_num = synthesize_decision_deterministic(all_traces_info)
-        best_trace_info = all_traces_info[best_trajectory_num - 1]
-        final_reward = best_trace_info['final_reward']
-        print(f"Synthesis selected trajectory {best_trajectory_num} with reward: {final_reward}")
-        return final_reward, {
-            'num_traces_run': num_traces,
-            'synthesized_decision': best_trajectory_num,
-            'individual_traces': all_traces_info,
-            'final_reward': final_reward,
-        }
-
 def run_task_with_all_modes(env, task_index, instruction):
     """Run a single task with all three modes: Standard, Synthesized, and Reflexion."""
     session_id = str(task_index)
     results = {}
+    max_steps = 15
 
     # 1. Standard ReAct (1 trace)
     print(f"\n[STANDARD REACT] Running for Session {session_id}")
     print("="*50)
     try:
-        reward, info = webthink_webshop(env, session_id, instruction, num_traces=1, to_print=True)
+        # For single trace, we call it directly, not through synthesized agent
+        reward, trajectory, n_calls = run_single_trace(env, session_id, instruction, to_print=True, max_steps=max_steps)
+        info = {'trajectory': trajectory, 'n_calls': n_calls}
         results['standard'] = {'reward': reward, 'info': info, 'success': True}
         print(f"Standard ReAct completed with reward: {reward}")
     except Exception as e:
@@ -92,7 +42,7 @@ def run_task_with_all_modes(env, task_index, instruction):
     print(f"\n[SYNTHESIZED REACT] Running for Session {session_id}")
     print("="*50)
     try:
-        reward, info = webthink_webshop(env, session_id, instruction, num_traces=3, to_print=True)
+        reward, info = run_synthesized_episode(env, session_id, instruction, num_traces=3, to_print=True, max_steps=max_steps)
         results['synthesized'] = {'reward': reward, 'info': info, 'success': True}
         print(f"Synthesized ReAct completed with reward: {reward}")
     except Exception as e:
@@ -103,7 +53,7 @@ def run_task_with_all_modes(env, task_index, instruction):
     print(f"\n[REFLEXION REACT] Running for Session {session_id}")
     print("="*50)
     try:
-        reward, info = run_reflexion_episode(env, session_id, instruction, max_traces=3, to_print=True)
+        reward, info = run_reflexion_episode(env, session_id, instruction, max_traces=3, to_print=True, max_steps=max_steps)
         results['reflexion'] = {'reward': reward, 'info': info, 'success': True}
         print(f"Reflexion ReAct completed with reward: {reward}")
     except Exception as e:
