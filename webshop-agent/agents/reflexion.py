@@ -1,79 +1,89 @@
-from ..llm import call_llm
-from .single_trace import run_single_trace
+from llm import call_llm
+from agents.single_trace import run_single_trace
 
 # --- Prompt Loading ---
-with open('webshop-agent/prompts/webshop_reflexion_few_shot.txt', 'r') as f:
+with open('prompts/webshop_reflexion_few_shot.txt', 'r') as f:
     REFLEXION_FEW_SHOT_PROMPT = f.read()
 
 # --- Reflexion Agent Logic ---
-def generate_reflection(instruction: str, trajectory_str: str, memory: str) -> str:
+def generate_reflection(instruction: str, failed_trajectory: str, task_reflections: str) -> str:
     """
-    Generates a reflection on a failed trajectory using an LLM.
-    This is the "Self-Reflection Model" (Msr).
+    Generates a reflection on a failed trajectory to improve future attempts.
+    Uses accumulated reflections from previous attempts within this task.
     """
-    prompt = f"{REFLEXION_FEW_SHOT_PROMPT}\n"
-    if memory:
-        prompt += f"You have failed on this task before. Here are your reflections from past trials to help you succeed now:\n{memory}\n\n"
-    prompt += f"{trajectory_str}\nInstruction: {instruction}\n"
 
-    reflection = call_llm(prompt, stop=['\n'])
-    return reflection
+    reflection_prompt = "You will be given the history of a past experience in which you were placed in an environment and given a task to complete. You were unsuccessful in completing the task. Do not summarize your environment, but rather think about the strategy and path you took to attempt to complete the task. Devise a concise, new plan of action that accounts for your mistake with reference to specific actions that you should have taken. There are two examples below." + REFLEXION_FEW_SHOT_PROMPT + "\n"
+    
+    # Plans from past attempts
+    if task_reflections:
+        reflection_prompt += f"You have failed on this task before. Your previous reflections didn't work, so analyze what went wrong in these attempts and devise a different strategy to complete the task:\n{task_reflections}\n\n"
 
-def trajectory_to_str(trajectory, instruction):
-    """Converts a trajectory list into a formatted string for prompts."""
-    trajectory_str = f"Instruction:\n{instruction}\n[Search]\n\n"
+
+    
+    reflection_prompt += f"{failed_trajectory}\n\nInstruction: {instruction}\n\nReflection: "
+    
+    # Use appropriate stop tokens to end reflection without cutting off mid-paragraph
+    # Use num_traces=2 to get higher temperature (0.7) for more varied reflections
+    return call_llm(reflection_prompt, stop=["Action:"], num_traces=2)
+
+def format_trajectory_for_reflection(trajectory, instruction):
+    """Formats a failed trajectory for reflection generation."""
+    formatted = f"Instruction:\n{instruction}\n[Search]\n\n"
     for step in trajectory:
-        trajectory_str += f"Action: {step['action']}\nObservation:\n{step['observation']}\n\n"
-    return trajectory_str.strip()
+        formatted += f"Action: {step['action']}\nObservation:\n{step['observation']}\n\n"
+    return formatted.strip()
 
 def run_reflexion_episode(env, session_id, instruction, max_traces=3, to_print=True, max_steps=15):
     """
-    Runs an episode with the Reflexion agent, which reflects on failures and retries.
+    Runs multiple ReAct attempts with reflection after failures.
+    Accumulates task-scoped reflections to improve subsequent attempts.
     """
-    long_term_memory = ""
-    all_traces_info = []
+    task_reflections = ""
+    trace_results = []
     final_reward = 0.0
 
-    for trace_num in range(1, max_traces + 1):
+    for attempt_num in range(1, max_traces + 1):
         if to_print:
-            print(f"\n{'='*20} REFLEXION TRACE {trace_num}/{max_traces} {'='*20}")
+            print(f"\n{'='*20} REFLEXION ATTEMPT {attempt_num}/{max_traces} {'='*20}")
 
-        reward, trajectory, n_calls = run_single_trace(
-            env, session_id, instruction, long_term_memory, to_print, max_steps, num_traces=1
+        # Run single ReAct trace with accumulated reflections
+        reward, trajectory, llm_calls = run_single_trace(
+            env, session_id, instruction, task_reflections, to_print, max_steps, num_traces=1
         )
 
-        trace_info = {
-            'trace_num': trace_num,
-            'n_calls': n_calls,
+        attempt_result = {
+            'attempt_num': attempt_num,
+            'llm_calls': llm_calls,
             'trajectory': trajectory,
-            'final_reward': reward,
+            'reward': reward,
             'reflection': None
         }
 
         final_reward = reward
+        
         if reward == 1.0:
             if to_print:
-                print(f"Reflexion trace {trace_num} SUCCEEDED with reward: {reward}")
-            all_traces_info.append(trace_info)
-            break  # Task solved
+                print(f"Reflexion attempt {attempt_num} SUCCEEDED with reward: {reward}")
+            trace_results.append(attempt_result)
+            break  # Task completed successfully
 
         if to_print:
-            print(f"Reflexion trace {trace_num} FAILED with reward: {reward}. Generating reflection...")
+            print(f"Reflexion attempt {attempt_num} FAILED with reward: {reward}. Generating reflection...")
 
-        # Generate reflection for the next attempt
-        fail_trajectory_str = trajectory_to_str(trajectory, instruction)
-        reflection = generate_reflection(instruction, fail_trajectory_str, long_term_memory)
-        long_term_memory += f"- {reflection}\n"
+        # Generate reflection for next attempt
+        failed_trajectory = format_trajectory_for_reflection(trajectory, instruction)
+        reflection = generate_reflection(instruction, failed_trajectory, task_reflections)
+        task_reflections += f"- {reflection}\n"
 
-        trace_info['reflection'] = reflection
-        all_traces_info.append(trace_info)
+        attempt_result['reflection'] = reflection
+        trace_results.append(attempt_result)
 
         if to_print:
-            print(f"\n--- Reflection for Next Trace ---")
+            print(f"\n--- Reflection for Next Attempt ---")
             print(reflection)
 
     return final_reward, {
-        'num_traces_run': len(all_traces_info),
-        'individual_traces': all_traces_info,
+        'total_attempts': len(trace_results),
+        'attempt_details': trace_results,
         'final_reward': final_reward,
     }

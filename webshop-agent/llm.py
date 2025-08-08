@@ -1,11 +1,21 @@
 import sys
 import time
+import os
+from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
+# Load environment variables from .env file in parent directory
+env_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+load_dotenv(env_path)
+
 # --- Gemini API Configuration ---
 try:
-    client = genai.Client()
+    api_key = os.getenv('GEMINI_API_KEY')
+    if not api_key:
+        print("ERROR: GEMINI_API_KEY environment variable not set")
+        sys.exit(1)
+    client = genai.Client(api_key=api_key)
 except Exception as e:
     print(f"ERROR: Failed to initialize Gemini client: {e}")
     sys.exit(1)

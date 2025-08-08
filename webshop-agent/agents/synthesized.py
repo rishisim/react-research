@@ -1,4 +1,4 @@
-from .single_trace import run_single_trace
+from agents.single_trace import run_single_trace
 
 def synthesize_decision_deterministic(all_traces_info):
     """
@@ -37,14 +37,14 @@ def run_synthesized_episode(env, session_id, instruction, num_traces=3, to_print
         # We need to reset the environment for each trace to start from the same initial state
         env.reset(session_id)
 
-        reward, trajectory, n_calls = run_single_trace(
+        reward, trajectory, llm_calls = run_single_trace(
             env, session_id, instruction, to_print=to_print, max_steps=max_steps
         )
         all_traces_info.append({
-            'trace_num': i + 1,
-            'n_calls': n_calls,
+            'attempt_num': i + 1,
+            'llm_calls': llm_calls,
             'trajectory': trajectory,
-            'final_reward': reward
+            'reward': reward
         })
         if num_traces > 1 and to_print:
             print(f"Trace {i + 1} completed with reward: {reward}")
@@ -57,14 +57,14 @@ def run_synthesized_episode(env, session_id, instruction, num_traces=3, to_print
 
     best_trajectory_num = synthesize_decision_deterministic(all_traces_info)
     best_trace_info = all_traces_info[best_trajectory_num - 1]
-    final_reward = best_trace_info['final_reward']
+    final_reward = best_trace_info['reward']
 
     if to_print:
         print(f"Synthesis selected trajectory {best_trajectory_num} with reward: {final_reward}")
 
     return final_reward, {
-        'num_traces_run': num_traces,
+        'total_attempts': num_traces,
         'synthesized_decision': best_trajectory_num,
-        'individual_traces': all_traces_info,
+        'attempt_details': all_traces_info,
         'final_reward': final_reward,
     }

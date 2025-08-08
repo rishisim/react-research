@@ -2,6 +2,7 @@ import argparse
 import json
 import random
 import re
+import os
 from dotenv import load_dotenv
 
 from agents.single_trace import run_single_trace
@@ -16,8 +17,8 @@ from utils import (
     OUTPUT_FILES,
 )
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables (now handled in llm.py)
+# load_dotenv is called in llm.py before client initialization
 
 def run_task_with_all_modes(env, task_index, instruction):
     """Run a single task with all three modes: Standard, Synthesized, and Reflexion."""
@@ -30,8 +31,8 @@ def run_task_with_all_modes(env, task_index, instruction):
     print("="*50)
     try:
         # For single trace, we call it directly, not through synthesized agent
-        reward, trajectory, n_calls = run_single_trace(env, session_id, instruction, to_print=True, max_steps=max_steps)
-        info = {'trajectory': trajectory, 'n_calls': n_calls}
+        reward, trajectory, llm_calls = run_single_trace(env, session_id, instruction, to_print=True, max_steps=max_steps)
+        info = {'trajectory': trajectory, 'llm_calls': llm_calls}
         results['standard'] = {'reward': reward, 'info': info, 'success': True}
         print(f"Standard ReAct completed with reward: {reward}")
     except Exception as e:
@@ -47,7 +48,7 @@ def run_task_with_all_modes(env, task_index, instruction):
         print(f"Synthesized ReAct completed with reward: {reward}")
     except Exception as e:
         print(f"Synthesized ReAct failed: {e}")
-        results['synthesized'] = {'reward': 0.0, 'info': {'individual_traces': [{'error': str(e)}]}, 'success': False, 'error': str(e)}
+        results['synthesized'] = {'reward': 0.0, 'info': {'attempt_details': [{'error': str(e)}]}, 'success': False, 'error': str(e)}
 
     # 3. Reflexion ReAct (up to 3 traces with reflection)
     print(f"\n[REFLEXION REACT] Running for Session {session_id}")
@@ -58,18 +59,41 @@ def run_task_with_all_modes(env, task_index, instruction):
         print(f"Reflexion ReAct completed with reward: {reward}")
     except Exception as e:
         print(f"Reflexion ReAct failed: {e}")
-        results['reflexion'] = {'reward': 0.0, 'info': {'individual_traces': [{'error': str(e)}]}, 'success': False, 'error': str(e)}
+        results['reflexion'] = {'reward': 0.0, 'info': {'attempt_details': [{'error': str(e)}]}, 'success': False, 'error': str(e)}
+
+    return results
+
+def run_task_reflexion_only(env, task_index, instruction):
+    """Run a single task with only Reflexion mode."""
+    session_id = str(task_index)
+    results = {}
+    max_steps = 15
+
+    # Only Reflexion ReAct (up to 3 traces with reflection)
+    print(f"\n[REFLEXION REACT] Running for Session {session_id}")
+    print("="*50)
+    try:
+        reward, info = run_reflexion_episode(env, session_id, instruction, max_traces=3, to_print=True, max_steps=max_steps)
+        results['reflexion'] = {'reward': reward, 'info': info, 'success': True}
+        print(f"Reflexion ReAct completed with reward: {reward}")
+    except Exception as e:
+        print(f"Reflexion ReAct failed: {e}")
+        results['reflexion'] = {'reward': 0.0, 'info': {'attempt_details': [{'error': str(e)}]}, 'success': False, 'error': str(e)}
 
     return results
 
 def main():
     parser = argparse.ArgumentParser(description="Run ReAct agent variations on the WebShop environment.")
     parser.add_argument("--num_episodes", type=int, default=5, help="Number of tasks to attempt.")
+    parser.add_argument("--reflexion_only", action="store_true", help="Run only reflexion agent (skip standard and synthesized)")
     args = parser.parse_args()
 
     env = WebShopEnv()
 
-    print("Running Standard, Synthesized, and Reflexion ReAct for each task.")
+    if args.reflexion_only:
+        print("Running ONLY Reflexion ReAct for each task.")
+    else:
+        print("Running Standard, Synthesized, and Reflexion ReAct for each task.")
 
     MAX_WEBSHOP_TASKS = 699
     all_indices = list(range(MAX_WEBSHOP_TASKS))
@@ -121,46 +145,65 @@ def main():
         processed_instructions.add(instruction)
 
         try:
-            results = run_task_with_all_modes(env, task_index, instruction)
+            if args.reflexion_only:
+                results = run_task_reflexion_only(env, task_index, instruction)
+            else:
+                results = run_task_with_all_modes(env, task_index, instruction)
 
-            # Save Standard ReAct results
-            std_data = results.get('standard', {})
-            std_info = std_data.get('info', {})
-            std_episode_data = {
-                'session_id_index': task_index, 'instruction': instruction,
-                'final_reward': std_data.get('reward', 0.0),
-                'trajectory': std_info.get('trajectory', [{'error': std_data.get('error', 'Unknown error')}]),
-                'n_calls': std_info.get('n_calls', 0)
-            }
-            append_to_json(std_episode_data, OUTPUT_FILES['standard'])
+            # Save results based on mode
+            if args.reflexion_only:
+                # Save only Reflexion ReAct results
+                reflexion_data = results.get('reflexion', {})
+                reflexion_info = reflexion_data.get('info', {})
+                reflexion_episode_data = {
+                    'session_id_index': task_index, 'instruction': instruction,
+                    'final_reward': reflexion_data.get('reward', 0.0),
+                    'total_attempts': reflexion_info.get('total_attempts', 0),
+                    'attempt_details': reflexion_info.get('attempt_details', [{'error': reflexion_data.get('error', 'Unknown error')}])
+                }
+                append_to_json(reflexion_episode_data, OUTPUT_FILES['reflexion'])
+                
+                print(f"\nResults for task {task_index} saved.")
+                print(f"  - Reflexion Reward: {reflexion_data.get('reward', 0.0)}")
+            else:
+                # Save Standard ReAct results
+                std_data = results.get('standard', {})
+                std_info = std_data.get('info', {})
+                std_episode_data = {
+                    'session_id_index': task_index, 'instruction': instruction,
+                    'final_reward': std_data.get('reward', 0.0),
+                    'trajectory': std_info.get('trajectory', [{'error': std_data.get('error', 'Unknown error')}]),
+                    'llm_calls': std_info.get('llm_calls', 0)
+                }
+                append_to_json(std_episode_data, OUTPUT_FILES['standard'])
 
-            # Save Synthesized ReAct results
-            synth_data = results.get('synthesized', {})
-            synth_info = synth_data.get('info', {})
-            synth_episode_data = {
-                'session_id_index': task_index, 'instruction': instruction,
-                'final_reward': synth_data.get('reward', 0.0),
-                'num_traces_run': synth_info.get('num_traces_run', 3),
-                'synthesized_decision': synth_info.get('synthesized_decision', 1),
-                'individual_traces': synth_info.get('individual_traces', [{'error': synth_data.get('error', 'Unknown error')}])
-            }
-            append_to_json(synth_episode_data, OUTPUT_FILES['synthesized'])
+                # Save Synthesized ReAct results
+                synth_data = results.get('synthesized', {})
+                synth_info = synth_data.get('info', {})
+                synth_episode_data = {
+                    'session_id_index': task_index, 'instruction': instruction,
+                    'final_reward': synth_data.get('reward', 0.0),
+                    'total_attempts': synth_info.get('total_attempts', 3),
+                    'synthesized_decision': synth_info.get('synthesized_decision', 1),
+                    'attempt_details': synth_info.get('attempt_details', [{'error': synth_data.get('error', 'Unknown error')}])
+                }
+                append_to_json(synth_episode_data, OUTPUT_FILES['synthesized'])
 
-            # Save Reflexion ReAct results
-            reflexion_data = results.get('reflexion', {})
-            reflexion_info = reflexion_data.get('info', {})
-            reflexion_episode_data = {
-                'session_id_index': task_index, 'instruction': instruction,
-                'final_reward': reflexion_data.get('reward', 0.0),
-                'num_traces_run': reflexion_info.get('num_traces_run', 0),
-                'individual_traces': reflexion_info.get('individual_traces', [{'error': reflexion_data.get('error', 'Unknown error')}])
-            }
-            append_to_json(reflexion_episode_data, OUTPUT_FILES['reflexion'])
+                # Save Reflexion ReAct results
+                reflexion_data = results.get('reflexion', {})
+                reflexion_info = reflexion_data.get('info', {})
+                reflexion_episode_data = {
+                    'session_id_index': task_index, 'instruction': instruction,
+                    'final_reward': reflexion_data.get('reward', 0.0),
+                    'total_attempts': reflexion_info.get('total_attempts', 0),
+                    'attempt_details': reflexion_info.get('attempt_details', [{'error': reflexion_data.get('error', 'Unknown error')}])
+                }
+                append_to_json(reflexion_episode_data, OUTPUT_FILES['reflexion'])
 
-            print(f"\nResults for task {task_index} saved.")
-            print(f"  - Standard Reward: {std_data.get('reward', 0.0)}")
-            print(f"  - Synthesized Reward: {synth_data.get('reward', 0.0)}")
-            print(f"  - Reflexion Reward: {reflexion_data.get('reward', 0.0)}")
+                print(f"\nResults for task {task_index} saved.")
+                print(f"  - Standard Reward: {std_data.get('reward', 0.0)}")
+                print(f"  - Synthesized Reward: {synth_data.get('reward', 0.0)}")
+                print(f"  - Reflexion Reward: {reflexion_data.get('reward', 0.0)}")
 
             tasks_completed_this_session += 1
         except Exception as e:

@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup, Comment
-from .config import WEBSHOP_URL, ACTION_TO_TEMPLATE
+from config import WEBSHOP_URL, ACTION_TO_TEMPLATE
 
 def clean_str(p):
     return p.encode().decode("unicode-escape").encode("latin1").decode("utf-8")
@@ -76,6 +76,12 @@ def webshop_text(session, page_type, **kwargs):
 class WebShopEnv:
     def __init__(self):
         self.sessions = {}
+
+    def reset(self, session):
+        """Reset the environment for a given session."""
+        self.sessions[session] = {'session': session, 'page_type': 'init'}
+        observation, info = webshop_text(session=session, page_type='init')
+        return observation
 
     def step(self, session, action):
         done = False
