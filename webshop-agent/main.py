@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from agents.single_trace import run_single_trace
 from agents.synthesized import run_synthesized_episode
 from agents.reflexion import run_reflexion_episode
+from agents.log_in_traj_reflexion import LogInTrajReflexionAgent
 from webshop_env import WebShopEnv, webshop_text
 from utils import (
     append_to_json,
@@ -82,15 +83,38 @@ def run_task_reflexion_only(env, task_index, instruction):
 
     return results
 
+def run_task_log_in_traj_reflexion_only(agent, env, task_index, instruction):
+    """Run a single task with only Log In Trajectory Reflexion mode."""
+    session_id = str(task_index)
+    results = {}
+    max_steps = 15
+
+    print(f"\n[LOG IN TRAJ REFLEXION REACT] Running for Session {session_id}")
+    print("="*50)
+    try:
+        reward, trajectory, llm_calls = agent.run_episode(env, session_id, instruction, to_print=True, max_steps=max_steps)
+        info = {'trajectory': trajectory, 'llm_calls': llm_calls}
+        results['log_in_traj_reflexion'] = {'reward': reward, 'info': info, 'success': True}
+        print(f"Log In Traj Reflexion ReAct completed with reward: {reward}")
+    except Exception as e:
+        print(f"Log In Traj Reflexion ReAct failed: {e}")
+        results['log_in_traj_reflexion'] = {'reward': 0.0, 'info': {'trajectory': [{'error': str(e)}]}, 'success': False, 'error': str(e)}
+
+    return results
+
 def main():
     parser = argparse.ArgumentParser(description="Run ReAct agent variations on the WebShop environment.")
     parser.add_argument("--num_episodes", type=int, default=5, help="Number of tasks to attempt.")
     parser.add_argument("--reflexion_only", action="store_true", help="Run only reflexion agent (skip standard and synthesized)")
+    parser.add_argument("--log_in_traj_reflexion_only", action="store_true", help="Run only log in trajectory reflexion agent")
     args = parser.parse_args()
 
     env = WebShopEnv()
 
-    if args.reflexion_only:
+    if args.log_in_traj_reflexion_only:
+        print("Running ONLY Log In Trajectory Reflexion ReAct for each task.")
+        agent = LogInTrajReflexionAgent()
+    elif args.reflexion_only:
         print("Running ONLY Reflexion ReAct for each task.")
     else:
         print("Running Standard, Synthesized, and Reflexion ReAct for each task.")
@@ -145,13 +169,19 @@ def main():
         processed_instructions.add(instruction)
 
         try:
-            if args.reflexion_only:
+            if args.log_in_traj_reflexion_only:
+                results = run_task_log_in_traj_reflexion_only(agent, env, task_index, instruction)
+            elif args.reflexion_only:
                 results = run_task_reflexion_only(env, task_index, instruction)
             else:
                 results = run_task_with_all_modes(env, task_index, instruction)
 
             # Save results based on mode
-            if args.reflexion_only:
+            if args.log_in_traj_reflexion_only:
+                # Save only Log In Traj Reflexion ReAct results
+                # This part is not implemented as it's for testing purposes.
+                pass
+            elif args.reflexion_only:
                 # Save only Reflexion ReAct results
                 reflexion_data = results.get('reflexion', {})
                 reflexion_info = reflexion_data.get('info', {})
