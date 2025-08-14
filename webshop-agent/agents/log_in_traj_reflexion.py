@@ -1,8 +1,10 @@
+import os
 from llm import call_llm
 
 class LogInTrajReflexionAgent:
     def __init__(self):
-        self.lt_memory_str = "| Activity | Problem | Solution | Outcome| \n| Empty | Empty | Empty | Empty |\n"
+        self.ltm_file_path = 'lt_memory.txt'
+        self.lt_memory_str = self._load_lt_memory()
         self.trigger_steps = [6, 9, 11, 13]
         self.lt_update_steps = [step + 1 for step in self.trigger_steps]  # [7, 10, 12, 14]
 
@@ -10,6 +12,21 @@ class LogInTrajReflexionAgent:
             self.react_few_shot_prompt = f.read()
         with open('prompts/webshop_LT_reflexion_few_shot.txt', 'r') as f:
             self.reflexion_few_shot_prompt = f.read()
+
+    def _load_lt_memory(self):
+        """Load long-term memory from file, or create default if file doesn't exist."""
+        if os.path.exists(self.ltm_file_path):
+            with open(self.ltm_file_path, 'r') as f:
+                return f.read()
+        else:
+            default_memory = "| Activity | Problem | Solution | Outcome| \n| Empty | Empty | Empty | Empty |\n"
+            self._save_lt_memory(default_memory)
+            return default_memory
+
+    def _save_lt_memory(self, memory_str):
+        """Save long-term memory to file."""
+        with open(self.ltm_file_path, 'w') as f:
+            f.write(memory_str)
 
     def run_episode(self, env, session_id, instruction, max_steps=15, to_print=True, num_traces=1):
         """
@@ -91,6 +108,7 @@ class LogInTrajReflexionAgent:
 
                 learning = self.update_Long_Term_Memory(st_memory)
                 self.lt_memory_str = f"{learning}\n"
+                self._save_lt_memory(self.lt_memory_str)
             
                 # Add LTM update to structured trajectory
                 ltm_data = {
@@ -142,6 +160,7 @@ class LogInTrajReflexionAgent:
         
         final_learning = self.update_Long_Term_Memory(st_memory)
         self.lt_memory_str = f"{final_learning}\n"
+        self._save_lt_memory(self.lt_memory_str)
         
         # Add final LTM update to structured trajectory
         final_ltm_data = {
