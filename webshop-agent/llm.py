@@ -22,7 +22,7 @@ except Exception as e:
 
 def call_llm(prompt, stop=None, num_traces=1):
     if stop is None: stop = ["\n"]
-    time.sleep(10)
+    time.sleep(15)
     temperature_setting = 0.0 if num_traces == 1 else 0.7
     try:
         response = client.models.generate_content(

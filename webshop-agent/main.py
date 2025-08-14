@@ -9,6 +9,7 @@ from agents.single_trace import run_single_trace
 from agents.synthesized import run_synthesized_episode
 from agents.reflexion import run_reflexion_episode
 from agents.log_in_traj_reflexion import LogInTrajReflexionAgent
+from agents.log_in_traj_reflexion_ST import LogInTrajReflexionAgent as LogInTrajReflexionSTAgent
 from webshop_env import WebShopEnv, webshop_text
 from utils import (
     append_to_json,
@@ -92,8 +93,8 @@ def run_task_log_in_traj_reflexion_only(agent, env, task_index, instruction):
     print(f"\n[LOG IN TRAJ REFLEXION REACT] Running for Session {session_id}")
     print("="*50)
     try:
-        reward, trajectory, llm_calls = agent.run_episode(env, session_id, instruction, to_print=True, max_steps=max_steps)
-        info = {'trajectory': trajectory, 'llm_calls': llm_calls}
+        reward, trajectory, llm_calls, st_memory = agent.run_episode(env, session_id, instruction, to_print=True, max_steps=max_steps)
+        info = {'trajectory': trajectory, 'llm_calls': llm_calls, 'st_memory': st_memory}
         results['log_in_traj_reflexion'] = {'reward': reward, 'info': info, 'success': True}
         print(f"Log In Traj Reflexion ReAct completed with reward: {reward}")
     except Exception as e:
@@ -102,18 +103,62 @@ def run_task_log_in_traj_reflexion_only(agent, env, task_index, instruction):
 
     return results
 
+def run_task_both_log_in_traj_reflexion(agent_original, agent_st, env, task_index, instruction):
+    """Run a single task with both Log In Trajectory Reflexion agents (original and ST)."""
+    session_id = str(task_index)
+    results = {}
+    max_steps = 15
+
+    # Run original log in traj reflexion
+    print(f"\n[LOG IN TRAJ REFLEXION REACT - ORIGINAL] Running for Session {session_id}")
+    print("="*60)
+    try:
+        reward, trajectory, llm_calls, st_memory = agent_original.run_episode(env, session_id, instruction, to_print=True, max_steps=max_steps)
+        info = {'trajectory': trajectory, 'llm_calls': llm_calls, 'st_memory': st_memory}
+        results['log_in_traj_reflexion_original'] = {'reward': reward, 'info': info, 'success': True}
+        print(f"Original Log In Traj Reflexion ReAct completed with reward: {reward}")
+    except Exception as e:
+        print(f"Original Log In Traj Reflexion ReAct failed: {e}")
+        results['log_in_traj_reflexion_original'] = {'reward': 0.0, 'info': {'trajectory': [{'error': str(e)}]}, 'success': False, 'error': str(e)}
+
+    # Run ST log in traj reflexion
+    print(f"\n[LOG IN TRAJ REFLEXION REACT - ST] Running for Session {session_id}")
+    print("="*60)
+    try:
+        reward, trajectory, llm_calls, reflexions = agent_st.run_episode(env, session_id, instruction, to_print=True, max_steps=max_steps)
+        info = {'trajectory': trajectory, 'llm_calls': llm_calls, 'reflexions': reflexions}
+        results['log_in_traj_reflexion_st'] = {'reward': reward, 'info': info, 'success': True}
+        print(f"ST Log In Traj Reflexion ReAct completed with reward: {reward}")
+    except Exception as e:
+        print(f"ST Log In Traj Reflexion ReAct failed: {e}")
+        results['log_in_traj_reflexion_st'] = {'reward': 0.0, 'info': {'trajectory': [{'error': str(e)}]}, 'success': False, 'error': str(e)}
+
+    return results
+
 def main():
     parser = argparse.ArgumentParser(description="Run ReAct agent variations on the WebShop environment.")
     parser.add_argument("--num_episodes", type=int, default=5, help="Number of tasks to attempt.")
     parser.add_argument("--reflexion_only", action="store_true", help="Run only reflexion agent (skip standard and synthesized)")
     parser.add_argument("--log_in_traj_reflexion_only", action="store_true", help="Run only log in trajectory reflexion agent")
+    parser.add_argument("--log_in_traj_reflexion_st_only", action="store_true", help="Run only log in trajectory reflexion agent with ST memory")
     args = parser.parse_args()
 
     env = WebShopEnv()
 
-    if args.log_in_traj_reflexion_only:
+    # Initialize agents based on arguments
+    agent_original = None
+    agent_st = None
+    
+    if args.log_in_traj_reflexion_only and args.log_in_traj_reflexion_st_only:
+        print("Running BOTH Log In Trajectory Reflexion ReAct (Original and ST) for each task.")
+        agent_original = LogInTrajReflexionAgent()
+        agent_st = LogInTrajReflexionSTAgent()
+    elif args.log_in_traj_reflexion_only:
         print("Running ONLY Log In Trajectory Reflexion ReAct for each task.")
-        agent = LogInTrajReflexionAgent()
+        agent_original = LogInTrajReflexionAgent()
+    elif args.log_in_traj_reflexion_st_only:
+        print("Running ONLY Log In Trajectory Reflexion ReAct with ST memory for each task.")
+        agent_st = LogInTrajReflexionSTAgent()
     elif args.reflexion_only:
         print("Running ONLY Reflexion ReAct for each task.")
     else:
@@ -169,18 +214,79 @@ def main():
         processed_instructions.add(instruction)
 
         try:
-            if args.log_in_traj_reflexion_only:
-                results = run_task_log_in_traj_reflexion_only(agent, env, task_index, instruction)
+            if args.log_in_traj_reflexion_only and args.log_in_traj_reflexion_st_only:
+                results = run_task_both_log_in_traj_reflexion(agent_original, agent_st, env, task_index, instruction)
+            elif args.log_in_traj_reflexion_only:
+                results = run_task_log_in_traj_reflexion_only(agent_original, env, task_index, instruction)
+            elif args.log_in_traj_reflexion_st_only:
+                results = run_task_log_in_traj_reflexion_only(agent_st, env, task_index, instruction)
             elif args.reflexion_only:
                 results = run_task_reflexion_only(env, task_index, instruction)
             else:
                 results = run_task_with_all_modes(env, task_index, instruction)
 
             # Save results based on mode
-            if args.log_in_traj_reflexion_only:
-                # Save only Log In Traj Reflexion ReAct results
-                # This part is not implemented as it's for testing purposes.
-                pass
+            if args.log_in_traj_reflexion_only and args.log_in_traj_reflexion_st_only:
+                # Save results for both original and ST agents
+                
+                # Save original log in traj reflexion results
+                log_traj_orig_data = results.get('log_in_traj_reflexion_original', {})
+                log_traj_orig_info = log_traj_orig_data.get('info', {})
+                log_traj_orig_episode_data = {
+                    'session_id_index': task_index,
+                    'instruction': instruction,
+                    'final_reward': log_traj_orig_data.get('reward', 0.0),
+                    'trajectory': log_traj_orig_info.get('trajectory', [{'error': log_traj_orig_data.get('error', 'Unknown error')}]),
+                    'llm_calls': log_traj_orig_info.get('llm_calls', 0),
+                    'agent_type': 'log_in_traj_reflexion',
+                    'st_memory': log_traj_orig_info.get('st_memory', '')
+                }
+                append_to_json(log_traj_orig_episode_data, OUTPUT_FILES['log_in_traj_reflexion'])
+                
+                # Save ST log in traj reflexion results
+                log_traj_st_data = results.get('log_in_traj_reflexion_st', {})
+                log_traj_st_info = log_traj_st_data.get('info', {})
+                log_traj_st_episode_data = {
+                    'session_id_index': task_index,
+                    'instruction': instruction,
+                    'final_reward': log_traj_st_data.get('reward', 0.0),
+                    'trajectory': log_traj_st_info.get('trajectory', [{'error': log_traj_st_data.get('error', 'Unknown error')}]),
+                    'llm_calls': log_traj_st_info.get('llm_calls', 0),
+                    'agent_type': 'log_in_traj_reflexion_st',
+                    'st_memory': log_traj_st_info.get('reflexions', [])
+                }
+                append_to_json(log_traj_st_episode_data, OUTPUT_FILES['log_in_traj_reflexion_st'])
+                
+                print(f"\nResults for task {task_index} saved.")
+                print(f"  - Log In Traj Reflexion Original Reward: {log_traj_orig_data.get('reward', 0.0)}")
+                print(f"  - Log In Traj Reflexion ST Reward: {log_traj_st_data.get('reward', 0.0)}")
+                
+            elif args.log_in_traj_reflexion_only or args.log_in_traj_reflexion_st_only:
+                # Save Log In Traj Reflexion ReAct results
+                log_traj_data = results.get('log_in_traj_reflexion', {})
+                log_traj_info = log_traj_data.get('info', {})
+                log_traj_episode_data = {
+                    'session_id_index': task_index,
+                    'instruction': instruction,
+                    'final_reward': log_traj_data.get('reward', 0.0),
+                    'trajectory': log_traj_info.get('trajectory', [{'error': log_traj_data.get('error', 'Unknown error')}]),
+                    'llm_calls': log_traj_info.get('llm_calls', 0),
+                    'agent_type': 'log_in_traj_reflexion_st' if args.log_in_traj_reflexion_st_only else 'log_in_traj_reflexion',
+                    'st_memory': log_traj_info.get('st_memory', '')
+                }
+                
+                # Use different output files for ST vs non-ST versions
+                if args.log_in_traj_reflexion_st_only:
+                    output_file = OUTPUT_FILES['log_in_traj_reflexion_st']
+                    agent_name = "Log In Traj Reflexion ST"
+                else:
+                    output_file = OUTPUT_FILES['log_in_traj_reflexion']
+                    agent_name = "Log In Traj Reflexion"
+                
+                append_to_json(log_traj_episode_data, output_file)
+                
+                print(f"\nResults for task {task_index} saved.")
+                print(f"  - {agent_name} Reward: {log_traj_data.get('reward', 0.0)}")
             elif args.reflexion_only:
                 # Save only Reflexion ReAct results
                 reflexion_data = results.get('reflexion', {})

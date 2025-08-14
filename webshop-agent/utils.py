@@ -5,7 +5,9 @@ import json
 OUTPUT_FILES = {
     'standard': 'webshop_react_trajectories.json',
     'synthesized': 'webshop_synthesized_trajectories.json',
-    'reflexion': 'webshop_reflexion_trajectories.json'
+    'reflexion': 'webshop_reflexion_trajectories.json',
+    'log_in_traj_reflexion': 'webshop_log_in_traj_reflexion_trajectories.json',
+    'log_in_traj_reflexion_st': 'webshop_log_in_traj_reflexion_st_trajectories.json'
 }
 INSTRUCTION_FILE = 'used_instructions.json'
 
@@ -25,11 +27,11 @@ def append_to_json(data, filename):
                 file_data = [file_data, data]
 
             f.seek(0)
-            json.dump(file_data, f, indent=2)
+            json.dump(file_data, f, indent=2, ensure_ascii=False)
             f.truncate()
     else:
         with open(filename, 'w', encoding='utf-8') as f:
-            json.dump([data], f, indent=2)
+            json.dump([data], f, indent=2, ensure_ascii=False)
 
 def get_all_processed_indices():
     """
