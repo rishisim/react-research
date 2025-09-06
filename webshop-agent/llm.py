@@ -32,7 +32,7 @@ def call_llm(prompt, stop=None, num_traces=1):
                 thinking_config=types.ThinkingConfig(thinking_budget=0),
                 stop_sequences=stop,
                 temperature=temperature_setting,
-                max_output_tokens=300,
+                max_output_tokens=400,
             )
         )
         return response.text

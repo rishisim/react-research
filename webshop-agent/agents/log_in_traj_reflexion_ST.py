@@ -4,9 +4,9 @@ class LogInTrajReflexionAgent:
     def __init__(self):
         self.trigger_steps = [6, 9, 11, 13]
 
-        with open('prompts/react_few_shot.txt', 'r') as f:
+        with open('prompts/CASE 2A Prompts/task_base_few_shot.txt', 'r') as f:
             self.react_few_shot_prompt = f.read()
-        with open('prompts/webshop_reflexion_few_shot.txt', 'r') as f:
+        with open('prompts/CASE 2A Prompts/in_traj_reflection_generation_prompt.txt', 'r') as f:
             self.reflexion_few_shot_prompt = f.read()
 
     def run_episode(self, env, session_id, instruction, max_steps=15, to_print=True, num_traces=1):
@@ -14,12 +14,12 @@ class LogInTrajReflexionAgent:
         Run a single ReAct reasoning trace with in-trajectory reflection.
         """
         action = 'reset'
-        st_memory = "ST Memory Empty"  # Short-term memory for in-trajectory reflections
+        Instruction = f"Instruction: {instruction}\n"
+        st_memory = ""  # Short-term memory for in-trajectory reflections
         reflexions = []  # Store all generated reflexions
 
         # Build initial prompt
-        initial_prompt = self.reflexion_few_shot_prompt + "\n"
-        initial_prompt += f"Instruction: {instruction}\n[Search]\n"
+        initial_prompt = self.reflexion_few_shot_prompt + "\n" + Instruction + "[Search]\n"
 
         prompt_history = ''
         trajectory = []
@@ -44,7 +44,10 @@ class LogInTrajReflexionAgent:
                 'reward': reward,
                 'done': done
             }
+
             trajectory.append(step_data)
+            st_memory += f"Action: {action}\nObservation: {observation.strip()}\n\n"
+            
             if to_print:
                 print(f"\n--- Step {i+1}/{max_steps} ---")
                 print(f"Action: {action}")
@@ -59,8 +62,8 @@ class LogInTrajReflexionAgent:
                 if to_print:
                     print(f"\n--- Step {i+1}/{max_steps}: Triggering In-Trajectory Reflexion ---")
 
-                reflection = self._generate_in_traj_reflection(trajectory, instruction, st_memory)
-                st_memory += f"- {reflection}\n"
+                reflection = self._generate_in_traj_reflection(instruction, st_memory)
+                st_memory += f"REFLECTION: {reflection}\n\n"
                 
                 # Store the reflexion with step information
                 reflexion_data = {
@@ -86,10 +89,17 @@ class LogInTrajReflexionAgent:
                 prompt_history += f" {action}\nObservation: {observation}\n\nAction:"
 
             # Construct the full prompt
-            full_prompt = initial_prompt
-            if st_memory:
-                full_prompt += f"You have the following reflections from this trajectory:\n{st_memory}\n\n"
-            full_prompt += prompt_history[-(6000 - len(full_prompt)):]
+            # full_prompt = initial_prompt
+            # if st_memory:
+            #     full_prompt += f"You have the following reflections from this trajectory:\n{st_memory}\n\n"
+            # full_prompt += prompt_history[-(6000 - len(full_prompt)):]
+
+
+            few_shot_example = self.react_few_shot_prompt + "\n"
+            STM = f"Here is your trajectory and reflections so far:\n{st_memory}\n"
+            Instruction = f"Instruction: {instruction}\n"
+
+            full_prompt = few_shot_example + Instruction + "\n" + STM + "Action: "
 
             action = call_llm(full_prompt, stop=['\n'], num_traces=num_traces).strip()
             llm_calls += 1
@@ -111,17 +121,28 @@ class LogInTrajReflexionAgent:
             formatted += f"Action: {step['action']}\nObservation:\n{step['observation']}\n\n"
         return formatted.strip()
 
-    def _generate_in_traj_reflection(self, trajectory, instruction, st_memory):
+    def _generate_in_traj_reflection(self, instruction, st_memory):
         """
         Generates a reflection on the current trajectory to improve future actions.
         """
-        reflection_prompt = "You are in the middle of completing your current WebShop task. Do not describe the environment itself—focus on analyzing your progress so far, including the strategy and path you have taken up to this point. From your journey so far within this trajectory, identify: \n Successful outcomes — steps and past reflections that moved you closer to completing the task that can help complete the task. \n Missteps or errors — actions that stalled progress, caused problems, or led to loops, and how you could have avoided them. \n If you have encountered similar problems before (such as invalid actions, loops, or unhelpful states), recall how you overcame them and apply those solutions now. \n If the problem is new or looped and you have no prior solution to draw from, reason about the current observations, available actions, and your understanding of the task to form a novel, logical plan that can overcome this obstacle. Think about alternative strategies, backtracking, or re-approaching the goal from a different angle if necessary. \n Your goal is to decide the most effective next action that will overcome the current obstacle and move you closer to completing the task. Keep the reflections concise and focused on actionable insights." 
+        reflection_instructions = "You are in the middle of completing your current WebShop task. Do not describe the environment itself—focus on analyzing your progress so far, including the strategy and path you have taken up to this point. From your journey so far within this trajectory, identify: \n Successful outcomes — steps and past reflections that moved you closer to completing the task that can help complete the task. \n Missteps or errors — actions that stalled progress, caused problems, or led to loops, and how you could have avoided them. \n If you have encountered similar problems before (such as invalid actions, loops, or unhelpful states), recall how you overcame them and apply those solutions now. \n If the problem is new or looped and you have no prior solution to draw from, reason about the current observations, available actions, and your understanding of the task to form a novel, logical plan that can overcome this obstacle. Think about alternative strategies, backtracking, or re-approaching the goal from a different angle if necessary. \n Your goal is to decide the most effective next action that will overcome the current obstacle and move you closer to completing the task. Keep the reflections concise and focused on actionable insights." 
         # + self.reflexion_few_shot_prompt + "\n"
 
         # if st_memory:
         #     reflection_prompt += f"You have already reflected on this task. Your previous reflections didn't work, so analyze what went wrong in these attempts and devise a different strategy to complete the task:\n{st_memory}\n\n"
 
-        formatted_trajectory = self._format_trajectory(trajectory, instruction)
-        reflection_prompt += f"{formatted_trajectory}\n\nInstruction: {instruction}\n\nReflection: "
+        # formatted_trajectory = self._format_trajectory(trajectory, instruction)
+        # reflection_prompt += f"{formatted_trajectory}\n\nInstruction: {instruction}\n\nReflection: "
 
-        return call_llm(reflection_prompt, stop=["Action:"], num_traces=2)
+        full_reflection_prompt = f"""{reflection_instructions}
+
+        ---
+        ## CURRENT TASK & TRAJECTORY
+        Instruction: {instruction}
+        {st_memory}
+
+        ---
+        ## REFLECTION
+        """
+
+        return call_llm(full_reflection_prompt, stop=["Action:"], num_traces=2)
