@@ -7,7 +7,7 @@ import string
 from collections import Counter
 
 
-DATA_DIR = "data"
+DATA_DIR = "../data"
 HOTPOTQA_SPLIT_FILE = {
   "train": "hotpot_train_v1.1_simplified.json",
   "dev": "hotpot_dev_v1_simplified.json",
@@ -87,6 +87,7 @@ class HotPotQAWrapper(gym.Wrapper):
     self.split = split
 
   def reset(self, seed=None, return_info=False, options=None, idx=None):
+    # Reset the underlying WikiEnv without passing idx
     self.env.reset(seed=seed, return_info=return_info, options=options)
     try:
       self.env.step('')
@@ -100,8 +101,8 @@ class HotPotQAWrapper(gym.Wrapper):
 
   def _get_info(self):
     return {
-      "steps": self.steps,
-      "answer": self.answer,
+      "steps": self.env.steps,
+      "answer": self.env.answer,
       "question": self.data[self.data_idx][0],
       "hotpot_split": self.split
     }
@@ -140,7 +141,8 @@ class FeverWrapper(gym.Wrapper):
   def __init__(self, env, split):
     super().__init__(env)
 
-    data_path = f"./data/{FEVER_SPLIT_FILE[split]}"
+    # Look for data in parent directory's data folder
+    data_path = f"../data/{FEVER_SPLIT_FILE[split]}"
     with open(data_path, "r") as json_file:
       json_list = list(json_file)
 
@@ -156,11 +158,13 @@ class FeverWrapper(gym.Wrapper):
     self.split = split
 
   def reset(self, seed=None, return_info=False, options=None, idx=None):
+    # Reset the underlying WikiEnv without passing idx
     self.env.reset(seed=seed, return_info=return_info, options=options)
     try:
       self.env.step('')
     except:
       pass
+    # Reset again after the empty step
     self.env.reset(seed=seed, return_info=return_info, options=options)
     self.data_idx = int(np.random.randint(len(self.data))) if idx is None else idx
     observation = f"Claim: {self.data[self.data_idx][0]}"
@@ -169,8 +173,8 @@ class FeverWrapper(gym.Wrapper):
 
   def _get_info(self):
     return {
-      "steps": self.steps,
-      "answer": self.answer,
+      "steps": self.env.steps,
+      "answer": self.env.answer,
       "question": self.data[self.data_idx][0],
       "fever_split": self.split
     }
