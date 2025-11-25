@@ -6,6 +6,10 @@ from google import genai
 from google.genai import types
 import wikienv, wrappers
 
+from dotenv import load_dotenv
+load_dotenv()
+
+
 # --- Environment Setup ---
 env = wikienv.WikiEnv()
 env = wrappers.HotPotQAWrapper(env, split="dev")
@@ -359,3 +363,150 @@ def webthink(idx=None, initial_prompt_template=WEBTHINK_PROMPT_TEMPLATE, to_prin
         # For multiple traces, the "final answer" is the synthesized one.
         # The second element returned should be the list of all trace infos.
         return synthesized_answer, all_traces_info
+
+# ========================= Reflexion-augmented Multi-trace =========================
+
+# Load reflexion prompt from external file with sensible fallback
+_reflexion_prompt_path = os.path.join(os.path.dirname(__file__), 'prompts', 'hotpot_reflexion.json')
+try:
+    with open(_reflexion_prompt_path, 'r', encoding='utf-8') as _rf:
+        _refl = json.load(_rf)
+        HOTPOT_REFLEXION_INSTRUCTION = _refl.get('instruction', '').strip()
+        if not HOTPOT_REFLEXION_INSTRUCTION:
+            raise ValueError('Missing "instruction" in hotpot_reflexion.json')
+except Exception as _e:
+    print(f"Warning: Could not load reflexion prompt from {_reflexion_prompt_path}: {_e}")
+    HOTPOT_REFLEXION_INSTRUCTION = (
+        "You will be given the question and your past Thought/Action/Observation history for a multi-hop QA attempt. "
+        "Do not summarize passages. Instead, analyze your strategy and identify concrete mistakes and missing steps. "
+        "Then write a concise, actionable plan to improve the next attempt with environment-specific actions:\n"
+        "- Use Search[entity] to find the right pages (consider aliases/disambiguation).\n"
+        "- Use Lookup[keyword] to extract specific facts.\n"
+        "- Chain hops explicitly; verify both entities and relations.\n"
+        "- Avoid premature Finish; cite evidence before concluding.\n"
+        "- If unsure, search alternate key entities or phrasing.\n\n"
+        "Write only the improved plan after 'Plan:'."
+    )
+
+def _make_reflexion_prompt(question, trajectory, success=False, em=None, f1=None):
+    status = "STATUS: SUCCESS" if success else "STATUS: FAIL"
+    return f"""{HOTPOT_REFLEXION_INSTRUCTION}
+
+Question: "{question}"
+
+{trajectory}
+{status}
+Plan:"""
+
+def _generate_reflexion_plan(question, trajectory, success=False, em=None, f1=None, to_print=False):
+    prompt = _make_reflexion_prompt(question, trajectory, success=success, em=em, f1=f1)
+    # Allow multiline plan; use higher temperature for creativity by passing num_traces != 1
+    plan_raw = llm(prompt, stop=[], num_traces=3).strip()
+    # Normalize to just the plan text
+    if "Plan:" in plan_raw:
+        plan_text = plan_raw.split("Plan:", 1)[1].strip()
+    else:
+        plan_text = plan_raw
+    plan_text = plan_text.strip()
+    if to_print:
+        print("Reflexion Plan:\n", plan_text)
+    return plan_text
+
+def webthink_reflexion_seq(idx=None, to_print=True):
+    """
+    Sequential reflexion-enhanced multi-trace for HotPotQA:
+      Trace 1 -> Reflexion 1 -> Trace 2 (with Plan 1) -> Reflexion 2 -> Trace 3 (with Plan 1+2)
+    Then synthesize a final answer from all 3 trajectories and validate it via environment metrics.
+    Returns: (final_reward, info_dict)
+    """
+    if to_print:
+        print(f"[Reflexion] Starting sequential 3-trace run for idx={idx}")
+
+    # Trace 1
+    r1, info1 = webthink(idx=idx, initial_prompt_template=WEBTHINK_PROMPT_TEMPLATE, to_print=to_print, num_traces=1)
+    question_text = info1.get('question_text', '') if isinstance(info1, dict) else ''
+    em1, f11 = (info1.get('em', 0), info1.get('f1', 0)) if isinstance(info1, dict) else (0, 0)
+    plan1 = _generate_reflexion_plan(question_text, info1.get('traj', '') if isinstance(info1, dict) else '', success=bool(em1 == 1), em=em1, f1=f11, to_print=to_print)
+
+    # Trace 2 (with Plan 1)
+    initial2 = WEBTHINK_PROMPT_TEMPLATE + f"""
+
+Reflexion Plan:
+{plan1}
+
+Follow the above plan in your next attempt before finishing. Be explicit and verify both hops.
+"""
+    r2, info2 = webthink(idx=idx, initial_prompt_template=initial2, to_print=to_print, num_traces=1)
+    em2, f12 = (info2.get('em', 0), info2.get('f1', 0)) if isinstance(info2, dict) else (0, 0)
+    plan2 = _generate_reflexion_plan(question_text, info2.get('traj', '') if isinstance(info2, dict) else '', success=bool(em2 == 1), em=em2, f1=f12, to_print=to_print)
+
+    # Trace 3 (with Plan 1 + Plan 2)
+    initial3 = WEBTHINK_PROMPT_TEMPLATE + f"""
+
+Reflexion Plan 1:
+{plan1}
+
+Reflexion Plan 2:
+{plan2}
+
+Follow these plans. Ensure both hops are verified with evidence before Finish.
+"""
+    r3, info3 = webthink(idx=idx, initial_prompt_template=initial3, to_print=to_print, num_traces=1)
+
+    traces = [t for t in [info1, info2, info3] if isinstance(t, dict)]
+    trajs = extract_trajectories_from_traces(traces)
+    synthesized_answer = synthesize_answer_with_llm(trajs, question_text).strip()
+
+    if to_print:
+        print("Synthesized Answer (pre-validate):", synthesized_answer)
+
+    # Compute metrics using underlying env's get_metrics (consistent with run_experiments)
+    hotpot_env = env
+    while hasattr(hotpot_env, 'env') and not hasattr(hotpot_env, 'get_metrics'):
+        hotpot_env = hotpot_env.env
+    if hasattr(hotpot_env, 'get_metrics'):
+        metrics = hotpot_env.get_metrics({'answer': synthesized_answer})
+    else:
+        metrics = {'em': 0, 'f1': 0, 'reward': 0}
+
+    # Optionally, also execute a finish action to capture observation text
+    try:
+        _ = env.reset(idx=idx)
+        obs_final, reward_final, done_final, info_final = step(env, f"finish[{synthesized_answer}]")
+    except Exception:
+        obs_final, reward_final, done_final, info_final = ("", metrics.get('reward', 0), True, {})
+    if not isinstance(info_final, dict):
+        info_final = {}
+
+    # Aggregate call counts (approximate extras for 2 reflexions + 1 synthesis)
+    total_calls = sum(t.get('n_calls', 0) for t in traces) + 3
+    total_badcalls = sum(t.get('n_badcalls', 0) for t in traces)
+
+    # Derive gt_answer from any trace info if available
+    gt_answer = None
+    for t in traces:
+        if t.get('gt_answer'):
+            gt_answer = t.get('gt_answer')
+            break
+
+    result_info = {
+        'framework': 'multi_trace_reflexion',
+        'question_idx': idx,
+        'question_text': question_text,
+        'answer': synthesized_answer,
+        'gt_answer': gt_answer,
+        'em': metrics.get('em'),
+        'f1': metrics.get('f1'),
+        'reward': metrics.get('reward'),
+        'n_calls': total_calls,
+        'n_badcalls': total_badcalls,
+        'num_traces_run': 3,
+        'individual_trajectories': trajs,
+        'reflexions': [plan1, plan2],
+        'finish_action_obs': info_final.get('finish_action_obs', obs_final)
+    }
+
+    if to_print:
+        print("[Reflexion] Final validated info:", result_info)
+
+    return result_info.get('reward', 0), result_info

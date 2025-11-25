@@ -5,6 +5,7 @@ import hotpotqa_agent as hqa # Import our library
 NUM_TASKS_TODAY = 20
 BASELINE_OUTPUT_FILE = 'HotPotQA_Experiment/react_baseline_results.json'
 NEW_FRAMEWORK_OUTPUT_FILE = 'HotPotQA_Experiment/react_cot_synth_results.json'
+REFLEXION_OUTPUT_FILE = 'HotPotQA_Experiment/react_multi_trace_reflexion_results.json'
 
 print("Setting up dataset indices...")
 all_indices = list(range(7405))
@@ -45,6 +46,27 @@ for i, idx in enumerate(indices_for_today):
     }
     hqa.append_to_json(new_framework_result, NEW_FRAMEWORK_OUTPUT_FILE)
     print(f"  > New framework results saved to {NEW_FRAMEWORK_OUTPUT_FILE}")
+
+    # 3. Run Reflexion-augmented Multi-Trace
+    print("Running reflexion-augmented multi-trace (3 sequential traces + synthesis)...")
+    try:
+        reward, refl_info = hqa.webthink_reflexion_seq(idx=idx, to_print=False)
+        reflexion_result = {
+            'question_idx': idx,
+            'question_text': refl_info.get('question_text'),
+            'answer': refl_info.get('answer'),
+            'ground_truth_answer': refl_info.get('gt_answer'),
+            'em': refl_info.get('em', 0),
+            'reward': reward if reward is not None else refl_info.get('reward', 0),
+            'f1': refl_info.get('f1', 0),
+            'num_traces_run': refl_info.get('num_traces_run', 3),
+            'individual_trajectories': refl_info.get('individual_trajectories', []),
+            'reflexions': refl_info.get('reflexions', [])
+        }
+        hqa.append_to_json(reflexion_result, REFLEXION_OUTPUT_FILE)
+        print(f"  > Reflexion results saved to {REFLEXION_OUTPUT_FILE}")
+    except Exception as e:
+        print(f"  > Reflexion framework errored: {e}")
     print("-" * 20)
 
 print("\nAll tasks for today completed!")

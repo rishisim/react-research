@@ -9,6 +9,9 @@ from google.genai import types
 import alfworld
 import alfworld.agents.environment
 
+# Resolve paths relative to this file
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 # Load .env from the project root (react-research folder)
 env_path = os.path.join(os.path.dirname(__file__), '..', '..', '..', '.env')
 load_dotenv(env_path)
@@ -44,7 +47,9 @@ def llm(prompt, stop=None, num_traces=1):
         print(f"Error calling LLM: {e}")
         return ""
 
-with open('../base_config.yaml') as reader:
+# Change to file-relative path:
+config_path = os.path.abspath(os.path.join(script_dir, '..', 'base_config.yaml'))
+with open(config_path) as reader:
     config = yaml.safe_load(reader)
 
 split = "eval_out_of_distribution"
@@ -57,8 +62,6 @@ def process_ob(ob):
         ob = ob[ob.find('. ')+2:]
     return ob
 
-import os
-script_dir = os.path.dirname(os.path.abspath(__file__))
 folder = os.path.join(script_dir, 'prompts/')
 # Assuming the prompt file from the original code exists relative to this script's location
 prompt_file = 'alfworld_3prompts.json'

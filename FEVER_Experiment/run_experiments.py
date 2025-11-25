@@ -19,11 +19,13 @@ except Exception as e:
 
 # --- Main Configuration ---
 MAX_FEVER_DEV_EXAMPLES = 7405 # Based on paper_dev.jsonl line count
-NUM_TASKS_TODAY = 20 # Keep small for testing, can be increased later
+NUM_TASKS_TODAY = 5 # Keep small for testing, can be increased later
 BASELINE_OUTPUT_FILE = 'react_baseline_results.json' # Path relative to FEVER_Experiment
 NEW_FRAMEWORK_OUTPUT_FILE = 'react_multi_trace_results.json' # Path relative to FEVER_Experiment
+REFLEXION_FRAMEWORK_OUTPUT_FILE = 'react_multi_trace_reflexion_results.json' # Path relative to FEVER_Experiment
 BASELINE_OUTPUT_FILE_PATH = os.path.join(os.path.dirname(__file__), BASELINE_OUTPUT_FILE)
 NEW_FRAMEWORK_OUTPUT_FILE_PATH = os.path.join(os.path.dirname(__file__), NEW_FRAMEWORK_OUTPUT_FILE)
+REFLEXION_FRAMEWORK_OUTPUT_FILE_PATH = os.path.join(os.path.dirname(__file__), REFLEXION_FRAMEWORK_OUTPUT_FILE)
 
 
 print("Setting up dataset indices for FEVER...")
@@ -51,7 +53,7 @@ def get_processed_indices(output_file_path):
     return processed_indices
 
 # Collect all processed indices from both output files
-processed_indices = get_processed_indices(BASELINE_OUTPUT_FILE_PATH) | get_processed_indices(NEW_FRAMEWORK_OUTPUT_FILE_PATH)
+processed_indices = get_processed_indices(BASELINE_OUTPUT_FILE_PATH) | get_processed_indices(NEW_FRAMEWORK_OUTPUT_FILE_PATH) | get_processed_indices(REFLEXION_FRAMEWORK_OUTPUT_FILE_PATH)
 
 all_indices = list(range(MAX_FEVER_DEV_EXAMPLES))
 random.Random(42).shuffle(all_indices)
@@ -104,8 +106,20 @@ for i, idx in enumerate(indices_for_today):
         print(f"  ERROR during new framework for index {idx}: {e}")
         error_info = {'question_idx': idx, 'error': str(e), 'details': 'New framework (3 traces) failed'}
         fa.append_to_json(error_info, NEW_FRAMEWORK_OUTPUT_FILE_PATH)
+
+    # 3. Run Multi-Trace ReAct with Reflexion Framework
+    print("Running multi-trace ReAct with reflexion framework...")
+    try:
+        reflexion_reward, reflexion_info = fa.webthink_multi_trace_reflexion(idx=idx, initial_prompt_template=fa.WEBTHINK_PROMPT_TEMPLATE, to_print=False)
+        fa.append_to_json(reflexion_info, REFLEXION_FRAMEWORK_OUTPUT_FILE_PATH)
+        print(f"  > Reflexion framework results saved to {REFLEXION_FRAMEWORK_OUTPUT_FILE_PATH}")
+    except Exception as e:
+        print(f"  ERROR during reflexion framework for index {idx}: {e}")
+        error_info = {'question_idx': idx, 'error': str(e), 'details': 'Reflexion framework failed'}
+        fa.append_to_json(error_info, REFLEXION_FRAMEWORK_OUTPUT_FILE_PATH)
     print("-" * 20)
 
 print("\nAll FEVER tasks for today completed!")
 print(f"Baseline results are in: {BASELINE_OUTPUT_FILE_PATH}")
 print(f"New framework results are in: {NEW_FRAMEWORK_OUTPUT_FILE_PATH}")
+print(f"Reflexion framework results are in: {REFLEXION_FRAMEWORK_OUTPUT_FILE_PATH}")

@@ -350,6 +350,156 @@ def webthink(idx=None, initial_prompt_template=None, to_print=True, num_traces=1
         }
         return em_score, synthesized_info
 
+# --- Multi-Trace ReAct with Reflexion Framework ---
+def webthink_multi_trace_reflexion(idx=None, initial_prompt_template=None, to_print=True):
+    """
+    Run Multi-Trace ReAct with Reflexion framework
+    """
+    fever_env = get_fever_env()
+    
+    if initial_prompt_template is None:
+        initial_prompt_template = WEBTHINK_PROMPT_TEMPLATE
+    
+    # Load reflexion prompt
+    try:
+        with open('prompts/fever_reflexion.json', 'r') as f:
+            reflexion_prompts = json.load(f)
+        reflexion_prompt = reflexion_prompts['reflexion']
+    except (FileNotFoundError, KeyError) as e:
+        if to_print:
+            print(f"Warning: Could not load reflexion prompt: {e}")
+        reflexion_prompt = "Reflect on your previous attempt and create a new plan."
+    
+    trajectories = []
+    reflexions = []
+    question_for_synthesis = ""
+    
+    # Trajectory 1
+    if to_print:
+        print("--- Running Trajectory 1 ---")
+    reward_1, trajectory_1 = webthink(idx=idx, initial_prompt_template=initial_prompt_template, to_print=to_print, num_traces=1)
+    trajectories.append(trajectory_1)
+    if not question_for_synthesis:
+        question_for_synthesis = trajectory_1.get('question_text', '')
+    
+    # Reflexion 1
+    if to_print:
+        print("--- Generating Reflexion 1 ---")
+    reflexion_1 = generate_reflexion(trajectory_1, reflexion_prompt, to_print=to_print)
+    reflexions.append(reflexion_1)
+    
+    # Trajectory 2 with reflexion context
+    if to_print:
+        print("--- Running Trajectory 2 with Reflexion Context ---")
+    modified_prompt_2 = initial_prompt_template + f"Plans from past attempts: {reflexion_1}\n\n"
+    reward_2, trajectory_2 = webthink(idx=idx, initial_prompt_template=modified_prompt_2, to_print=to_print, num_traces=1)
+    trajectories.append(trajectory_2)
+    
+    # Reflexion 2
+    if to_print:
+        print("--- Generating Reflexion 2 ---")
+    reflexion_2 = generate_reflexion(trajectory_2, reflexion_prompt, to_print=to_print)
+    reflexions.append(reflexion_2)
+    
+    # Trajectory 3 with reflexion context
+    if to_print:
+        print("--- Running Trajectory 3 with Reflexion Context ---")
+    modified_prompt_3 = initial_prompt_template + f"Plans from past attempts: {reflexion_2}\n\n"
+    reward_3, trajectory_3 = webthink(idx=idx, initial_prompt_template=modified_prompt_3, to_print=to_print, num_traces=1)
+    trajectories.append(trajectory_3)
+    
+    # Final synthesis using existing multi-trace logic
+    if to_print:
+        print("--- Starting Final Synthesis ---")
+    
+    # Extract trajectories for synthesis
+    trajectory_strings = []
+    for traj in trajectories:
+        traj_str = traj.get('traj', '')
+        if traj_str:
+            trajectory_strings.append(traj_str)
+    
+    if not trajectory_strings:
+        if to_print:
+            print("Warning: No trajectories extracted for synthesis.")
+        synthesized_answer = "NOT ENOUGH INFO"
+    else:
+        synthesized_answer = synthesize_answer_with_llm(trajectory_strings, question_for_synthesis)
+    
+    if to_print:
+        print(f"Final Synthesized Answer: {synthesized_answer}")
+    
+    # Calculate final metrics
+    gt_answer = trajectory_1.get('gt_answer', 'UNKNOWN_GT_ANSWER')
+    em_score = 1.0 if synthesized_answer == gt_answer else 0.0
+    
+    total_calls = sum(t.get('n_calls', 0) for t in trajectories)
+    total_badcalls = sum(t.get('n_badcalls', 0) for t in trajectories)
+    
+    final_info = {
+        'question_idx': idx,
+        'question_text': question_for_synthesis,
+        'answer': synthesized_answer,
+        'gt_answer': gt_answer,
+        'em': em_score,
+        'f1': em_score,
+        'reward': em_score,
+        'n_calls': total_calls,
+        'n_badcalls': total_badcalls,
+        'num_traces_run': 3,
+        'individual_trajectories': trajectories,
+        'reflexions': reflexions,
+        'framework': 'multi_trace_reflexion'
+    }
+    
+    return em_score, final_info
+
+def generate_reflexion(trajectory_info, reflexion_prompt, to_print=False):
+    """
+    Generate a reflexion based on the trajectory information
+    """
+    # Format the trajectory for reflexion
+    history_text = format_trajectory_for_reflexion(trajectory_info)
+    
+    full_prompt = f"{reflexion_prompt}\n\n{history_text}\nSTATUS: FAIL\nPlan:"
+    
+    # Generate reflexion using the language model
+    try:
+        reflexion_response = llm(full_prompt, stop=["\n"], num_traces=1)
+        
+        # Extract the plan from the response
+        if "Plan:" in reflexion_response:
+            plan = reflexion_response.split("Plan:")[-1].strip()
+        else:
+            plan = reflexion_response.strip()
+        
+        if to_print:
+            print(f"Generated Reflexion: {plan}")
+        
+        return plan
+    except Exception as e:
+        if to_print:
+            print(f"Error generating reflexion: {e}")
+        return "Continue with a more systematic approach to gather evidence."
+
+def format_trajectory_for_reflexion(trajectory_info):
+    """
+    Format the trajectory information for reflexion input
+    """
+    if isinstance(trajectory_info, dict):
+        # Extract the full trajectory string
+        trajectory_str = trajectory_info.get('traj', '')
+        if trajectory_str:
+            return trajectory_str
+        
+        # If no trajectory string, try to reconstruct from parts
+        question = trajectory_info.get('question_text', '')
+        answer = trajectory_info.get('answer', '')
+        return f"Claim: {question}\n[Trajectory details not available]\nFinal Answer: {answer}"
+    else:
+        # If it's already a string, return as is
+        return str(trajectory_info)
+
 # --- Utility for run_experiments.py ---
 def append_to_json(data, filename):
     """Appends data to a JSON file that stores a list of JSON objects."""
