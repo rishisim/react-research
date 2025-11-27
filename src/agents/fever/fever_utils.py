@@ -49,7 +49,7 @@ def llm(prompt, stop=["\n"], num_traces=1):
 
     temperature_setting = 0.0 if num_traces == 1 else 0.7
     response = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
+        model="gemini-2.5-flash",
         contents=prompt,
         config=types.GenerateContentConfig(
             thinking_config=types.ThinkingConfig(thinking_budget=0),  # Disables thinking
@@ -310,7 +310,10 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
         if not isinstance(action, str):
             action = str(action)
         
-        obs, r, done, info = step(fever_env, action[0].lower() + action[1:])
+        # Lowercase first character of action (e.g., Search -> search)
+        # This is required by the WikiEnv - see FEVER.ipynb line 95
+        action_lowercase = action[0].lower() + action[1:] if action else action
+        obs, r, done, info = step(fever_env, action_lowercase)
         obs = obs.replace('\\n', '') if isinstance(obs, str) else str(obs)
         
         step_str = f"Thought {i}: {thought}\nAction {i}: {action}\nObservation {i}: {obs}\n"
