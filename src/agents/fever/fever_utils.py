@@ -44,8 +44,9 @@ def llm(prompt, stop=["\n"], num_traces=1):
     Returns:
         String response from the LLM
     """
-    # This delay handles the 15 RPM limit by waiting ~4 seconds per call.
-    time.sleep(4.1)
+    # This delay ensures we don't exceed API rate limits (3 seconds between calls).
+    time.sleep(3.0)
+
 
     temperature_setting = 0.0 if num_traces == 1 else 0.7
     response = client.models.generate_content(
@@ -55,7 +56,7 @@ def llm(prompt, stop=["\n"], num_traces=1):
             thinking_config=types.ThinkingConfig(thinking_budget=0),  # Disables thinking
             stop_sequences=stop,
             temperature=temperature_setting,
-            max_output_tokens=100,
+            max_output_tokens=512,
             top_p=1.0
         )
     )
@@ -243,16 +244,44 @@ Final Answer (SUPPORTS / REFUTES / NOT ENOUGH INFO):"""
         formatted_trajectories=formatted_trajectories
     )
 
-    # LLM call to get the synthesized verdict
-    llm_response = llm(synthesizer_prompt, stop=["\n"], num_traces=1)
-    final_verdict = llm_response.strip().upper()
+    # LLM call to get the synthesized verdict - allow full response without stopping
+    llm_response = llm(synthesizer_prompt, stop=[], num_traces=1)
+    
+    # Extract the answer using pattern matching
+    # Look for SUPPORTS, REFUTES, or NOT ENOUGH INFO in the response
+    # Prioritize uppercase versions and check for common patterns
+    
+    # First, try to find the answer in common formats
+    patterns_to_try = [
+        r'\b(SUPPORTS|REFUTES|NOT ENOUGH INFO)\b',  # Uppercase standalone
+        r'\*\*(SUPPORTS|REFUTES|NOT ENOUGH INFO)\*\*',  # Markdown bold
+        r'Final Answer:?\s*(SUPPORTS|REFUTES|NOT ENOUGH INFO)',  # After "Final Answer"
+        r'Answer:?\s*(SUPPORTS|REFUTES|NOT ENOUGH INFO)',  # After "Answer"
+        r'\b(supports|refutes|not enough info)\b',  # Lowercase versions
+        r'Final Answer:?\s*(SUP|REF|NOT)',  # Truncated versions
+    ]
+    
+    for pattern in patterns_to_try:
+        matches = re.findall(pattern, llm_response, re.IGNORECASE)
+        if matches:
+            # Return the last match found, converted to uppercase
+            match_str = matches[-1].upper()
+            
+            # Handle truncated/partial matches
+            if match_str.startswith("SUP"):
+                return "SUPPORTS"
+            elif match_str.startswith("REF"):
+                return "REFUTES"
+            elif match_str.startswith("NOT"):
+                return "NOT ENOUGH INFO"
+                
+            if match_str in ["SUPPORTS", "REFUTES", "NOT ENOUGH INFO"]:
+                return match_str
+    
+    # If no match found, log the response and default to NOT ENOUGH INFO
+    print(f"[WARNING] LLM returned unexpected verdict: '{llm_response}'. Defaulting to NOT ENOUGH INFO.")
+    return "NOT ENOUGH INFO"
 
-    # Validate the LLM response
-    if final_verdict in ["SUPPORTS", "REFUTES", "NOT ENOUGH INFO"]:
-        return final_verdict
-    else:
-        print(f"[WARNING] LLM returned unexpected verdict: '{llm_response}'. Defaulting to NOT ENOUGH INFO.")
-        return "NOT ENOUGH INFO"
 
 
 # --- Core Single Trace Execution ---

@@ -15,22 +15,16 @@ import json
 import random
 import argparse
 from datetime import datetime
+from typing import List, Dict, Any, Set
 from pathlib import Path
-from typing import Dict, List, Any, Set
 
-# Add parent directory to path for imports
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-# Import all agent frameworks
+from fever_utils import WEBTHINK_PROMPT_TEMPLATE
 from react_agent import run_react
 from reflexion_react_agent import run_reflexion_react
 from majority_voting_agent import run_majority_voting
 from cot_sc_agent import run_cot_sc
-from fever_utils import WEBTHINK_PROMPT_TEMPLATE
-
 
 class FEVERExperimentRunner:
-    """Manages FEVER experiment execution with continuation support."""
     
     # Map framework names to their execution functions
     FRAMEWORK_MAP = {
@@ -74,16 +68,16 @@ class FEVERExperimentRunner:
         self.results_dir = (script_dir / results_base_dir / run_name).resolve()
         self.results_dir.mkdir(parents=True, exist_ok=True)
         
-        print("="*70)
-        print(f"[EXPERIMENT] FEVER Agent Evaluation")
-        print("="*70)
-        print(f"Results directory: {self.results_dir}")
-        print(f"Seed: {seed}")
-        print(f"Model: {model}")
-        print(f"Frameworks: {', '.join(self.frameworks)}")
-        print(f"Examples to run: {num_examples}")
-        print(f"Retry failed: {retry_failed}")
-        print("="*70)
+        print("="*70, flush=True)
+        print(f"[EXPERIMENT] FEVER Agent Evaluation", flush=True)
+        print("="*70, flush=True)
+        print(f"Results directory: {self.results_dir}", flush=True)
+        print(f"Seed: {seed}", flush=True)
+        print(f"Model: {model}", flush=True)
+        print(f"Frameworks: {', '.join(self.frameworks)}", flush=True)
+        print(f"Examples to run: {num_examples}", flush=True)
+        print(f"Retry failed: {retry_failed}", flush=True)
+        print("="*70, flush=True)
         
         # File paths
         self.config_path = self.results_dir / "config.json"
@@ -195,7 +189,7 @@ class FEVERExperimentRunner:
         Returns:
             Result dictionary (may contain 'error' key if failed)
         """
-        print(f"  Running {framework}...")
+        print(f"  Running {framework}...", flush=True)
         
         try:
             agent_func = self.FRAMEWORK_MAP[framework]
@@ -208,7 +202,7 @@ class FEVERExperimentRunner:
             gt = result.get('gt_answer', 'UNKNOWN')
             em = result.get('em', 0.0)
             
-            print(f"  > {framework}: Answer={answer} | GT={gt} | EM={em}")
+            print(f"  > {framework}: Answer={answer} | GT={gt} | EM={em}", flush=True)
             
             return result
             
@@ -232,17 +226,17 @@ class FEVERExperimentRunner:
         # Record run start
         run_start_time = datetime.now()
         
-        print(f"\n{'='*70}")
-        print(f"[START] Processing {len(indices)} examples")
-        print(f"{'='*70}\n")
+        print(f"\n{'='*70}", flush=True)
+        print(f"[START] Processing {len(indices)} examples", flush=True)
+        print(f"{'='*70}\n", flush=True)
         
         successful_count = 0
         failed_count = 0
         
         for i, idx in enumerate(indices, 1):
-            print(f"\n{'-'*70}")
-            print(f"[EXAMPLE {i}/{len(indices)}] Index: {idx}")
-            print(f"{'-'*70}")
+            print(f"\n{'-'*70}", flush=True)
+            print(f"[EXAMPLE {i}/{len(indices)}] Index: {idx}", flush=True)
+            print(f"{'-'*70}", flush=True)
             
             framework_results = {}
             example_success = True
