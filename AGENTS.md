@@ -15,19 +15,20 @@ Two primary variations of the ReAct framework are utilized:
 ## Alfworld Agent
 
 *   **Dataset**: [ALFWorld](https://alfworld.github.io/)
-*   **File**: `alfworld-parent/alfworld/agent.py`
+*   **File**: `src/agents/alfworld/`
 *   **Description**: The Alfworld agent is designed to solve complex, multi-step tasks in a text-based simulated household environment. It processes natural language instructions to perform actions like navigating rooms, interacting with objects (e.g., `take`, `put`, `open`), and ultimately achieving a high-level goal.
 
 ## FEVER Agent
 
 *   **Dataset**: [FEVER (Fact Extraction and VERification)](https://fever.ai/)
-*   **File**: `FEVER_Experiment/fever_agent.py`
-*   **Description**: The FEVER agent is tasked with verifying the truthfulness of a given claim. It interacts with a Wikipedia-like environment to find evidence supporting or refuting the claim. Its primary actions include `search` to find relevant articles and `lookup` to find specific information within an article, concluding with a `finish` action to state whether the claim is "SUPPORTS" or "REFUTES".
+*   **File**: `src/agents/fever/fever_agent.py`
+*   **Frameworks**: See [`progress_notes/frameworks.md`](progress_notes/frameworks.md) for detailed documentation
+*   **Description**: The FEVER agent is tasked with verifying the truthfulness of a given claim. It interacts with a Wikipedia-like environment to find evidence supporting or refuting the claim. Its primary actions include `search` to find relevant articles and `lookup` to find specific information within an article, concluding with a `finish` action to state whether the claim is "SUPPORTS", "REFUTES", or "NOT ENOUGH INFO".
 
 ## HotPotQA Agent
 
 *   **Dataset**: [HotPotQA](https://hotpotqa.github.io/)
-*   **File**: `HotPotQA_Experiment/hotpotqa_agent.py`
+*   **File**: `src/agents/hotpotqa/hotpotqa_agent.py`
 *   **Description**: This agent is built for multi-hop question answering. Given a question, it must navigate through multiple documents to find different pieces of information and then synthesize them to form a final answer. Like the FEVER agent, it uses `search` and `lookup` to gather information before providing an answer with the `finish` action.
 
 ## WebShop Agent
