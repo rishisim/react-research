@@ -7,6 +7,12 @@ from bs4 import BeautifulSoup
 
 # import wikipedia
 
+# Wikipedia now requires a User-Agent header for all API requests
+# See: https://meta.wikimedia.org/wiki/User-Agent_policy
+HEADERS = {
+    "User-Agent": "FEVERResearchBot/1.0 (https://github.com/rishisim/react-research; research purposes)"
+}
+
 def clean_str(p):
   return p.encode().decode("unicode-escape").encode("latin1").decode("utf-8")
 
@@ -99,7 +105,7 @@ class WikiEnv(gym.Env):
     entity_ = entity.replace(" ", "+")
     search_url = f"https://en.wikipedia.org/w/index.php?search={entity_}"
     old_time = time.time()
-    response_text = requests.get(search_url).text
+    response_text = requests.get(search_url, headers=HEADERS).text
     self.search_time += time.time() - old_time
     self.num_searches += 1
     soup = BeautifulSoup(response_text, features="html.parser")

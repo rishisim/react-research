@@ -1,9 +1,9 @@
 """
-Reflexion ReAct Agent for FEVER
+Self-Reflection Agent for FEVER
 
-Runs a ReAct trace, then verifies the answer using LLM. If the verification
-determines the answer is incorrect, runs a second trace with verification 
-feedback to guide the reasoning.
+Runs a single ReAct trace, then uses LLM to verify the answer based on the trace.
+If the verification determines the answer is incorrect, outputs the corrected answer
+based solely on the evidence in the trace.
 """
 
 import sys
@@ -18,25 +18,26 @@ from fever_utils import (
 )
 
 
-def load_verification_prompt():
-    """Load the reflexion verification prompt from JSON file."""
+def load_self_reflection_prompt():
+    """Load the self-reflection verification prompt from JSON file."""
     try:
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        prompt_path = os.path.join(script_dir, 'prompts', 'fever_reflexion.json')
+        prompt_path = os.path.join(script_dir, 'prompts', 'fever_self_reflection.json')
         with open(prompt_path, 'r') as f:
             prompts = json.load(f)
-        return prompts['reflexion_verification']
+        return prompts['self_reflection_verification']
     except (FileNotFoundError, KeyError) as e:
-        print(f"[WARNING] Could not load verification prompt: {e}")
+        print(f"[WARNING] Could not load self-reflection prompt: {e}")
         return """You will be given a reasoning trace and its final answer. Analyze whether the answer is correct based on the evidence.
 Respond with:
 Verification: [CORRECT or INCORRECT]
-Reasoning: [Brief explanation]"""
+Reasoning: [Brief explanation]
+Final Answer: [The correct answer based on the trace]"""
 
 
-def verify_answer(trajectory_info, verification_prompt, to_print=False):
+def verify_and_correct_answer(trajectory_info, verification_prompt, to_print=False):
     """
-    Verify if the answer in the trajectory is correct using LLM.
+    Verify if the answer in the trajectory is correct using LLM, and provide correction if needed.
     
     Args:
         trajectory_info: Dictionary with trajectory information
@@ -46,7 +47,8 @@ def verify_answer(trajectory_info, verification_prompt, to_print=False):
     Returns:
         Dictionary with verification results:
         - verification_status: 'CORRECT' or 'INCORRECT'
-        - verification_reasoning: Explanation and guidance from the LLM
+        - verification_reasoning: Explanation from the LLM
+        - corrected_answer: The final answer (original if correct, corrected if incorrect)
     """
     # Extract trajectory string
     if isinstance(trajectory_info, dict):
@@ -68,7 +70,8 @@ def verify_answer(trajectory_info, verification_prompt, to_print=False):
         
         # Parse the verification response
         verification_status = "UNKNOWN"
-        verification_reasoning = verification_response.strip()
+        verification_reasoning = ""
+        corrected_answer = trajectory_info.get('answer', 'NOT ENOUGH INFO')
         
         # Try to extract CORRECT or INCORRECT from the response
         if "CORRECT" in verification_response.upper():
@@ -87,15 +90,31 @@ def verify_answer(trajectory_info, verification_prompt, to_print=False):
         
         # Try to extract reasoning portion
         if "Reasoning:" in verification_response:
-            verification_reasoning = verification_response.split("Reasoning:")[-1].strip()
+            reasoning_part = verification_response.split("Reasoning:")[-1]
+            if "Final Answer:" in reasoning_part:
+                verification_reasoning = reasoning_part.split("Final Answer:")[0].strip()
+            else:
+                verification_reasoning = reasoning_part.strip()
+        
+        # Try to extract corrected answer if verification says INCORRECT
+        if "Final Answer:" in verification_response:
+            final_answer_part = verification_response.split("Final Answer:")[-1].strip()
+            # Extract SUPPORTS, REFUTES, or NOT ENOUGH INFO
+            for valid_answer in ['SUPPORTS', 'REFUTES', 'NOT ENOUGH INFO']:
+                if valid_answer in final_answer_part.upper():
+                    corrected_answer = valid_answer
+                    break
         
         if to_print:
             print(f"[VERIFICATION] Status: {verification_status}")
             print(f"[VERIFICATION] Reasoning: {verification_reasoning}")
+            if verification_status == "INCORRECT":
+                print(f"[VERIFICATION] Corrected Answer: {corrected_answer}")
         
         return {
             'verification_status': verification_status,
             'verification_reasoning': verification_reasoning,
+            'corrected_answer': corrected_answer,
             'full_verification_response': verification_response
         }
     except Exception as e:
@@ -104,19 +123,20 @@ def verify_answer(trajectory_info, verification_prompt, to_print=False):
         return {
             'verification_status': 'ERROR',
             'verification_reasoning': f'Error during verification: {str(e)}',
+            'corrected_answer': trajectory_info.get('answer', 'NOT ENOUGH INFO'),
             'full_verification_response': ''
         }
 
 
-def run_reflexion_react(idx, prompt_template=None, to_print=True):
+def run_self_reflection(idx, prompt_template=None, to_print=True):
     """
-    Run Reflexion ReAct with verification-driven second trace.
+    Run Self-Reflection agent with single trace and verification.
     
     Process:
-    1. Run initial ReAct trace
-    2. Verify the answer using LLM (reflexion verification)
-    3. If INCORRECT, run second ReAct trace with verification feedback as context
-    4. Return final answer (from trace 2 if run, otherwise trace 1)
+    1. Run a single ReAct trace
+    2. Verify the answer using LLM based on the trace
+    3. If INCORRECT, use the corrected answer from verification
+    4. If CORRECT, use the original answer
     
     Args:
         idx: Question index from FEVER dataset
@@ -126,93 +146,66 @@ def run_reflexion_react(idx, prompt_template=None, to_print=True):
     Returns:
         Tuple of (reward, info_dict) where:
         - reward: EM score of the final answer
-        - info_dict: Dictionary with both traces and verification results
+        - info_dict: Dictionary with trace and verification results
     """
     if prompt_template is None:
         prompt_template = WEBTHINK_PROMPT_TEMPLATE
     
     # Load verification prompt
-    verification_prompt = load_verification_prompt()
+    verification_prompt = load_self_reflection_prompt()
     
     if to_print:
         print("="*60)
-        print("[FRAMEWORK] Reflexion ReAct (Verification-Driven)")
+        print("[FRAMEWORK] Self-Reflection (Single Trace + Verification)")
         print("="*60)
     
-    # --- Trace 1: Initial attempt ---
+    # --- Step 1: Run single ReAct trace ---
     if to_print:
-        print("\n--- Trace 1: Initial Attempt ---")
+        print("\n--- Step 1: Running ReAct Trace ---")
     
-    trace_1 = run_single_trace(
+    trace_info = run_single_trace(
         idx=idx,
         initial_prompt_template=prompt_template,
         to_print=to_print,
         temperature=0.0
     )
     
-    question_text = trace_1.get('question_text')
-    gt_answer = trace_1.get('gt_answer')
+    question_text = trace_info.get('question_text')
+    gt_answer = trace_info.get('gt_answer')
+    initial_answer = trace_info.get('answer')
     
     if to_print:
-        print(f"[TRACE 1] Answer: {trace_1.get('answer')}")
+        print(f"[TRACE] Initial Answer: {initial_answer}")
     
-    # --- Generate Verification ---
+    # --- Step 2: Verify and potentially correct the answer ---
     if to_print:
         print(f"\n{'='*60}")
-        print("[VERIFICATION] Verifying Trace 1...")
+        print("[VERIFICATION] Verifying answer based on trace...")
     
-    verification_result = verify_answer(trace_1, verification_prompt, to_print=to_print)
+    verification_result = verify_and_correct_answer(trace_info, verification_prompt, to_print=to_print)
     
-    # --- Conditional Trace 2: Run if verification is INCORRECT ---
-    trace_2 = None
-    num_traces_run = 1
-    
-    if verification_result['verification_status'] == 'INCORRECT':
+    # --- Step 3: Determine final answer ---
+    if verification_result['verification_status'] == 'CORRECT':
+        final_answer = initial_answer
         if to_print:
-            print(f"\n{'='*60}")
-            print("--- Trace 2: With Verification Feedback ---")
-        
-        # Create context with verification feedback
-        feedback_context = f"""Previous attempt analysis:
-You previously attempted this claim and concluded with: {trace_1.get('answer')}
-However, this answer was incorrect.
-
-Verification feedback: {verification_result['verification_reasoning']}
-
-Use this feedback to guide your search and reasoning in this attempt.
-
-"""
-        
-        modified_prompt = feedback_context + prompt_template
-        
-        trace_2 = run_single_trace(
-            idx=idx,
-            initial_prompt_template=modified_prompt,
-            to_print=to_print,
-            temperature=0.0
-        )
-        
+            print(f"[VERIFICATION] Answer verified as CORRECT")
+    elif verification_result['verification_status'] == 'INCORRECT':
+        final_answer = verification_result['corrected_answer']
         if to_print:
-            print(f"[TRACE 2] Answer: {trace_2.get('answer')}")
-        
-        final_answer = trace_2.get('answer')
-        num_traces_run = 2
+            print(f"[VERIFICATION] Answer was INCORRECT")
+            print(f"[CORRECTION] Corrected Answer: {final_answer}")
     else:
-        # Verification says CORRECT, use trace 1 answer
-        final_answer = trace_1.get('answer')
+        # If verification status is UNKNOWN or ERROR, use original answer
+        final_answer = initial_answer
         if to_print:
-            print(f"[VERIFICATION] Answer is correct, no second trace needed.")
+            print(f"[WARNING] Verification status {verification_result['verification_status']}, using original answer")
     
     # Calculate metrics based on final answer
     em_score = 1.0 if final_answer == gt_answer else 0.0
     
-    # Aggregate call counts
-    total_calls = trace_1.get('n_calls', 0) + 1  # +1 for verification
-    total_badcalls = trace_1.get('n_badcalls', 0)
-    
-    if trace_2:
-        total_calls += trace_2.get('n_calls', 0)
-        total_badcalls += trace_2.get('n_badcalls', 0)
+    # Aggregate call counts (1 trace + 1 verification call)
+    total_calls = trace_info.get('n_calls', 0) + 1  # +1 for verification
+    total_badcalls = trace_info.get('n_badcalls', 0)
     
     info_dict = {
         'question_idx': idx,
@@ -224,29 +217,21 @@ Use this feedback to guide your search and reasoning in this attempt.
         'reward': em_score,
         'n_calls': total_calls,
         'n_badcalls': total_badcalls,
-        'num_traces_run': num_traces_run,
+        'initial_answer': initial_answer,
         'verification': verification_result,
-        'trace_1': {
-            'answer': trace_1.get('answer'),
-            'em': trace_1.get('em', 0.0),
-            'n_calls': trace_1.get('n_calls', 0),
-            'traj': trace_1.get('traj', '')
+        'trace': {
+            'answer': initial_answer,
+            'em': trace_info.get('em', 0.0),
+            'n_calls': trace_info.get('n_calls', 0),
+            'traj': trace_info.get('traj', '')
         },
-        'trace_2': {
-            'answer': trace_2.get('answer'),
-            'em': trace_2.get('em', 0.0),
-            'n_calls': trace_2.get('n_calls', 0),
-            'traj': trace_2.get('traj', '')
-        } if trace_2 else None,
-        'full_trace_1': trace_1,
-        'full_trace_2': trace_2,
-        'framework': 'reflexion_react'
+        'framework': 'self_reflection'
     }
     
     if to_print:
         print("="*60)
         print(f"[FINAL] Answer: {final_answer} | GT: {gt_answer} | EM: {em_score}")
-        print(f"[TRACES] Ran {num_traces_run} trace(s)")
+        print(f"[INITIAL] {initial_answer} -> [FINAL] {final_answer}")
         print(f"[VERIFICATION] {verification_result['verification_status']}")
         print("="*60)
     
@@ -255,12 +240,9 @@ Use this feedback to guide your search and reasoning in this attempt.
 
 if __name__ == '__main__':
     # Test with a sample FEVER example
-    print("\n[TEST] Running Reflexion ReAct agent test\n")
-    reward, info = run_reflexion_react(idx=3687, to_print=True)
+    print("\n[TEST] Running Self-Reflection agent test\n")
+    reward, info = run_self_reflection(idx=3687, to_print=True)
     print(f"\n[TEST RESULT] Reward: {reward}, Final Answer: {info['answer']}")
-    print(f"[TRACES RUN] {info['num_traces_run']}")
-    print(f"[TRACE 1] Answer: {info['trace_1']['answer']}")
-    if info['trace_2']:
-        print(f"[TRACE 2] Answer: {info['trace_2']['answer']}")
+    print(f"[INITIAL ANSWER] {info['initial_answer']}")
     print(f"[VERIFICATION STATUS] {info['verification']['verification_status']}")
     print(f"[VERIFICATION REASONING] {info['verification']['verification_reasoning']}")

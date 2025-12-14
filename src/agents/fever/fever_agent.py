@@ -367,7 +367,9 @@ def webthink_multi_trace_reflexion(idx=None, initial_prompt_template=None, to_pr
     
     # Load reflexion prompt
     try:
-        with open('prompts/fever_reflexion.json', 'r') as f:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        prompt_path = os.path.join(script_dir, 'prompts', 'fever_reflexion.json')
+        with open(prompt_path, 'r') as f:
             reflexion_prompts = json.load(f)
         reflexion_prompt = reflexion_prompts['reflexion']
     except (FileNotFoundError, KeyError) as e:
@@ -466,7 +468,7 @@ def generate_reflexion(trajectory_info, reflexion_prompt, to_print=False):
     # Format the trajectory for reflexion
     history_text = format_trajectory_for_reflexion(trajectory_info)
     
-    full_prompt = f"{reflexion_prompt}\n\n{history_text}\nSTATUS: FAIL\nPlan:"
+    full_prompt = f"{reflexion_prompt}\n\n{history_text}\nPlan:"
     
     # Generate reflexion using the language model
     try:

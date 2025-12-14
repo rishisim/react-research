@@ -23,6 +23,7 @@ from react_agent import run_react
 from reflexion_react_agent import run_reflexion_react
 from majority_voting_agent import run_majority_voting
 from cot_sc_agent import run_cot_sc
+from self_reflection_agent import run_self_reflection
 
 class FEVERExperimentRunner:
     
@@ -31,7 +32,8 @@ class FEVERExperimentRunner:
         'react': run_react,
         'reflexion': run_reflexion_react,
         'majority_voting': run_majority_voting,
-        'cot_sc': run_cot_sc
+        'cot_sc': run_cot_sc,
+        'self_reflection': run_self_reflection
     }
     
     def __init__(
@@ -49,7 +51,7 @@ class FEVERExperimentRunner:
         Args:
             model: Gemini model to use
             num_examples: Number of FEVER examples to run
-            frameworks: List of frameworks ['react', 'reflexion', 'majority_voting', 'cot_sc']
+            frameworks: List of frameworks ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection']
             results_base_dir: Base directory for results
             seed: Random seed for reproducibility
             retry_failed: Whether to retry previously failed questions
@@ -375,7 +377,7 @@ def main():
                        help='Number of examples to run')
     parser.add_argument('--frameworks', type=str, nargs='+',
                        default=['react'],
-                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc'],
+                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection'],
                        help='Frameworks to run')
     parser.add_argument('--seed', type=int, default=42,
                        help='Random seed for reproducibility')
