@@ -24,6 +24,7 @@ from reflexion_react_agent import run_reflexion_react
 from majority_voting_agent import run_majority_voting
 from cot_sc_agent import run_cot_sc
 from self_reflection_agent import run_self_reflection
+from nexus_wrapper import run_nexus
 
 class FEVERExperimentRunner:
     
@@ -33,7 +34,8 @@ class FEVERExperimentRunner:
         'reflexion': run_reflexion_react,
         'majority_voting': run_majority_voting,
         'cot_sc': run_cot_sc,
-        'self_reflection': run_self_reflection
+        'self_reflection': run_self_reflection,
+        'nexus': run_nexus
     }
     
     def __init__(
@@ -43,7 +45,8 @@ class FEVERExperimentRunner:
         frameworks: List[str] = None,
         results_base_dir: str = "../../../results/fever",
         seed: int = 42,
-        retry_failed: bool = False
+        retry_failed: bool = False,
+        specific_indices: List[int] = None
     ):
         """
         Initialize experiment runner.
@@ -51,16 +54,18 @@ class FEVERExperimentRunner:
         Args:
             model: Gemini model to use
             num_examples: Number of FEVER examples to run
-            frameworks: List of frameworks ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection']
+            frameworks: List of frameworks ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'nexus']
             results_base_dir: Base directory for results
             seed: Random seed for reproducibility
             retry_failed: Whether to retry previously failed questions
+            specific_indices: List of specific indices to run (overrides num_examples randomness)
         """
         self.model = model
         self.num_examples = num_examples
         self.frameworks = frameworks or ['react']
         self.seed = seed
         self.retry_failed = retry_failed
+        self.specific_indices = specific_indices
         self.max_fever_dev_examples = 7405
         
         # Create seed-based run directory (accumulates across runs)
@@ -79,11 +84,14 @@ class FEVERExperimentRunner:
         print(f"Frameworks: {', '.join(self.frameworks)}", flush=True)
         print(f"Examples to run: {num_examples}", flush=True)
         print(f"Retry failed: {retry_failed}", flush=True)
+        if specific_indices:
+             print(f"Specific Indices: {specific_indices}", flush=True)
         print("="*70, flush=True)
         
         # File paths
         self.config_path = self.results_dir / "config.json"
         self.processed_indices_path = self.results_dir / "processed_indices.json"
+        
         self.failed_indices_path = self.results_dir / "failed_indices.json"
         self.run_history_path = self.results_dir / "run_history.json"
         
@@ -156,6 +164,11 @@ class FEVERExperimentRunner:
     
     def select_indices(self) -> List[int]:
         """Select indices to process, skipping already processed ones."""
+        # If specific_indices are provided, use them directly (ignoring processed checks to allow force run)
+        if self.specific_indices:
+             print(f"\n[INDICES] Forcing run on specific indices: {self.specific_indices}")
+             return self.specific_indices
+
         all_indices = list(range(self.max_fever_dev_examples))
         random.Random(self.seed).shuffle(all_indices)
         
@@ -377,12 +390,14 @@ def main():
                        help='Number of examples to run')
     parser.add_argument('--frameworks', type=str, nargs='+',
                        default=['react'],
-                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection'],
+                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'nexus'],
                        help='Frameworks to run')
     parser.add_argument('--seed', type=int, default=42,
                        help='Random seed for reproducibility')
     parser.add_argument('--retry-failed', action='store_true',
                        help='Retry previously failed questions')
+    parser.add_argument('--specific-indices', type=int, nargs='+',
+                       help='Run specific indices (space separated)')
     
     args = parser.parse_args()
     
@@ -391,7 +406,8 @@ def main():
         num_examples=args.num_examples,
         frameworks=args.frameworks,
         seed=args.seed,
-        retry_failed=args.retry_failed
+        retry_failed=args.retry_failed,
+        specific_indices=args.specific_indices
     )
     
     runner.run_all()

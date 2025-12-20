@@ -24,6 +24,7 @@ from reflexion_react_agent import run_reflexion_react
 from majority_voting_agent import run_majority_voting
 from cot_sc_agent import run_cot_sc
 from self_reflection_agent import run_self_reflection
+from nexus_wrapper import run_nexus
 
 
 class HotPotQAExperimentRunner:
@@ -34,7 +35,8 @@ class HotPotQAExperimentRunner:
         'reflexion': run_reflexion_react,
         'majority_voting': run_majority_voting,
         'cot_sc': run_cot_sc,
-        'self_reflection': run_self_reflection
+        'self_reflection': run_self_reflection,
+        'nexus': run_nexus
     }
     
     def __init__(
@@ -386,7 +388,7 @@ def main():
                        help='Number of examples to run')
     parser.add_argument('--frameworks', type=str, nargs='+',
                        default=['react'],
-                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection'],
+                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'nexus'],
                        help='Frameworks to run')
     parser.add_argument('--seed', type=int, default=42,
                        help='Random seed for reproducibility')

@@ -145,16 +145,18 @@ def run_reflexion_react(idx, prompt_template=None, to_print=True):
             print("\n--- Trace 2 (With Guidance) ---")
             print(f"[GUIDANCE] Using verification feedback to improve reasoning")
         
-        # Build enhanced prompt with verification guidance
+        # Build enhanced prompt with verification guidance (prepended like FEVER)
         guidance = verification_result['verification_reasoning']
-        enhanced_prompt = prompt_template + f"""
+        feedback_context = f"""Previous attempt analysis:
+You previously attempted this question and concluded with: {trace1_info.get('answer')}
+However, this answer was incorrect.
 
-Previous Attempt Feedback:
-The previous attempt to answer this question was incorrect. Here is guidance for this attempt:
-{guidance}
+Verification feedback: {guidance}
 
-Use this feedback to avoid the same mistakes. Now answer the question:
+Use this feedback to guide your search and reasoning in this attempt.
+
 """
+        enhanced_prompt = feedback_context + prompt_template
         
         trace2_info = run_single_trace(
             idx=idx,

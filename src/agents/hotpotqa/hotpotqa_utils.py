@@ -46,8 +46,8 @@ def llm(prompt, stop=["\n"], temperature=None, num_traces=1):
     Returns:
         String response from the LLM
     """
-    # 3 second delay for paid tier rate limits
-    time.sleep(3.0)
+    # 0.5 second delay (reduced for Flash tier)
+    time.sleep(0.5)
 
     if temperature is None:
         temperature_setting = 0.0 if num_traces == 1 else 0.7
@@ -238,18 +238,18 @@ def synthesize_answer_with_llm(list_of_trajectories, question_for_context=""):
     if not valid_trajectories:
         return "null"
 
-    prompt_template = """You are an expert analyst. Your task is to determine the single best answer to the question, based on the reasoning trajectories provided below.
+    prompt_template = """You are an answer aggregation assistant. Your task is to review the reasoning trajectories below, each of which ends with an answer to the question.
 
-Each trajectory represents a separate attempt to answer the same question, including the reasoning steps and final answer.
+Your goal is to find the best overall answer by considering the conclusions reached in the trajectories. If most trajectories agree, that is a strong signal, but also consider the quality and justification of the reasoning in each trajectory. If a minority trajectory provides much stronger evidence or reasoning than the majority, you may select its answer instead. Clearly prefer the majority answer unless there is a compelling, well-justified reason to do otherwise.
 
-Carefully review all trajectories and evaluate the logical soundness, factual accuracy, relevance to the question, and completeness of each. Then, identify the answer that is best supported by reasoning and evidence.
-
-Question: {question_context}
+Question:
+"{question_context}"
 
 Reasoning Trajectories:
 {formatted_trajectories}
 
-Based on your analysis of all the reasoning trajectories, what is the single best answer to the question? Output ONLY the final answer, nothing else.
+Based on your review, what is the best overall answer? Output ONLY the final answer, nothing else.
+
 Final Answer:"""
 
     formatted_trajectories = ""
@@ -296,9 +296,10 @@ Task: Identify which answers mean the same thing (semantic equivalence), then se
 
 Consider that different phrasings can mean the same thing (e.g., "NYC" = "New York City" = "New York").
 
-If there's no clear majority (all different), pick the most reasonable answer based on the question.
+If there's a clear majority (at least 2 out of 3 answers are semantically equivalent), output that answer.
+If there is NO clear majority (all three answers are different), output exactly: null
 
-Output ONLY the majority answer, nothing else.
+Output ONLY the majority answer (or null if tie), nothing else.
 Majority Answer:"""
     
     response = llm(prompt, stop=["\n"], num_traces=1)
