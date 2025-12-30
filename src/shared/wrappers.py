@@ -19,6 +19,11 @@ FEVER_SPLIT_FILE = {
   "dev": "paper_dev.jsonl",
 }
 
+FEVEROUS_SPLIT_FILE = {
+  "train": "feverous_train.jsonl",
+  "dev": "feverous_dev.jsonl",
+}
+
 
 class HistoryWrapper(gym.ObservationWrapper):
   def __init__(self, env, obs_format, prompt=None):
@@ -206,6 +211,76 @@ class FeverWrapper(gym.Wrapper):
     return len(self.data)
   
   
+class FeverousWrapper(gym.Wrapper):
+  """Wrapper for FEVEROUS dataset - handles claims that may require table+text evidence."""
+  def __init__(self, env, split):
+    super().__init__(env)
+    
+    # Use absolute path relative to this file's location
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Go up to project root (shared -> src -> react-research)
+    project_root = os.path.abspath(os.path.join(script_dir, '..', '..'))
+    data_path = os.path.join(project_root, "data", FEVEROUS_SPLIT_FILE[split])
+    
+    with open(data_path, "r", encoding="utf-8") as json_file:
+      json_list = list(json_file)
+
+    data = []
+    for json_str in json_list:
+      json_str = json.loads(json_str)
+      label = json_str.get("label", "")
+      claim = json_str.get("claim", "")
+      claim_id = json_str.get("id", None)
+      # Skip empty entries (first line can be empty in some FEVEROUS files)
+      if label and claim:
+        data.append((claim, label, claim_id))
+
+    self.data = data
+    self.data_idx = 0
+    self.split = split
+
+  def reset(self, seed=None, return_info=False, options=None, idx=None):
+    self.env.reset(seed=seed, return_info=return_info, options=options)
+    try:
+      self.env.step('')
+    except:
+      pass
+    self.env.reset(seed=seed, return_info=return_info, options=options)
+    self.data_idx = int(np.random.randint(len(self.data))) if idx is None else idx
+    observation = f"Claim: {self.data[self.data_idx][0]}"
+    info = self._get_info()
+    return (observation, info) if return_info else observation
+
+  def _get_info(self):
+    return {
+      "steps": self.steps, 
+      "answer": self.answer,
+      "question": self.data[self.data_idx][0], 
+      "feverous_split": self.split,
+      "claim_id": self.data[self.data_idx][2]
+    }
+
+  def get_reward(self, info):
+    if info['answer'] is not None:
+      label = normalize_answer(self.data[self.data_idx][1])
+      pred = normalize_answer(info['answer'])
+      if label == pred:
+        return 1
+    return 0
+
+  def step(self, action):
+    obs, _, done, info = self.env.step(action)
+    reward = self.get_reward(info)
+    if done:
+      obs = f"Episode finished, reward = {reward}\n"
+      info.update({"gt_answer": self.data[self.data_idx][1], "question_idx": self.data_idx})
+      info.update({'em': reward, 'reward': reward, 'f1': reward})
+    return obs, reward, done, info
+    
+  def __len__(self):
+    return len(self.data)
+
+
 class LoggingWrapper(gym.Wrapper):
   def __init__(self, env, folder="trajs", file_id=None):
     super().__init__(env)

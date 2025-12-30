@@ -17,6 +17,29 @@ class NexusAgent:
         self.framework = "nexus"
         self.task_type = task_type  # "fever" or "hotpotqa"
         self.n_calls = 0  # LLM call tracking
+    
+    def _parse_similar_results(self, obs: str) -> List[str]:
+        """Parse 'Could not find X. Similar: [...]' responses to extract alternatives."""
+        if "Could not find" not in obs or "Similar:" not in obs:
+            return []
+        try:
+            # Extract the list from "Similar: ['A', 'B', ...]"
+            match = re.search(r"Similar:\s*(\[.*?\])", obs)
+            if match:
+                import ast
+                return ast.literal_eval(match.group(1))
+        except Exception:
+            pass
+        return []
+    
+    def _is_invalid_search(self, obs: str) -> bool:
+        """Check if observation indicates a failed search."""
+        return (
+            "Could not find" in obs 
+            or "Invalid action" in obs 
+            or "There were no results matching the query" in obs
+            or not obs.strip()
+        )
         
     def solve(self, question: str) -> Tuple[str, Dict[str, Any]]:
         # Reset environment is NOT done here because we might receive an already reset env or we do it outside.
@@ -46,8 +69,21 @@ class NexusAgent:
                 # For FEVER/HotPot, it expects "search[Entity]" (lowercase 's')
                 action = f"search[{entity}]"
                 obs, _, _, _ = self.env.step(action)
+                
+                # Check for invalid result and retry with first similar
+                if self._is_invalid_search(obs):
+                    similar = self._parse_similar_results(obs)
+                    if similar:
+                        alt_entity = similar[0]
+                        trace += f"Scout search[{entity}] -> Invalid, retrying with '{alt_entity}'\n"
+                        alt_action = f"search[{alt_entity}]"
+                        obs, _, _, _ = self.env.step(alt_action)
+                        passports[alt_entity] = obs
+                        trace += f"Scout search[{alt_entity}] -> {str(obs)}\n"
+                        continue
+                
                 passports[entity] = obs
-                trace += f"Scout search[{entity}] -> {str(obs)[:200]}...\n"
+                trace += f"Scout search[{entity}] -> {str(obs)}\n"
             except Exception as e:
                 passports[entity] = f"Error searching {entity}: {e}"
                 trace += f"Scout search[{entity}] -> Error\n"
@@ -77,7 +113,7 @@ class NexusAgent:
                 start = llm_output.find("[")
                 end = llm_output.rfind("]") + 1
                 entities = json.loads(llm_output[start:end])
-                return entities[:3] # Limit to top 3
+                return entities
             else:
                  return [question]
         except Exception:
@@ -139,23 +175,30 @@ class NexusAgent:
                 try:
                     obs, _, _, _ = self.env.step(full_command)
                     
-                    # Heuristic for "Valid Result"
-                    # WikiEnv returns "Could not find..." or "Invalid action" on failure.
-                    # We also want to avoid empty results or "Main page..." generic dumps if possible.
-                    is_failure = (
-                        "Could not find" in obs 
-                        or "Invalid action" in obs 
-                        or "There were no results matching the query" in obs
-                        or not obs.strip()
-                    )
-                    
-                    if not is_failure:
+                    # Check if result is valid
+                    if not self._is_invalid_search(obs):
                         bridge_info[f"Bridge_{query}"] = obs
-                        trace_log += f"Bridge Attempt {i+1} ({full_command}) -> Success: {str(obs)[:100]}...\n"
+                        trace_log += f"Bridge Attempt {i+1} ({full_command}) -> Success: {str(obs)}\n"
                         success = True
                         break # Stop after first success
                     else:
-                        trace_log += f"Bridge Attempt {i+1} ({full_command}) -> Failed (No results)\n"
+                        # Try to retry with first similar result (one retry only)
+                        similar = self._parse_similar_results(obs)
+                        if similar:
+                            alt_query = similar[0]
+                            trace_log += f"Bridge Attempt {i+1} ({full_command}) -> Invalid, retrying with '{alt_query}'\n"
+                            alt_command = f"search[{alt_query}]"
+                            alt_obs, _, _, _ = self.env.step(alt_command)
+                            
+                            if not self._is_invalid_search(alt_obs):
+                                bridge_info[f"Bridge_{alt_query}"] = alt_obs
+                                trace_log += f"Bridge Retry ({alt_command}) -> Success: {str(alt_obs)}\n"
+                                success = True
+                                break
+                            else:
+                                trace_log += f"Bridge Retry ({alt_command}) -> Also failed, moving on\n"
+                        else:
+                            trace_log += f"Bridge Attempt {i+1} ({full_command}) -> Failed (No results)\n"
                         
                 except Exception as e:
                     trace_log += f"Bridge Attempt {i+1} ({full_command}) -> Error: {e}\n"
@@ -190,7 +233,23 @@ class NexusAgent:
              lines = llm_output.strip().split('\n')
              # Default depends on task type
              default_answer = "NOT ENOUGH INFO" if self.task_type == "fever" else "null"
-             answer = lines[-1] if lines else default_answer
+             
+             # Try to find keywords in the last few lines
+             found_answer = None
+             if self.task_type == "fever":
+                 valid_labels = ["SUPPORTS", "REFUTES", "NOT ENOUGH INFO"]
+                 # Check from end to start
+                 for line in reversed(lines):
+                     clean_line = line.upper().strip()
+                     # specific check for the label appearing in the line
+                     for label in valid_labels:
+                         if label in clean_line:
+                             found_answer = label
+                             break
+                     if found_answer:
+                         break
+             
+             answer = found_answer if found_answer else (lines[-1] if lines else default_answer)
             
         return answer, llm_output
         
