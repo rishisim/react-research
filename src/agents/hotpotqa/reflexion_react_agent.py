@@ -10,12 +10,15 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import json
+from datetime import datetime
 
 from hotpotqa_utils import (
     run_single_trace,
     llm,
     llm_judge_answer,
     get_hotpotqa_env,
+    append_to_json,
+    get_next_run_number,
     WEBTHINK_PROMPT_TEMPLATE
 )
 
@@ -35,139 +38,168 @@ def load_verification_prompt():
 
 def verify_answer(trajectory_info, verification_prompt, to_print=False):
     """
-    Verify if the answer in the trajectory is correct using LLM.
+    Generate a reflection and plan based on past trajectory using LLM.
     
     Args:
         trajectory_info: Dictionary with trajectory information
-        verification_prompt: The verification prompt template
-        to_print: Whether to print verification output
+        verification_prompt: The verification/reflection prompt template
+        to_print: Whether to print reflection output
         
     Returns:
         Dictionary with:
-        - verification_status: 'CORRECT' or 'INCORRECT'
-        - verification_reasoning: Explanation and guidance from the LLM
+        - plan: The LLM-generated plan for next attempt
+        - full_response: Full response from LLM
     """
     question = trajectory_info.get('question_text', '')
     trajectory = trajectory_info.get('traj', '')
     answer = trajectory_info.get('answer', '')
     
-    # Build the verification prompt
+    # Build the reflection prompt
     full_prompt = f"""{verification_prompt}
-
-Now verify this trajectory:
 
 Question: "{question}"
 
 {trajectory}
 
-The agent's final answer is: {answer}
-
-Provide your verification:"""
+The agent's final answer was: {answer}"""
     
     response = llm(full_prompt, stop=[], num_traces=1)
     
-    # Parse the response
-    verification_status = 'CORRECT'
-    if 'INCORRECT' in response.upper():
-        verification_status = 'INCORRECT'
+    # Extract the plan from the response
+    plan = response.strip()
+    if "Plan:" in response:
+        plan = response.split("Plan:")[-1].strip()
     
     if to_print:
-        print(f"\n[VERIFICATION] Status: {verification_status}")
-        print(f"[VERIFICATION] Response: {response[:500]}...")
+        print(f"\n[REFLECTION] Plan generated:")
+        print(f"{plan[:300]}...")
     
     return {
-        'verification_status': verification_status,
-        'verification_reasoning': response.strip()
+        'plan': plan,
+        'full_response': response.strip()
     }
 
 
-def run_reflexion_react(idx, prompt_template=None, to_print=True):
+def run_reflexion_react(idx, prompt_template=None, to_print=True, max_trials=7):
     """
-    Run Reflexion ReAct with verification-driven second trace.
+    Run Reflexion ReAct with multi-trial verification-driven approach.
     
     Process:
     1. Run initial ReAct trace
     2. Verify the answer using LLM (reflexion verification)
-    3. If INCORRECT, run second trace with verification guidance
-    4. Return final answer (from trace 1 if CORRECT, or trace 2 if INCORRECT)
+    3. If INCORRECT, run another ReAct trace with verification feedback (repeat up to max_trials)
+    4. Return final answer from the last trace
     
     Args:
         idx: Question index from HotPotQA dataset
         prompt_template: Custom prompt template (uses default if None)
         to_print: Whether to print progress during execution
+        max_trials: Maximum number of trials to attempt (default: 7)
         
     Returns:
         Tuple of (reward, info_dict) where:
         - reward: EM score of the final answer
-        - info_dict: Dictionary with both traces and verification results
+        - info_dict: Dictionary with all traces and verification results
     """
     if prompt_template is None:
         prompt_template = WEBTHINK_PROMPT_TEMPLATE
     
     if to_print:
         print("="*60)
-        print("[FRAMEWORK] Reflexion ReAct (Verification-Driven)")
+        print(f"[FRAMEWORK] Reflexion ReAct (Up to {max_trials} Trials)")
         print("="*60)
     
     # Load verification prompt
     verification_prompt = load_verification_prompt()
     
-    # Run initial trace
-    if to_print:
-        print("\n--- Trace 1 (Initial) ---")
+    # Store all traces
+    traces = {}
+    reflections = {}
+    num_trials_run = 0
+    final_answer = None
+    question_text = None
+    gt_answer = None
     
-    trace1_info = run_single_trace(
-        idx=idx,
-        initial_prompt_template=prompt_template,
-        to_print=to_print,
-        temperature=0.0  # Deterministic first trace
-    )
-    
-    question_text = trace1_info.get('question_text', '')
-    gt_answer = trace1_info.get('gt_answer', '')
-    
-    if to_print:
-        print(f"\n[TRACE 1] Answer: {trace1_info.get('answer')}")
-    
-    # Verify the first trace answer
-    if to_print:
-        print("\n--- Verification Phase ---")
-    
-    verification_result = verify_answer(trace1_info, verification_prompt, to_print=to_print)
-    
-    # Determine if we need a second trace
-    final_answer = trace1_info.get('answer')
-    trace2_info = None
-    used_trace = 1
-    
-    if verification_result['verification_status'] == 'INCORRECT':
+    # Iterative trial loop
+    for trial_num in range(1, max_trials + 1):
         if to_print:
-            print("\n--- Trace 2 (With Guidance) ---")
-            print(f"[GUIDANCE] Using verification feedback to improve reasoning")
+            print(f"\n--- Trial {trial_num} ---")
         
-        # Build enhanced prompt with verification guidance
-        guidance = verification_result['verification_reasoning']
-        enhanced_prompt = prompt_template + f"""
+        # Determine prompt for this trial
+        if trial_num == 1:
+            # First trial uses base prompt
+            current_prompt = prompt_template
+        else:
+            # Build memory context with ONLY LAST 3 reflexions
+            memory_context = ""
+            start_trial = max(1, trial_num - 3)  # Only last 3 reflexions
+            for t in range(start_trial, trial_num):
+                plan_t = reflections.get(t, {}).get('plan', f'[Trial {t} plan not available]')
+                memory_context += f"Trial #{t}: {plan_t}\n"
+            
+            # Generate new plan using reflection on the most recent failed attempt
+            plan_prompt = f"""{verification_prompt}
 
-Previous Attempt Feedback:
-The previous attempt to answer this question was incorrect. Here is guidance for this attempt:
-{guidance}
-
-Use this feedback to avoid the same mistakes. Now answer the question:
+Previous reflexions:
+{memory_context}
 """
+            reflection_result = verify_answer(traces[trial_num - 1], plan_prompt, to_print=to_print)
+            new_plan = reflection_result.get('plan', '')
+            
+            # Store the reflection that generated this trial's plan
+            reflections[trial_num - 1] = reflection_result
+            
+            # Incorporate plan into prompt as guidance
+            current_prompt = f"""Based on this plan: {new_plan}
+
+{prompt_template}"""
         
-        trace2_info = run_single_trace(
+        # Run the trace
+        trace_result = run_single_trace(
             idx=idx,
-            initial_prompt_template=enhanced_prompt,
+            initial_prompt_template=current_prompt,
             to_print=to_print,
             temperature=0.0
         )
         
-        final_answer = trace2_info.get('answer')
-        used_trace = 2
+        traces[trial_num] = trace_result
+        num_trials_run = trial_num
+        question_text = trace_result.get('question_text', '')
+        gt_answer = trace_result.get('gt_answer', '')
+        final_answer = trace_result.get('answer')
         
         if to_print:
-            print(f"\n[TRACE 2] Answer: {final_answer}")
+            print(f"[TRIAL {trial_num}] Answer: {final_answer}")
+        
+        # Check if the answer is correct using LLM-as-judge
+        llm_eval = llm_judge_answer(question_text, final_answer, gt_answer)
+        is_correct = llm_eval['llm_correct']
+        
+        if to_print:
+            print(f"[EVALUATION] LLM Judge: {'CORRECT' if is_correct else 'INCORRECT'}")
+        
+        # If correct, stop - no need for more trials
+        if is_correct:
+            if to_print:
+                print(f"[SUCCESS] Trial {trial_num} - Answer is correct! Stopping.")
+            # Store a "success" reflection
+            reflections[trial_num] = {
+                'plan': 'No plan needed - answer was correct.',
+                'full_response': 'Task completed successfully.',
+                'success': True
+            }
+            break
+        
+        # If incorrect and not last trial, we'll reflect at the start of next iteration
+        if trial_num < max_trials:
+            if to_print:
+                print(f"[INCORRECT] Trial {trial_num} - Will reflect and try again...")
+        else:
+            # Last trial - generate final reflection for records
+            if to_print:
+                print(f"[MAX TRIALS] Reached maximum of {max_trials} trials")
+            final_reflection = verify_answer(trace_result, verification_prompt, to_print=to_print)
+            reflections[trial_num] = final_reflection
     
     # Get metrics for final answer
     hotpotqa_env = get_hotpotqa_env()
@@ -186,13 +218,25 @@ Use this feedback to avoid the same mistakes. Now answer the question:
     # LLM-as-judge evaluation on final answer
     llm_eval = llm_judge_answer(question_text, final_answer, gt_answer)
     
-    # Calculate total calls
-    total_calls = trace1_info.get('n_calls', 0)
-    total_badcalls = trace1_info.get('n_badcalls', 0)
-    if trace2_info:
-        total_calls += trace2_info.get('n_calls', 0)
-        total_badcalls += trace2_info.get('n_badcalls', 0)
-    total_calls += 1  # Verification call
+    # Calculate total calls across all traces
+    total_calls = 0
+    total_badcalls = 0
+    for trial_num in range(1, num_trials_run + 1):
+        total_calls += traces[trial_num].get('n_calls', 0)
+        total_badcalls += traces[trial_num].get('n_badcalls', 0)
+    
+    # Add verification calls (one per trial)
+    total_calls += num_trials_run
+    
+    # Build traces dict for info
+    traces_info = {}
+    for trial_num in range(1, num_trials_run + 1):
+        traces_info[f'trace_{trial_num}'] = {
+            'answer': traces[trial_num].get('answer'),
+            'em': traces[trial_num].get('em', 0.0),
+            'n_calls': traces[trial_num].get('n_calls', 0),
+            'traj': traces[trial_num].get('traj', '')
+        }
     
     info_dict = {
         'question_idx': idx,
@@ -204,18 +248,12 @@ Use this feedback to avoid the same mistakes. Now answer the question:
         'reward': em_score,
         'n_calls': total_calls,
         'n_badcalls': total_badcalls,
-        'used_trace': used_trace,
-        'trace_1': {
-            'answer': trace1_info.get('answer'),
-            'em': trace1_info.get('em', 0.0),
-            'traj': trace1_info.get('traj', '')
-        },
-        'trace_2': {
-            'answer': trace2_info.get('answer') if trace2_info else None,
-            'em': trace2_info.get('em', 0.0) if trace2_info else None,
-            'traj': trace2_info.get('traj', '') if trace2_info else None
-        } if trace2_info else None,
-        'verification': verification_result,
+        'num_trials': num_trials_run,
+        'max_trials': max_trials,
+        'all_traces': traces_info,
+        'all_reflections': reflections,
+        'final_plan': reflections.get(num_trials_run, {}).get('plan', ''),
+        'final_reflection': reflections.get(num_trials_run, {}),
         'llm_correct': llm_eval['llm_correct'],
         'llm_explanation': llm_eval['llm_explanation'],
         'framework': 'reflexion'
@@ -224,15 +262,25 @@ Use this feedback to avoid the same mistakes. Now answer the question:
     if to_print:
         print("\n" + "="*60)
         print(f"[FINAL] Answer: {final_answer} | GT: {gt_answer} | EM: {em_score} | LLM: {llm_eval['llm_correct']}")
-        print(f"[FINAL] Used Trace: {used_trace} | Verification: {verification_result['verification_status']}")
+        print(f"[TRIALS] Ran {num_trials_run}/{max_trials} trials")
+        print(f"[FINAL PLAN] {reflections.get(num_trials_run, {}).get('plan', 'No plan available')[:200]}...")
         print("="*60)
+    
+    # Log the result to file with framework/run folder structure
+    framework_folder = os.path.join(os.path.dirname(__file__), '../../../results/hotpotqa/reflexion')
+    run_name = get_next_run_number(framework_folder)
+    run_folder = os.path.join(framework_folder, run_name)
+    os.makedirs(run_folder, exist_ok=True)
+    log_file = os.path.join(run_folder, 'results.jsonl')
+    append_to_json(info_dict, log_file)
     
     return em_score, info_dict
 
 
 if __name__ == '__main__':
     # Test with a sample HotPotQA example
-    print("\n[TEST] Running Reflexion ReAct agent test\n")
-    reward, info = run_reflexion_react(idx=0, to_print=True)
+    print("\n[TEST] Running Reflexion ReAct agent test (max 7 trials)\n")
+    reward, info = run_reflexion_react(idx=0, to_print=True, max_trials=7)
     print(f"\n[TEST RESULT] Reward: {reward}, Answer: {info['answer']}")
-    print(f"[VERIFICATION STATUS] {info['verification']['verification_status']}")
+    print(f"[TRIALS RUN] {info['num_trials']}/{info['max_trials']}")
+    print(f"[FINAL VERIFICATION] {info['final_verification'].get('verification_status', 'UNKNOWN')}")

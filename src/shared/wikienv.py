@@ -47,7 +47,7 @@ class WikiEnv(gym.Env):
   def _get_info(self):
     return {"steps": self.steps, "answer": self.answer}
 
-  def reset(self, seed=None, return_info=False, options=None):
+  def reset(self, seed=None, return_info=False, options=None, idx=None):
     # We need the following line to seed self.np_random
     # super().reset(seed=seed)
     self.obs = ("Interact with Wikipedia using search[], lookup[], and "

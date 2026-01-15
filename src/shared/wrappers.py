@@ -9,14 +9,14 @@ from collections import Counter
     
 DATA_DIR = "data"
 HOTPOTQA_SPLIT_FILE = {
-  "train": "hotpot_train_v1.1_simplified.json",
-  "dev": "hotpot_dev_distractor_v1.json",
-  "test": "hotpot_test_v1_simplified.json",
+  "train": "hotpotqa/hotpot_train_v1.1_simplified.json",
+  "dev": "hotpotqa/hotpot_dev_distractor_v1.json",
+  "test": "hotpotqa/hotpot_test_v1_simplified.json",
 }
 
 FEVER_SPLIT_FILE = {
-  "train": "train.jsonl",
-  "dev": "paper_dev.jsonl",
+  "train": "fever/train.jsonl",
+  "dev": "fever/paper_dev.jsonl",
 }
 
 

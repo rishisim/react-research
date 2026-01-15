@@ -484,3 +484,33 @@ def append_to_json(data, filename):
     else:
         with open(filename, 'w') as f:
             json.dump([data], f, indent=4)
+
+
+def get_next_run_number(framework_folder):
+    """
+    Get the next run number for a framework folder.
+    
+    Looks for existing run_XXX folders and returns the next number.
+    
+    Args:
+        framework_folder: Path to the framework folder (e.g., results/hotpotqa/reflexion)
+        
+    Returns:
+        String like 'run_001', 'run_002', etc.
+    """
+    import re
+    
+    if not os.path.exists(framework_folder):
+        return 'run_001'
+    
+    existing_runs = []
+    for item in os.listdir(framework_folder):
+        match = re.match(r'run_(\d+)', item)
+        if match:
+            existing_runs.append(int(match.group(1)))
+    
+    if not existing_runs:
+        return 'run_001'
+    
+    next_num = max(existing_runs) + 1
+    return f'run_{next_num:03d}'

@@ -10,12 +10,15 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import json
+from datetime import datetime
 
 from hotpotqa_utils import (
     run_single_trace,
     llm,
     llm_judge_answer,
     get_hotpotqa_env,
+    append_to_json,
+    get_next_run_number,
     WEBTHINK_PROMPT_TEMPLATE
 )
 
@@ -201,6 +204,14 @@ def run_self_reflection(idx, prompt_template=None, to_print=True):
         print(f"[FINAL] Answer: {final_answer} | GT: {gt_answer} | EM: {em_score} | LLM: {llm_eval['llm_correct']}")
         print(f"[FINAL] Corrected: {answer_was_corrected} | Verification: {verification_result['verification_status']}")
         print("="*60)
+    
+    # Log the result to file with framework/run folder structure
+    framework_folder = os.path.join(os.path.dirname(__file__), '../../../results/hotpotqa/self_reflection')
+    run_name = get_next_run_number(framework_folder)
+    run_folder = os.path.join(framework_folder, run_name)
+    os.makedirs(run_folder, exist_ok=True)
+    log_file = os.path.join(run_folder, 'results.jsonl')
+    append_to_json(info_dict, log_file)
     
     return em_score, info_dict
 
