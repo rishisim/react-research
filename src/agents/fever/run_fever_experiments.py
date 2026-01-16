@@ -24,6 +24,7 @@ from reflexion_react_agent import run_reflexion_react
 from majority_voting_agent import run_majority_voting
 from cot_sc_agent import run_cot_sc
 from self_reflection_agent import run_self_reflection
+from action_prune_react_agent import run_action_prune_react
 
 class FEVERExperimentRunner:
     
@@ -33,7 +34,8 @@ class FEVERExperimentRunner:
         'reflexion': run_reflexion_react,
         'majority_voting': run_majority_voting,
         'cot_sc': run_cot_sc,
-        'self_reflection': run_self_reflection
+        'self_reflection': run_self_reflection,
+        'action_prune': run_action_prune_react
     }
     
     def __init__(
@@ -87,7 +89,9 @@ class FEVERExperimentRunner:
             base_results_path = project_root / "results/fever/reflexion"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'majority_voting':
             base_results_path = project_root / "results/fever/majority_voting"
-        elif all(f in ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection'] for f in self.frameworks):
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'action_prune':
+            base_results_path = project_root / "results/fever/action_prune"
+        elif all(f in ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'action_prune'] for f in self.frameworks):
              # For mixed runs or other types, we might want a general folder or stick to the previous behavior
              # The user asked for "general folders are created for hotpotQA and FEVER" 
              # but specifically mentioned outputs of runs should go with dedicated folders.
@@ -482,7 +486,7 @@ def main():
                        help='Number of examples to run')
     parser.add_argument('--frameworks', type=str, nargs='+',
                        default=['react'],
-                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection'],
+                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'action_prune'],
                        help='Frameworks to run')
     parser.add_argument('--seed', type=int, default=42,
                        help='Random seed for reproducibility')
