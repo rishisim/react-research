@@ -3,8 +3,13 @@ import hotpotqa_agent as hqa
 import os
 import json
 
+# Define paths relative to this script
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+REACT_RESULTS_DIR = os.path.join(PROJECT_ROOT, 'results', 'hotpotqa', 'react')
+os.makedirs(REACT_RESULTS_DIR, exist_ok=True)
+
 NUM_TASKS_TODAY = 20
-BASELINE_OUTPUT_FILE = 'HotPotQA_Experiment/react_baseline_results.json'
+BASELINE_OUTPUT_FILE = os.path.join(REACT_RESULTS_DIR, 'react_baseline_results.json')
 
 def get_processed_indices(output_file_path):
     processed_indices = set()

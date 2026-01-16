@@ -151,6 +151,7 @@ def run_majority_voting(idx, prompt_template=None, to_print=True, num_traces=3):
         print("="*60)
     
     # Log the result to file with framework/run folder structure
+    # Updated to point to results/fever/majority_voting
     framework_folder = os.path.join(os.path.dirname(__file__), '../../../results/fever/majority_voting')
     run_name = get_next_run_number(framework_folder)
     run_folder = os.path.join(framework_folder, run_name)

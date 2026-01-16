@@ -68,7 +68,22 @@ class HotPotQAExperimentRunner:
         run_name = f"seed{seed}_{model.replace('/', '-')}"
         
         script_dir = Path(__file__).parent
-        self.results_dir = (script_dir / results_base_dir / run_name).resolve()
+        project_root = script_dir.parent.parent.parent
+
+        # Determine base directory based on frameworks
+        if len(self.frameworks) == 1 and self.frameworks[0] == 'react':
+            base_results_path = project_root / "results/hotpotqa/react"
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'reflexion':
+            base_results_path = project_root / "results/hotpotqa/reflexion"
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'majority_voting':
+            base_results_path = project_root / "results/hotpotqa/majority_voting"
+        elif all(f in ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection'] for f in self.frameworks):
+             base_results_path = project_root / "results/hotpotqa/mixed"
+        else:
+             # Fallback
+             base_results_path = project_root / "results/hotpotqa"
+
+        self.results_dir = (base_results_path / run_name).resolve()
         self.results_dir.mkdir(parents=True, exist_ok=True)
         
         print("="*70, flush=True)

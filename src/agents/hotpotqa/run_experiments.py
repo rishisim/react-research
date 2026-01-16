@@ -2,10 +2,19 @@ import random
 import hotpotqa_agent as hqa # Import our library
 
 # --- Main Configuration ---
+import os
+
+# Define paths relative to this script
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+REACT_RESULTS_DIR = os.path.join(PROJECT_ROOT, 'results', 'hotpotqa', 'react')
+REFLEXION_RESULTS_DIR = os.path.join(PROJECT_ROOT, 'results', 'hotpotqa', 'reflexion')
+os.makedirs(REACT_RESULTS_DIR, exist_ok=True)
+os.makedirs(REFLEXION_RESULTS_DIR, exist_ok=True)
+
 NUM_TASKS_TODAY = 20
-BASELINE_OUTPUT_FILE = 'HotPotQA_Experiment/react_baseline_results.json'
-NEW_FRAMEWORK_OUTPUT_FILE = 'HotPotQA_Experiment/react_cot_synth_results.json'
-REFLEXION_OUTPUT_FILE = 'HotPotQA_Experiment/react_multi_trace_reflexion_results.json'
+BASELINE_OUTPUT_FILE = os.path.join(REACT_RESULTS_DIR, 'react_baseline_results.json')
+NEW_FRAMEWORK_OUTPUT_FILE = os.path.join(REACT_RESULTS_DIR, 'react_cot_synth_results.json')
+REFLEXION_OUTPUT_FILE = os.path.join(REFLEXION_RESULTS_DIR, 'react_multi_trace_reflexion_results.json')
 
 print("Setting up dataset indices...")
 all_indices = list(range(7405))

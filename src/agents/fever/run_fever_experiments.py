@@ -66,8 +66,35 @@ class FEVERExperimentRunner:
         # Create seed-based run directory (accumulates across runs)
         run_name = f"seed{seed}_{model.replace('/', '-')}"
         
+        # Create seed-based run directory (accumulates across runs)
+        run_name = f"seed{seed}_{model.replace('/', '-')}"
+        
         script_dir = Path(__file__).parent
-        self.results_dir = (script_dir / results_base_dir / run_name).resolve()
+        project_root = script_dir.parent.parent.parent
+        
+        # Determine base directory based on frameworks
+        if len(self.frameworks) == 1 and self.frameworks[0] == 'react':
+            base_results_path = project_root / "results/fever/react"
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'reflexion':
+            base_results_path = project_root / "results/fever/reflexion"
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'majority_voting':
+            base_results_path = project_root / "results/fever/majority_voting"
+        elif all(f in ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection'] for f in self.frameworks):
+             # For mixed runs or other types, we might want a general folder or stick to the previous behavior
+             # The user asked for "general folders are created for hotpotQA and FEVER" 
+             # but specifically mentioned outputs of runs should go with dedicated folders.
+             # Let's default to results/fever/mixed if it's a mix, or just respect the passed in arg if it feels safer,
+             # but the user requested changes.
+             # However, the user request "react fodlers general folders are created for hotpotQA and FEVER" implies splitting by method.
+             # If running multiple methods, it complicates things. 
+             # Let's stick to the user's specific request for "dedicated folders".
+             # If it's a mix, I'll put it in a 'mixed' subfolder in fever.
+             base_results_path = project_root / "results/fever/mixed"
+        else:
+             # Fallback
+             base_results_path = project_root / "results/fever"
+
+        self.results_dir = (base_results_path / run_name).resolve()
         self.results_dir.mkdir(parents=True, exist_ok=True)
         
         print("="*70, flush=True)

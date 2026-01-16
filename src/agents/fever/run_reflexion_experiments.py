@@ -25,9 +25,16 @@ MULTI_TRACE_OUTPUT_FILE = 'react_multi_trace_results.json'
 REFLEXION_OUTPUT_FILE = 'react_multi_trace_reflexion_results.json'
 
 # Full paths
-BASELINE_OUTPUT_FILE_PATH = os.path.join(os.path.dirname(__file__), BASELINE_OUTPUT_FILE)
-MULTI_TRACE_OUTPUT_FILE_PATH = os.path.join(os.path.dirname(__file__), MULTI_TRACE_OUTPUT_FILE)
-REFLEXION_OUTPUT_FILE_PATH = os.path.join(os.path.dirname(__file__), REFLEXION_OUTPUT_FILE)
+# Full paths
+# Define paths relative to this script
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+REACT_RESULTS_DIR = os.path.join(PROJECT_ROOT, 'results', 'fever', 'react')
+REFLEXION_RESULTS_DIR = os.path.join(PROJECT_ROOT, 'results', 'fever', 'reflexion')
+os.makedirs(REFLEXION_RESULTS_DIR, exist_ok=True)
+
+BASELINE_OUTPUT_FILE_PATH = os.path.join(REACT_RESULTS_DIR, BASELINE_OUTPUT_FILE)
+MULTI_TRACE_OUTPUT_FILE_PATH = os.path.join(REACT_RESULTS_DIR, MULTI_TRACE_OUTPUT_FILE)
+REFLEXION_OUTPUT_FILE_PATH = os.path.join(REFLEXION_RESULTS_DIR, REFLEXION_OUTPUT_FILE)
 
 print("Setting up reflexion experiments for existing FEVER questions...")
 
