@@ -101,6 +101,9 @@ def run_action_prune_react(idx, prompt_template=None, to_print=True):
         'reward': reward,
         'n_calls': trace_info.get('n_calls', 0),
         'n_badcalls': trace_info.get('n_badcalls', 0),
+        'input_tokens': trace_info.get('input_tokens', 0),
+        'output_tokens': trace_info.get('output_tokens', 0),
+        'total_tokens': trace_info.get('total_tokens', 0),
         'traj': trace_info.get('traj', ''),
         'framework': 'action_prune_react'
     }

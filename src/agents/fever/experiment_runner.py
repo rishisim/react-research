@@ -23,7 +23,7 @@ class ExperimentRunner:
     
     def __init__(
         self,
-        model: str = "gemini-2.5-flash-lite",
+        model: str = "gemini-2.5-flash",
         num_examples: int = 5,
         frameworks: Optional[List[str]] = None,
         results_base_dir: str = "../../../results/fever",
@@ -306,7 +306,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description="Run FEVER experiments with organized results")
-    parser.add_argument('--model', type=str, default='gemini-2.5-flash-lite',
+    parser.add_argument('--model', type=str, default='gemini-2.5-flash',
                        help='Gemini model to use')
     parser.add_argument('--num-examples', type=int, default=5,
                        help='Number of examples to run')

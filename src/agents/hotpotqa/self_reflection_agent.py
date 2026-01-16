@@ -50,6 +50,7 @@ def verify_and_correct_answer(trajectory_info, verification_prompt, to_print=Fal
         - verification_status: 'CORRECT' or 'INCORRECT'
         - verification_reasoning: Explanation from the LLM
         - corrected_answer: The final answer (original if correct, corrected if incorrect)
+        - input_tokens, output_tokens, total_tokens: Token usage
     """
     question = trajectory_info.get('question_text', '')
     trajectory = trajectory_info.get('traj', '')
@@ -68,7 +69,7 @@ The agent's final answer is: {answer}
 
 Provide your verification:"""
     
-    response = llm(full_prompt, stop=[], num_traces=1)
+    response, token_usage = llm(full_prompt, stop=[], num_traces=1)
     
     # Parse the response
     verification_status = 'CORRECT'
@@ -93,7 +94,10 @@ Provide your verification:"""
     return {
         'verification_status': verification_status,
         'verification_reasoning': response.strip(),
-        'corrected_answer': corrected_answer
+        'corrected_answer': corrected_answer,
+        'input_tokens': token_usage['input_tokens'],
+        'output_tokens': token_usage['output_tokens'],
+        'total_tokens': token_usage['total_tokens']
     }
 
 
@@ -173,9 +177,15 @@ def run_self_reflection(idx, prompt_template=None, to_print=True):
     # LLM-as-judge evaluation on final answer
     llm_eval = llm_judge_answer(question_text, final_answer, gt_answer)
     
-    # Calculate total calls (trace calls + 1 verification)
-    total_calls = trace_info.get('n_calls', 0) + 1
+    # Calculate total calls and tokens
+    total_calls = trace_info.get('n_calls', 0) + 1  # +1 for verification
     total_badcalls = trace_info.get('n_badcalls', 0)
+    total_input_tokens = trace_info.get('input_tokens', 0) + verification_result.get('input_tokens', 0)
+    total_output_tokens = trace_info.get('output_tokens', 0) + verification_result.get('output_tokens', 0)
+    
+    # Add LLM judge tokens
+    total_input_tokens += llm_eval.get('judge_input_tokens', 0)
+    total_output_tokens += llm_eval.get('judge_output_tokens', 0)
     
     info_dict = {
         'question_idx': idx,
@@ -189,6 +199,9 @@ def run_self_reflection(idx, prompt_template=None, to_print=True):
         'reward': em_score,
         'n_calls': total_calls,
         'n_badcalls': total_badcalls,
+        'input_tokens': total_input_tokens,
+        'output_tokens': total_output_tokens,
+        'total_tokens': total_input_tokens + total_output_tokens,
         'verification': {
             'verification_status': verification_result['verification_status'],
             'verification_reasoning': verification_result['verification_reasoning']

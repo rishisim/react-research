@@ -50,6 +50,7 @@ def verify_answer(trajectory_info, verification_prompt, to_print=False):
         Dictionary with reflection results:
         - plan: The LLM-generated plan for the next attempt
         - full_response: Full response from LLM
+        - input_tokens, output_tokens, total_tokens: Token usage
     """
     # Extract trajectory string
     if isinstance(trajectory_info, dict):
@@ -67,7 +68,7 @@ def verify_answer(trajectory_info, verification_prompt, to_print=False):
     
     # Generate reflection using LLM
     try:
-        reflection_response = llm(full_prompt, stop=[], num_traces=1)
+        reflection_response, token_usage = llm(full_prompt, stop=[], num_traces=1)
         
         # Extract the plan from the response
         plan = reflection_response.strip()
@@ -82,14 +83,20 @@ def verify_answer(trajectory_info, verification_prompt, to_print=False):
         
         return {
             'plan': plan,
-            'full_response': reflection_response
+            'full_response': reflection_response,
+            'input_tokens': token_usage['input_tokens'],
+            'output_tokens': token_usage['output_tokens'],
+            'total_tokens': token_usage['total_tokens']
         }
     except Exception as e:
         if to_print:
             print(f"[ERROR] Error during reflection: {e}")
         return {
             'plan': f'Error during reflection: {str(e)}',
-            'full_response': ''
+            'full_response': '',
+            'input_tokens': 0,
+            'output_tokens': 0,
+            'total_tokens': 0
         }
 
 
@@ -216,12 +223,22 @@ Previous reflexions:
     # Calculate metrics based on final answer
     em_score = 1.0 if final_answer == gt_answer else 0.0
     
-    # Aggregate call counts across all traces
+    # Aggregate call counts and tokens across all traces
     total_calls = 0
     total_badcalls = 0
+    total_input_tokens = 0
+    total_output_tokens = 0
     for trial_num in range(1, num_traces_run + 1):
         total_calls += traces[trial_num].get('n_calls', 0)
         total_badcalls += traces[trial_num].get('n_badcalls', 0)
+        total_input_tokens += traces[trial_num].get('input_tokens', 0)
+        total_output_tokens += traces[trial_num].get('output_tokens', 0)
+    
+    # Add verification/reflection tokens
+    for trial_num, reflection in reflections.items():
+        if isinstance(reflection, dict):
+            total_input_tokens += reflection.get('input_tokens', 0)
+            total_output_tokens += reflection.get('output_tokens', 0)
     
     # Add verification calls (one per trial)
     total_calls += num_traces_run
@@ -233,6 +250,8 @@ Previous reflexions:
             'answer': traces[trial_num].get('answer'),
             'em': traces[trial_num].get('em', 0.0),
             'n_calls': traces[trial_num].get('n_calls', 0),
+            'input_tokens': traces[trial_num].get('input_tokens', 0),
+            'output_tokens': traces[trial_num].get('output_tokens', 0),
             'traj': traces[trial_num].get('traj', '')
         }
     
@@ -254,6 +273,9 @@ Previous reflexions:
         'reward': em_score,
         'n_calls': total_calls,
         'n_badcalls': total_badcalls,
+        'input_tokens': total_input_tokens,
+        'output_tokens': total_output_tokens,
+        'total_tokens': total_input_tokens + total_output_tokens,
         'num_trials': num_traces_run,
         'max_trials': max_trials,
         'all_traces': traces_info,

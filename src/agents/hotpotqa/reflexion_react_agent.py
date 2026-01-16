@@ -49,6 +49,7 @@ def verify_answer(trajectory_info, verification_prompt, to_print=False):
         Dictionary with:
         - plan: The LLM-generated plan for next attempt
         - full_response: Full response from LLM
+        - input_tokens, output_tokens, total_tokens: Token usage
     """
     question = trajectory_info.get('question_text', '')
     trajectory = trajectory_info.get('traj', '')
@@ -63,7 +64,7 @@ Question: "{question}"
 
 The agent's final answer was: {answer}"""
     
-    response = llm(full_prompt, stop=[], num_traces=1)
+    response, token_usage = llm(full_prompt, stop=[], num_traces=1)
     
     # Extract the plan from the response
     plan = response.strip()
@@ -76,7 +77,10 @@ The agent's final answer was: {answer}"""
     
     return {
         'plan': plan,
-        'full_response': response.strip()
+        'full_response': response.strip(),
+        'input_tokens': token_usage['input_tokens'],
+        'output_tokens': token_usage['output_tokens'],
+        'total_tokens': token_usage['total_tokens']
     }
 
 
@@ -218,12 +222,26 @@ Previous reflexions:
     # LLM-as-judge evaluation on final answer
     llm_eval = llm_judge_answer(question_text, final_answer, gt_answer)
     
-    # Calculate total calls across all traces
+    # Calculate total calls and tokens across all traces
     total_calls = 0
     total_badcalls = 0
+    total_input_tokens = 0
+    total_output_tokens = 0
     for trial_num in range(1, num_trials_run + 1):
         total_calls += traces[trial_num].get('n_calls', 0)
         total_badcalls += traces[trial_num].get('n_badcalls', 0)
+        total_input_tokens += traces[trial_num].get('input_tokens', 0)
+        total_output_tokens += traces[trial_num].get('output_tokens', 0)
+    
+    # Add verification/reflection tokens
+    for trial_num, reflection in reflections.items():
+        if isinstance(reflection, dict):
+            total_input_tokens += reflection.get('input_tokens', 0)
+            total_output_tokens += reflection.get('output_tokens', 0)
+    
+    # Add LLM judge tokens
+    total_input_tokens += llm_eval.get('judge_input_tokens', 0)
+    total_output_tokens += llm_eval.get('judge_output_tokens', 0)
     
     # Add verification calls (one per trial)
     total_calls += num_trials_run
@@ -235,6 +253,8 @@ Previous reflexions:
             'answer': traces[trial_num].get('answer'),
             'em': traces[trial_num].get('em', 0.0),
             'n_calls': traces[trial_num].get('n_calls', 0),
+            'input_tokens': traces[trial_num].get('input_tokens', 0),
+            'output_tokens': traces[trial_num].get('output_tokens', 0),
             'traj': traces[trial_num].get('traj', '')
         }
     
@@ -248,6 +268,9 @@ Previous reflexions:
         'reward': em_score,
         'n_calls': total_calls,
         'n_badcalls': total_badcalls,
+        'input_tokens': total_input_tokens,
+        'output_tokens': total_output_tokens,
+        'total_tokens': total_input_tokens + total_output_tokens,
         'num_trials': num_trials_run,
         'max_trials': max_trials,
         'all_traces': traces_info,

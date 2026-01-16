@@ -60,7 +60,7 @@ python run_fever_experiments.py --frameworks react --num-examples 10 --seed 42 -
 
 ### Command-Line Arguments
 
-- `--model`: Gemini model to use (default: `gemini-2.5-flash-lite`)
+- `--model`: Gemini model to use (default: `gemini-2.5-flash`)
 - `--num-examples`: Number of examples to run (default: 5)
 - `--frameworks`: Space-separated list of frameworks to run
 - `--seed`: Random seed for reproducibility (default: 42)
@@ -82,22 +82,22 @@ The experiment runner uses a **seed-based continuation system**:
 ```bash
 # Run 1: Process 15 examples with seed=42
 python run_fever_experiments.py --frameworks react --num-examples 15 --seed 42
-# Creates: seed42_gemini-2.5-flash-lite/
+# Creates: seed42_gemini-2.5-flash/
 # Processes indices: [3421, 891, 5523, ...]
 
 # Run 2: Process 10 MORE examples with seed=42
 python run_fever_experiments.py --frameworks react --num-examples 10 --seed 42
-# Uses: seed42_gemini-2.5-flash-lite/
+# Uses: seed42_gemini-2.5-flash/
 # Skips: [3421, 891, 5523, ...]
 # Processes: NEW indices only
 
-# Result: Total of 25 examples in seed42_gemini-2.5-flash-lite/react.json
+# Result: Total of 25 examples in seed42_gemini-2.5-flash/react.json
 ```
 
 ## Results Structure
 
 ```
-results/fever/seed42_gemini-2.5-flash-lite/
+results/fever/seed42_gemini-2.5-flash/
 ├── config.json                  # Experiment configuration
 ├── processed_indices.json       # Successfully processed question indices
 ├── failed_indices.json          # Failed question indices

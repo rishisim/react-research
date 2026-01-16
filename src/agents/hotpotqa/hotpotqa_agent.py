@@ -38,7 +38,7 @@ def llm(prompt, stop=["\n"], num_traces=1):
   for attempt in range(max_retries):
     try:
       response = client.models.generate_content(
-        model="gemini-2.5-flash-lite-preview-06-17",
+        model="gemini-2.5-flash",
         contents=prompt,
         config=types.GenerateContentConfig(
             thinking_config=types.ThinkingConfig(thinking_budget=0), # Disables thinking

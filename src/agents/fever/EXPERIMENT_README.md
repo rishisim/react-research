@@ -12,7 +12,7 @@ A structured system for running FEVER fact verification experiments with organiz
 
 ## Quick Start
 
-### Test Run (5 examples with gemini-2.5-flash-lite)
+### Test Run (5 examples with gemini-2.5-flash)
 ```bash
 cd src/agents/fever
 python experiment_runner.py --num-examples 5
@@ -37,7 +37,7 @@ python experiment_runner.py \
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `--model` | `gemini-2.5-flash-lite` | Gemini model to use |
+| `--model` | `gemini-2.5-flash` | Gemini model to use |
 | `--num-examples` | `5` | Number of FEVER examples |
 | `--frameworks` | `baseline multi_trace` | Which frameworks to run |
 | `--seed` | `42` | Random seed for reproducibility |
@@ -47,7 +47,7 @@ python experiment_runner.py \
 Results are saved in `results/fever/TIMESTAMP_nN_MODEL/`:
 
 ```
-results/fever/20251124_194800_n5_gemini-2.5-flash-lite/
+results/fever/20251124_194800_n5_gemini-2.5-flash/
 ├── config.json           # Run configuration and metadata
 ├── baseline.json         # Baseline ReAct results (num_traces=1)
 ├── multi_trace.json      # Multi-trace ReAct results (num_traces=3)
@@ -61,7 +61,7 @@ results/fever/20251124_194800_n5_gemini-2.5-flash-lite/
 ```json
 {
   "timestamp": "20251124_194800",
-  "model": "gemini-2.5-flash-lite",
+  "model": "gemini-2.5-flash",
   "num_examples": 5,
   "frameworks": ["baseline", "multi_trace"],
   "seed": 42,
@@ -116,7 +116,7 @@ results/fever/20251124_194800_n5_gemini-2.5-flash-lite/
 
 The system respects Gemini API rate limits:
 
-- **gemini-2.5-flash-lite**: 15 RPM (4.1s sleep between calls)
+- **gemini-2.5-flash**: 15 RPM (4.1s sleep between calls)
 - **gemini-2.5-flash**: 10 RPM (6s sleep - needs update in `fever_agent.py`)
 
 ## Estimating Run Time

@@ -44,7 +44,10 @@ def llm(prompt, stop=["\n"], temperature=None, num_traces=1):
         num_traces: Number of traces (affects default temperature setting)
         
     Returns:
-        String response from the LLM
+        Tuple of (text_response, token_usage_dict) where token_usage_dict has:
+        - input_tokens: Number of prompt tokens
+        - output_tokens: Number of completion tokens
+        - total_tokens: Sum of input and output tokens
     """
     # 3 second delay for paid tier rate limits
     time.sleep(3.0)
@@ -53,6 +56,9 @@ def llm(prompt, stop=["\n"], temperature=None, num_traces=1):
         temperature_setting = 0.0 if num_traces == 1 else 0.7
     else:
         temperature_setting = temperature
+    
+    # Default token usage for error cases
+    default_token_usage = {'input_tokens': 0, 'output_tokens': 0, 'total_tokens': 0}
         
     max_retries = 3
     for attempt in range(max_retries):
@@ -69,7 +75,15 @@ def llm(prompt, stop=["\n"], temperature=None, num_traces=1):
                 )
             )
             if response and response.text:
-                return response.text
+                # Extract token usage from response metadata
+                token_usage = default_token_usage.copy()
+                if hasattr(response, 'usage_metadata') and response.usage_metadata:
+                    token_usage = {
+                        'input_tokens': getattr(response.usage_metadata, 'prompt_token_count', 0) or 0,
+                        'output_tokens': getattr(response.usage_metadata, 'candidates_token_count', 0) or 0,
+                        'total_tokens': getattr(response.usage_metadata, 'total_token_count', 0) or 0
+                    }
+                return response.text, token_usage
             time.sleep(2)  # Wait before retry if we got an empty response
         except Exception as e:
             print(f"LLM call failed (attempt {attempt + 1}/{max_retries}): {str(e)}")
@@ -78,7 +92,7 @@ def llm(prompt, stop=["\n"], temperature=None, num_traces=1):
             else:
                 raise
     
-    return "I need to finish now.\nFinish[Unable to proceed due to API error]"
+    return "I need to finish now.\nFinish[Unable to proceed due to API error]", default_token_usage
 
 
 # --- Environment Setup ---
@@ -229,14 +243,16 @@ def synthesize_answer_with_llm(list_of_trajectories, question_for_context=""):
         question_for_context: The original question being answered
         
     Returns:
-        Synthesized answer string
+        Tuple of (synthesized_answer, token_usage)
     """
+    default_token_usage = {'input_tokens': 0, 'output_tokens': 0, 'total_tokens': 0}
+    
     if not list_of_trajectories:
-        return "null"
+        return "null", default_token_usage
 
     valid_trajectories = [str(t).strip() for t in list_of_trajectories if str(t).strip()]
     if not valid_trajectories:
-        return "null"
+        return "null", default_token_usage
 
     prompt_template = """You are an expert analyst. Your task is to determine the single best answer to the question, based on the reasoning trajectories provided below.
 
@@ -262,8 +278,8 @@ Final Answer:"""
         formatted_trajectories=formatted_trajectories
     )
 
-    llm_response = llm(synthesizer_prompt, stop=["\n"], num_traces=1)
-    return llm_response.strip()
+    llm_response, token_usage = llm(synthesizer_prompt, stop=["\n"], num_traces=1)
+    return llm_response.strip(), token_usage
 
 
 # --- Majority Voting (Semantic) ---
@@ -276,13 +292,15 @@ def majority_vote_semantic(answers, question):
         question: The original question for context
         
     Returns:
-        The majority answer string
+        Tuple of (majority_answer, token_usage)
     """
+    default_token_usage = {'input_tokens': 0, 'output_tokens': 0, 'total_tokens': 0}
+    
     if not answers:
-        return "null"
+        return "null", default_token_usage
     
     if len(answers) == 1:
-        return answers[0]
+        return answers[0], default_token_usage
     
     # Build numbered list of answers
     answer_list = "\n".join(f"{i+1}. {ans}" for i, ans in enumerate(answers))
@@ -301,8 +319,8 @@ If there's no clear majority (all different), pick the most reasonable answer ba
 Output ONLY the majority answer, nothing else.
 Majority Answer:"""
     
-    response = llm(prompt, stop=["\n"], num_traces=1)
-    return response.strip()
+    response, token_usage = llm(prompt, stop=["\n"], num_traces=1)
+    return response.strip(), token_usage
 
 
 # --- LLM-as-Judge Evaluation ---
@@ -316,7 +334,7 @@ def llm_judge_answer(question, prediction, ground_truth):
         ground_truth: The correct answer
         
     Returns:
-        Dictionary with 'llm_correct' (bool) and 'llm_explanation' (str)
+        Dictionary with 'llm_correct' (bool), 'llm_explanation' (str), and token_usage fields
     """
     prompt = f"""You are an expert evaluator for a Question Answering system.
 
@@ -336,7 +354,7 @@ Output:
 Explanation: [Brief reasoning]
 Label: [CORRECT or INCORRECT]"""
     
-    response = llm(prompt, stop=[], num_traces=1)
+    response, token_usage = llm(prompt, stop=[], num_traces=1)
     
     # Parse response
     is_correct = "CORRECT" in response.upper() and "INCORRECT" not in response.upper()
@@ -349,7 +367,10 @@ Label: [CORRECT or INCORRECT]"""
     
     return {
         'llm_correct': is_correct,
-        'llm_explanation': explanation
+        'llm_explanation': explanation,
+        'judge_input_tokens': token_usage['input_tokens'],
+        'judge_output_tokens': token_usage['output_tokens'],
+        'judge_total_tokens': token_usage['total_tokens']
     }
 
 
@@ -369,6 +390,7 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
         - question_idx, question_text, answer, gt_answer
         - em, f1, reward
         - n_calls, n_badcalls
+        - input_tokens, output_tokens, total_tokens (NEW)
         - traj (full trajectory string)
         - llm_correct, llm_explanation (LLM-judge results)
     """
@@ -382,6 +404,8 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
         print(f"[QUESTION] {question}")
     
     n_calls, n_badcalls = 0, 0
+    total_input_tokens, total_output_tokens = 0, 0  # Token accumulators
+    llm_calls = []  # Per-call token logging
     current_trace_steps = []
     
     # Determine temperature for diversity
@@ -389,7 +413,17 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
     
     for i in range(1, 8):  # Max 7 steps per trace
         n_calls += 1
-        thought_action = llm(current_prompt + f"Thought {i}:", stop=[f"\nObservation {i}:"], num_traces=num_traces_param)
+        thought_action, token_usage = llm(current_prompt + f"Thought {i}:", stop=[f"\nObservation {i}:"], num_traces=num_traces_param)
+        total_input_tokens += token_usage['input_tokens']
+        total_output_tokens += token_usage['output_tokens']
+        llm_calls.append({
+            'call_num': n_calls,
+            'step': i,
+            'type': 'thought_action',
+            'input_tokens': token_usage['input_tokens'],
+            'output_tokens': token_usage['output_tokens'],
+            'total_tokens': token_usage['total_tokens']
+        })
         
         try:
             thought, action = thought_action.strip().split(f"\nAction {i}: ")
@@ -399,7 +433,19 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
             n_badcalls += 1
             thought = thought_action.strip().split('\n')[0] if thought_action else "Error in thought generation"
             action_prompt = current_prompt + f"Thought {i}: {thought}\nAction {i}:"
-            action = llm(action_prompt, stop=["\n"], num_traces=num_traces_param).strip()
+            action, recovery_token_usage = llm(action_prompt, stop=["\n"], num_traces=num_traces_param)
+            action = action.strip()
+            total_input_tokens += recovery_token_usage['input_tokens']
+            total_output_tokens += recovery_token_usage['output_tokens']
+            n_calls += 1
+            llm_calls.append({
+                'call_num': n_calls,
+                'step': i,
+                'type': 'action_recovery',
+                'input_tokens': recovery_token_usage['input_tokens'],
+                'output_tokens': recovery_token_usage['output_tokens'],
+                'total_tokens': recovery_token_usage['total_tokens']
+            })
             if not action or ("Finish[" not in action and "Search[" not in action and "Lookup[" not in action):
                 action = "Finish[null]"
                 if to_print:
@@ -444,11 +490,26 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
     
     # LLM-as-judge evaluation
     llm_eval = llm_judge_answer(question_text, answer, gt_answer)
+    # Add judge tokens to totals and call log
+    total_input_tokens += llm_eval.get('judge_input_tokens', 0)
+    total_output_tokens += llm_eval.get('judge_output_tokens', 0)
+    llm_calls.append({
+        'call_num': n_calls + 1,
+        'step': 'judge',
+        'type': 'llm_judge',
+        'input_tokens': llm_eval.get('judge_input_tokens', 0),
+        'output_tokens': llm_eval.get('judge_output_tokens', 0),
+        'total_tokens': llm_eval.get('judge_total_tokens', 0)
+    })
     
     trace_info = info.copy()
     trace_info.update({
         'n_calls': n_calls,
         'n_badcalls': n_badcalls,
+        'input_tokens': total_input_tokens,
+        'output_tokens': total_output_tokens,
+        'total_tokens': total_input_tokens + total_output_tokens,
+        'llm_calls': llm_calls,  # Per-call token breakdown
         'traj': initial_prompt_template + question + "\n" + "".join(current_trace_steps),
         'question_idx': idx,
         'question_text': question_text,

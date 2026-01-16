@@ -69,7 +69,7 @@ def verify_and_correct_answer(trajectory_info, verification_prompt, to_print=Fal
     
     # Generate verification using LLM
     try:
-        verification_response = llm(full_prompt, stop=[], num_traces=1)
+        verification_response, token_usage = llm(full_prompt, stop=[], num_traces=1)
         
         # Parse the verification response
         verification_status = "UNKNOWN"
@@ -118,7 +118,10 @@ def verify_and_correct_answer(trajectory_info, verification_prompt, to_print=Fal
             'verification_status': verification_status,
             'verification_reasoning': verification_reasoning,
             'corrected_answer': corrected_answer,
-            'full_verification_response': verification_response
+            'full_verification_response': verification_response,
+            'input_tokens': token_usage['input_tokens'],
+            'output_tokens': token_usage['output_tokens'],
+            'total_tokens': token_usage['total_tokens']
         }
     except Exception as e:
         if to_print:
@@ -127,7 +130,10 @@ def verify_and_correct_answer(trajectory_info, verification_prompt, to_print=Fal
             'verification_status': 'ERROR',
             'verification_reasoning': f'Error during verification: {str(e)}',
             'corrected_answer': trajectory_info.get('answer', 'NOT ENOUGH INFO'),
-            'full_verification_response': ''
+            'full_verification_response': '',
+            'input_tokens': 0,
+            'output_tokens': 0,
+            'total_tokens': 0
         }
 
 
@@ -206,9 +212,11 @@ def run_self_reflection(idx, prompt_template=None, to_print=True):
     # Calculate metrics based on final answer
     em_score = 1.0 if final_answer == gt_answer else 0.0
     
-    # Aggregate call counts (1 trace + 1 verification call)
+    # Aggregate call counts and tokens (1 trace + 1 verification call)
     total_calls = trace_info.get('n_calls', 0) + 1  # +1 for verification
     total_badcalls = trace_info.get('n_badcalls', 0)
+    total_input_tokens = trace_info.get('input_tokens', 0) + verification_result.get('input_tokens', 0)
+    total_output_tokens = trace_info.get('output_tokens', 0) + verification_result.get('output_tokens', 0)
     
     info_dict = {
         'question_idx': idx,
@@ -220,12 +228,17 @@ def run_self_reflection(idx, prompt_template=None, to_print=True):
         'reward': em_score,
         'n_calls': total_calls,
         'n_badcalls': total_badcalls,
+        'input_tokens': total_input_tokens,
+        'output_tokens': total_output_tokens,
+        'total_tokens': total_input_tokens + total_output_tokens,
         'initial_answer': initial_answer,
         'verification': verification_result,
         'trace': {
             'answer': initial_answer,
             'em': trace_info.get('em', 0.0),
             'n_calls': trace_info.get('n_calls', 0),
+            'input_tokens': trace_info.get('input_tokens', 0),
+            'output_tokens': trace_info.get('output_tokens', 0),
             'traj': trace_info.get('traj', '')
         },
         'framework': 'self_reflection'

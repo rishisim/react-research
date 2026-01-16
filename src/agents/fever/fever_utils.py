@@ -42,11 +42,16 @@ def llm(prompt, stop=["\n"], num_traces=1):
         num_traces: Number of traces (affects temperature setting)
         
     Returns:
-        String response from the LLM
+        Tuple of (text_response, token_usage_dict) where token_usage_dict has:
+        - input_tokens: Number of prompt tokens
+        - output_tokens: Number of completion tokens
+        - total_tokens: Sum of input and output tokens
     """
     # This delay ensures we don't exceed API rate limits (3 seconds between calls).
     time.sleep(3.0)
 
+    # Default token usage for error cases
+    default_token_usage = {'input_tokens': 0, 'output_tokens': 0, 'total_tokens': 0}
 
     temperature_setting = 0.0 if num_traces == 1 else 0.7
     response = client.models.generate_content(
@@ -60,7 +65,17 @@ def llm(prompt, stop=["\n"], num_traces=1):
             top_p=1.0
         )
     )
-    return response.text
+    
+    # Extract token usage from response metadata
+    token_usage = default_token_usage.copy()
+    if hasattr(response, 'usage_metadata') and response.usage_metadata:
+        token_usage = {
+            'input_tokens': getattr(response.usage_metadata, 'prompt_token_count', 0) or 0,
+            'output_tokens': getattr(response.usage_metadata, 'candidates_token_count', 0) or 0,
+            'total_tokens': getattr(response.usage_metadata, 'total_token_count', 0) or 0
+        }
+    
+    return response.text, token_usage
 
 
 # --- Environment Setup ---
@@ -211,14 +226,16 @@ def synthesize_answer_with_llm(list_of_trajectories, claim_for_context=""):
         claim_for_context: The original claim being verified
         
     Returns:
-        Synthesized answer (SUPPORTS/REFUTES/NOT ENOUGH INFO)
+        Tuple of (synthesized_verdict, token_usage) where verdict is SUPPORTS/REFUTES/NOT ENOUGH INFO
     """
+    default_token_usage = {'input_tokens': 0, 'output_tokens': 0, 'total_tokens': 0}
+    
     if not list_of_trajectories:
-        return "NOT ENOUGH INFO"
+        return "NOT ENOUGH INFO", default_token_usage
 
     valid_trajectories = [str(t).strip() for t in list_of_trajectories if str(t).strip()]
     if not valid_trajectories:
-        return "NOT ENOUGH INFO"
+        return "NOT ENOUGH INFO", default_token_usage
 
     prompt_template = """You are an answer aggregation assistant. Your task is to review the reasoning trajectories below, each of which ends with a verdict about the claim.
 
@@ -244,8 +261,7 @@ Final Answer (SUPPORTS / REFUTES / NOT ENOUGH INFO):"""
         formatted_trajectories=formatted_trajectories
     )
 
-    # LLM call to get the synthesized verdict - allow full response without stopping
-    llm_response = llm(synthesizer_prompt, stop=[], num_traces=1)
+    llm_response, token_usage = llm(synthesizer_prompt, stop=[], num_traces=1)
     
     # Extract the answer using pattern matching
     # Look for SUPPORTS, REFUTES, or NOT ENOUGH INFO in the response
@@ -269,18 +285,18 @@ Final Answer (SUPPORTS / REFUTES / NOT ENOUGH INFO):"""
             
             # Handle truncated/partial matches
             if match_str.startswith("SUP"):
-                return "SUPPORTS"
+                return "SUPPORTS", token_usage
             elif match_str.startswith("REF"):
-                return "REFUTES"
+                return "REFUTES", token_usage
             elif match_str.startswith("NOT"):
-                return "NOT ENOUGH INFO"
+                return "NOT ENOUGH INFO", token_usage
                 
             if match_str in ["SUPPORTS", "REFUTES", "NOT ENOUGH INFO"]:
-                return match_str
+                return match_str, token_usage
     
     # If no match found, log the response and default to NOT ENOUGH INFO
     print(f"[WARNING] LLM returned unexpected verdict: '{llm_response}'. Defaulting to NOT ENOUGH INFO.")
-    return "NOT ENOUGH INFO"
+    return "NOT ENOUGH INFO", token_usage
 
 
 
@@ -300,6 +316,7 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
         - question_idx, question_text, answer, gt_answer
         - em, f1, reward
         - n_calls, n_badcalls
+        - input_tokens, output_tokens, total_tokens (NEW)
         - traj (full trajectory string)
     """
     fever_env = get_fever_env()
@@ -312,6 +329,8 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
         print(f"[CLAIM] {question}")
     
     n_calls, n_badcalls = 0, 0
+    total_input_tokens, total_output_tokens = 0, 0  # Token accumulators
+    llm_calls = []  # Per-call token logging
     current_trace_steps = []
     
     # Determine num_traces parameter for LLM (affects temperature)
@@ -319,7 +338,17 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
     
     for i in range(1, 8):  # Max 7 steps per trace
         n_calls += 1
-        thought_action = llm(current_prompt + f"Thought {i}:", stop=[f"\nObservation {i}:"], num_traces=num_traces_param)
+        thought_action, token_usage = llm(current_prompt + f"Thought {i}:", stop=[f"\nObservation {i}:"], num_traces=num_traces_param)
+        total_input_tokens += token_usage['input_tokens']
+        total_output_tokens += token_usage['output_tokens']
+        llm_calls.append({
+            'call_num': n_calls,
+            'step': i,
+            'type': 'thought_action',
+            'input_tokens': token_usage['input_tokens'],
+            'output_tokens': token_usage['output_tokens'],
+            'total_tokens': token_usage['total_tokens']
+        })
         
         try:
             thought, action = thought_action.strip().split(f"\nAction {i}: ")
@@ -329,7 +358,19 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
             n_badcalls += 1
             thought = thought_action.strip().split('\n')[0] if thought_action else "Error in thought generation"
             action_prompt = current_prompt + f"Thought {i}: {thought}\nAction {i}:"
-            action = llm(action_prompt, stop=["\n"], num_traces=num_traces_param).strip()
+            action, recovery_token_usage = llm(action_prompt, stop=["\n"], num_traces=num_traces_param)
+            action = action.strip()
+            total_input_tokens += recovery_token_usage['input_tokens']
+            total_output_tokens += recovery_token_usage['output_tokens']
+            n_calls += 1
+            llm_calls.append({
+                'call_num': n_calls,
+                'step': i,
+                'type': 'action_recovery',
+                'input_tokens': recovery_token_usage['input_tokens'],
+                'output_tokens': recovery_token_usage['output_tokens'],
+                'total_tokens': recovery_token_usage['total_tokens']
+            })
             if not action or ("Finish[" not in action and "Search[" not in action and "Lookup[" not in action):
                 action = "Finish[NOT ENOUGH INFO]"
                 if to_print:
@@ -372,6 +413,10 @@ def run_single_trace(idx, initial_prompt_template, to_print=True, temperature=No
     trace_info.update({
         'n_calls': n_calls,
         'n_badcalls': n_badcalls,
+        'input_tokens': total_input_tokens,
+        'output_tokens': total_output_tokens,
+        'total_tokens': total_input_tokens + total_output_tokens,
+        'llm_calls': llm_calls,  # Per-call token breakdown
         'traj': initial_prompt_template + question + "\n" + "".join(current_trace_steps),
         'question_idx': idx,
         'question_text': question,

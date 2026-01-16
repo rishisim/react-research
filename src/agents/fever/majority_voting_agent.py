@@ -114,9 +114,11 @@ def run_majority_voting(idx, prompt_template=None, to_print=True, num_traces=3):
     # Calculate metrics
     em_score = 1.0 if voted_answer == gt_answer else 0.0
     
-    # Aggregate call counts
+    # Aggregate call counts and tokens
     total_calls = sum(t.get('n_calls', 0) for t in all_traces)
     total_badcalls = sum(t.get('n_badcalls', 0) for t in all_traces)
+    total_input_tokens = sum(t.get('input_tokens', 0) for t in all_traces)
+    total_output_tokens = sum(t.get('output_tokens', 0) for t in all_traces)
     
     # Prepare trace summaries (without full trajectories for space efficiency)
     trace_summaries = []
@@ -125,7 +127,9 @@ def run_majority_voting(idx, prompt_template=None, to_print=True, num_traces=3):
             'trace_num': i + 1,
             'answer': trace.get('answer'),
             'em': trace.get('em', 0.0),
-            'n_calls': trace.get('n_calls', 0)
+            'n_calls': trace.get('n_calls', 0),
+            'input_tokens': trace.get('input_tokens', 0),
+            'output_tokens': trace.get('output_tokens', 0)
         })
     
     info_dict = {
@@ -138,6 +142,9 @@ def run_majority_voting(idx, prompt_template=None, to_print=True, num_traces=3):
         'reward': em_score,
         'n_calls': total_calls,
         'n_badcalls': total_badcalls,
+        'input_tokens': total_input_tokens,
+        'output_tokens': total_output_tokens,
+        'total_tokens': total_input_tokens + total_output_tokens,
         'num_traces_run': num_traces,
         'individual_votes': answers,
         'trace_summaries': trace_summaries,
