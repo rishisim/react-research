@@ -43,7 +43,8 @@ class FEVERExperimentRunner:
         frameworks: List[str] = None,
         results_base_dir: str = "../../../results/fever",
         seed: int = 42,
-        retry_failed: bool = False
+        retry_failed: bool = False,
+        task_ids_file: str = None
     ):
         """
         Initialize experiment runner.
@@ -55,6 +56,7 @@ class FEVERExperimentRunner:
             results_base_dir: Base directory for results
             seed: Random seed for reproducibility
             retry_failed: Whether to retry previously failed questions
+            task_ids_file: Path to JSON file containing task IDs to use
         """
         self.model = model
         self.num_examples = num_examples
@@ -62,6 +64,12 @@ class FEVERExperimentRunner:
         self.seed = seed
         self.retry_failed = retry_failed
         self.max_fever_dev_examples = 7405
+        self.task_ids_file = task_ids_file
+        self.predefined_task_ids = None
+        self.original_claim_ids = None  # Store original claim IDs for logging
+        self.line_idx_to_claim_id = {}  # Mapping from line index to claim ID
+        if task_ids_file:
+            self.predefined_task_ids, self.original_claim_ids, self.line_idx_to_claim_id = self._load_task_ids_from_file()
         
         # Create seed-based run directory (accumulates across runs)
         run_name = f"seed{seed}_{model.replace('/', '-')}"
@@ -181,10 +189,77 @@ class FEVERExperimentRunner:
         with open(self.failed_indices_path, 'w', encoding='utf-8') as f:
             json.dump(sorted(list(failed)), f, indent=2)
     
+    def _load_task_ids_from_file(self):
+        """Load task IDs from a JSON file and convert to line indices.
+        
+        The task_ids file contains claim IDs (e.g., 159719, 80575) which need to be
+        converted to line indices (0, 1, 2, ...) that the FeverWrapper expects.
+        
+        Returns:
+            Tuple of (line_indices, original_claim_ids, line_idx_to_claim_id)
+        """
+        if not self.task_ids_file:
+            return None, None, {}
+        
+        try:
+            with open(self.task_ids_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            # Handle both formats: list or dict with 'task_ids' key
+            if isinstance(data, list):
+                task_ids = data
+            elif isinstance(data, dict) and 'task_ids' in data:
+                task_ids = data['task_ids']
+            else:
+                raise ValueError("JSON file must be a list or dict with 'task_ids' key")
+            
+            print(f"[TASK_IDS] Loaded {len(task_ids)} claim IDs from {self.task_ids_file}")
+            
+            # Build mapping from claim ID to line index
+            from pathlib import Path
+            script_dir = Path(__file__).parent
+            project_root = script_dir.parent.parent.parent
+            fever_data_path = project_root / "data" / "fever" / "paper_dev.jsonl"
+            
+            claim_id_to_line_idx = {}
+            with open(fever_data_path, 'r', encoding='utf-8') as f:
+                for line_idx, line in enumerate(f):
+                    record = json.loads(line.strip())
+                    claim_id = record.get('id')
+                    if claim_id is not None:
+                        claim_id_to_line_idx[claim_id] = line_idx
+            
+            print(f"[TASK_IDS] Built mapping for {len(claim_id_to_line_idx)} claims in FEVER dev set")
+            
+            # Convert claim IDs to line indices and build reverse mapping
+            line_indices = []
+            original_claim_ids = []
+            line_idx_to_claim_id = {}
+            for claim_id in task_ids:
+                if claim_id in claim_id_to_line_idx:
+                    line_idx = claim_id_to_line_idx[claim_id]
+                    line_indices.append(line_idx)
+                    original_claim_ids.append(claim_id)
+                    line_idx_to_claim_id[line_idx] = claim_id
+                else:
+                    print(f"[WARNING] Claim ID {claim_id} not found in FEVER dev set, skipping")
+            
+            print(f"[TASK_IDS] Converted {len(line_indices)} claim IDs to line indices")
+            return line_indices, original_claim_ids, line_idx_to_claim_id
+            
+        except Exception as e:
+            print(f"[ERROR] Failed to load task IDs from {self.task_ids_file}: {e}")
+            raise
+    
     def select_indices(self) -> List[int]:
         """Select indices to process, skipping already processed ones."""
-        all_indices = list(range(self.max_fever_dev_examples))
-        random.Random(self.seed).shuffle(all_indices)
+        # Use predefined task IDs if available, otherwise use random selection
+        if self.predefined_task_ids:
+            all_indices = self.predefined_task_ids
+            print(f"[INDICES] Using predefined task IDs from file")
+        else:
+            all_indices = list(range(self.max_fever_dev_examples))
+            random.Random(self.seed).shuffle(all_indices)
         
         processed = self.load_processed_indices()
         failed = self.load_failed_indices()
@@ -200,7 +275,7 @@ class FEVERExperimentRunner:
         
         selected = unprocessed[:self.num_examples]
         
-        print(f"\n[INDICES] Total available: {self.max_fever_dev_examples}")
+        print(f"\n[INDICES] Total available: {len(all_indices)}")
         print(f"[INDICES] Already processed: {len(processed)}")
         print(f"[INDICES] Previously failed: {len(failed)}")
         print(f"[INDICES] Selected for this run: {len(selected)}")
@@ -263,8 +338,11 @@ class FEVERExperimentRunner:
         failed_count = 0
         
         for i, idx in enumerate(indices, 1):
+            # Get claim ID for display if available
+            claim_id = self.line_idx_to_claim_id.get(idx, None)
+            claim_info = f" (Claim ID: {claim_id})" if claim_id else ""
             print(f"\n{'-'*70}", flush=True)
-            print(f"[EXAMPLE {i}/{len(indices)}] Index: {idx}", flush=True)
+            print(f"[EXAMPLE {i}/{len(indices)}] Line Index: {idx}{claim_info}", flush=True)
             print(f"{'-'*70}", flush=True)
             
             framework_results = {}
@@ -410,6 +488,8 @@ def main():
                        help='Random seed for reproducibility')
     parser.add_argument('--retry-failed', action='store_true',
                        help='Retry previously failed questions')
+    parser.add_argument('--task-ids-file', type=str, default=None,
+                       help='Path to JSON file containing task IDs to use')
     
     args = parser.parse_args()
     
@@ -418,7 +498,8 @@ def main():
         num_examples=args.num_examples,
         frameworks=args.frameworks,
         seed=args.seed,
-        retry_failed=args.retry_failed
+        retry_failed=args.retry_failed,
+        task_ids_file=args.task_ids_file
     )
     
     runner.run_all()
