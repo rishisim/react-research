@@ -251,13 +251,13 @@ def run_self_reflection(idx, prompt_template=None, to_print=True):
         print(f"[VERIFICATION] {verification_result['verification_status']}")
         print("="*60)
     
-    # Log the result to file with framework/run folder structure
-    framework_folder = os.path.join(os.path.dirname(__file__), '../../../results/fever/self_reflection')
-    run_name = get_next_run_number(framework_folder)
-    run_folder = os.path.join(framework_folder, run_name)
-    os.makedirs(run_folder, exist_ok=True)
-    log_file = os.path.join(run_folder, 'results.jsonl')
-    append_to_json(info_dict, log_file)
+    # Logging is handled by the experiment runner (run_fever_experiments.py)
+    # framework_folder = os.path.join(os.path.dirname(__file__), '../../../results/fever/self_reflection')
+    # run_name = get_next_run_number(framework_folder)
+    # run_folder = os.path.join(framework_folder, run_name)
+    # os.makedirs(run_folder, exist_ok=True)
+    # log_file = os.path.join(run_folder, 'results.jsonl')
+    # append_to_json(info_dict, log_file)
     
     return em_score, info_dict
 

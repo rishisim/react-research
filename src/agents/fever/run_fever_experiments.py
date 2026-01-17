@@ -91,6 +91,10 @@ class FEVERExperimentRunner:
             base_results_path = project_root / "results/fever/majority_voting"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'action_prune':
             base_results_path = project_root / "results/fever/action_prune"
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'self_reflection':
+            base_results_path = project_root / "results/fever/self_reflection"
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'cot_sc':
+            base_results_path = project_root / "results/fever/cot_sc"
         elif all(f in ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'action_prune'] for f in self.frameworks):
              # For mixed runs or other types, we might want a general folder or stick to the previous behavior
              # The user asked for "general folders are created for hotpotQA and FEVER" 
