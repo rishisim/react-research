@@ -44,7 +44,8 @@ class HotPotQAExperimentRunner:
         frameworks: List[str] = None,
         results_base_dir: str = "../../../results/hotpotqa",
         seed: int = 42,
-        retry_failed: bool = False
+        retry_failed: bool = False,
+        task_ids_file: str = None
     ):
         """
         Initialize experiment runner.
@@ -56,12 +57,14 @@ class HotPotQAExperimentRunner:
             results_base_dir: Base directory for results
             seed: Random seed for reproducibility
             retry_failed: Whether to retry previously failed questions
+            task_ids_file: Path to JSON file containing specific task IDs to run
         """
         self.model = model
         self.num_examples = num_examples
         self.frameworks = frameworks or ['react']
         self.seed = seed
         self.retry_failed = retry_failed
+        self.task_ids_file = task_ids_file
         self.max_hotpotqa_dev_examples = 7405
         
         # Create seed-based run directory (accumulates across runs)
@@ -95,6 +98,8 @@ class HotPotQAExperimentRunner:
         print(f"Frameworks: {', '.join(self.frameworks)}", flush=True)
         print(f"Examples to run: {num_examples}", flush=True)
         print(f"Retry failed: {retry_failed}", flush=True)
+        if self.task_ids_file:
+            print(f"Task IDs File: {self.task_ids_file}", flush=True)
         print("="*70, flush=True)
         
         # File paths
@@ -122,6 +127,7 @@ class HotPotQAExperimentRunner:
                 "seed": self.seed,
                 "model": self.model,
                 "max_hotpotqa_dev_examples": self.max_hotpotqa_dev_examples,
+                "task_ids_file": self.task_ids_file,
                 "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
             print(f"[CONFIG] Created new config")
@@ -172,9 +178,6 @@ class HotPotQAExperimentRunner:
     
     def select_indices(self) -> List[int]:
         """Select indices to process, skipping already processed ones."""
-        all_indices = list(range(self.max_hotpotqa_dev_examples))
-        random.Random(self.seed).shuffle(all_indices)
-        
         processed = self.load_processed_indices()
         failed = self.load_failed_indices()
         
@@ -183,11 +186,75 @@ class HotPotQAExperimentRunner:
             skip_indices = processed  # Only skip successful ones
         else:
             skip_indices = processed | failed  # Skip both successful and failed
+
+        target_indices = []
+
+        if self.task_ids_file:
+            # Mode A: Select specific indices based on task IDs
+            print(f"[SELECTION] Loading task IDs from {self.task_ids_file}")
+            try:
+                with open(self.task_ids_file, 'r') as f:
+                    data = json.load(f)
+                    # Handle different formats (list of IDs or dict with 'task_ids' key)
+                    if isinstance(data, list):
+                        target_ids = data
+                    elif isinstance(data, dict):
+                        target_ids = data.get('task_ids', [])
+                        # Fallback for other formats if needed
+                        if not target_ids and 'ids' in data:
+                            target_ids = data['ids']
+                    else:
+                        target_ids = []
+                
+                print(f"[SELECTION] Found {len(target_ids)} target IDs")
+                
+                # Load actual HotPotQA data to map IDs to indices
+                # We need to load the same file the wrapper uses: hotpot_dev_distractor_v1.json
+                script_dir = Path(__file__).parent
+                # Go up to project root (src/agents/hotpotqa -> src/agents -> src -> root)
+                project_root = script_dir.parent.parent.parent
+                data_path = project_root / "data/hotpotqa/hotpot_dev_distractor_v1.json"
+                
+                print(f"[SELECTION] Loading dataset from {data_path}")
+                with open(data_path, 'r') as f:
+                    full_data = json.load(f)
+                
+                # Create ID -> Index map
+                id_to_idx = {item['_id']: i for i, item in enumerate(full_data)}
+                
+                # Resolve target IDs
+                for tid in target_ids:
+                    if tid in id_to_idx:
+                        target_indices.append(id_to_idx[tid])
+                    else:
+                        print(f"[WARNING] Task ID {tid} not found in dev set")
+                
+                print(f"[SELECTION] Resolved {len(target_indices)} indices from {len(target_ids)} IDs")
+                
+            except Exception as e:
+                print(f"[ERROR] Failed to load/map task IDs: {e}")
+                return []
+        else:
+            # Mode B: Random selection
+            all_indices = list(range(self.max_hotpotqa_dev_examples))
+            random.Random(self.seed).shuffle(all_indices)
+            target_indices = all_indices
         
-        # Find unprocessed indices
-        unprocessed = [idx for idx in all_indices if idx not in skip_indices]
         
-        selected = unprocessed[:self.num_examples]
+        # Remove skipped indices
+        unprocessed = [idx for idx in target_indices if idx not in skip_indices]
+        
+        # Apply limit
+        if self.task_ids_file:
+            # If using specific file, we generally want all of them, but respect num_examples if it's smaller
+            # or if explicit limit is desired. Typically num_examples is set to the file size or larger.
+            if len(unprocessed) > self.num_examples:
+                selected = unprocessed[:self.num_examples]
+                print(f"[INFO] Limiting to {self.num_examples} examples (File contained {len(unprocessed)})")
+            else:
+                selected = unprocessed
+        else:
+            selected = unprocessed[:self.num_examples]
         
         print(f"\n[INDICES] Total available: {self.max_hotpotqa_dev_examples}")
         print(f"[INDICES] Already processed: {len(processed)}")
@@ -227,6 +294,8 @@ class HotPotQAExperimentRunner:
             
         except Exception as e:
             print(f"  > {framework}: ERROR - {str(e)}")
+            import traceback
+            traceback.print_exc()
             return {
                 'question_idx': idx,
                 'error': str(e),
@@ -407,6 +476,8 @@ def main():
                        help='Random seed for reproducibility')
     parser.add_argument('--retry-failed', action='store_true',
                        help='Retry previously failed questions')
+    parser.add_argument('--task-ids-file', type=str, default=None,
+                       help='Path to JSON file containing specific task IDs to run')
     
     args = parser.parse_args()
     
@@ -415,7 +486,8 @@ def main():
         num_examples=args.num_examples,
         frameworks=args.frameworks,
         seed=args.seed,
-        retry_failed=args.retry_failed
+        retry_failed=args.retry_failed,
+        task_ids_file=args.task_ids_file
     )
     
     runner.run_all()
