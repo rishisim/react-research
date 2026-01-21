@@ -6,7 +6,7 @@ import os
 
 # Configuration
 INPUT_FILE = '/Users/rishisim/Documents/research/react-research/results/fever/pareto_aggregation/pareto_summary.csv'
-OUTPUT_DIR = '/Users/rishisim/Documents/research/react-research/results/fever/pareto_aggregation/charts'
+OUTPUT_DIR = '/Users/rishisim/Documents/research/react-research/results/fever/pareto_aggregation/fever_charts_500'
 BIN_WIDTH = 2500
 MAX_TOKEN_LIMIT = 50000  # Cap for visualization focus, covering most cases except extreme outliers
 
@@ -37,8 +37,9 @@ def calculate_metrics(df_framework, bins, labels):
     df_framework['bin'] = pd.cut(df_framework['total_tokens'], bins=bins, labels=labels, include_lowest=True, right=True)
     
     # 1. Bar Chart Data: Accuracy (Mean EM) per bin
-    bin_stats = df_framework.groupby('bin', observed=False)['em'].agg(['mean', 'count']).reset_index()
-    bin_stats.rename(columns={'mean': 'accuracy'}, inplace=True)
+    bin_stats = df_framework.groupby('bin', observed=False)['em'].agg(['mean', 'sum']).reset_index()
+    bin_stats.rename(columns={'mean': 'accuracy', 'sum': 'successes'}, inplace=True)
+    bin_stats['successes'] = bin_stats['successes'].fillna(0)
     
     # 2. Cumulative Data
     # For budget comparison, we want Cumulative Accuracy:
@@ -83,8 +84,42 @@ def plot_individual_chart(framework_name, bin_stats, cumulative_accuracy, labels
     # for i, v in enumerate(cumulative_accuracy):
     #     ax2.text(i, v + 0.01, f'{v:.2f}', color='darkgreen', ha='center', fontsize=8)
     
-    plt.tight_layout()
-    plt.savefig(output_path)
+    # Add table with success counts below x-axis
+    success_counts = [int(x) for x in bin_stats['successes'].tolist()]
+    
+    # Position the table below the x-axis labels
+    # Since labels are rotated 45 deg, we need some space.
+    # bbox = [left, bottom, width, height] in axes coordinates
+    # We push it down by e.g. 0.35 (35% of axes height)
+    the_table = ax1.table(cellText=[success_counts],
+                          rowLabels=['S'],
+                          loc='bottom',
+                          cellLoc='center',
+                          bbox=[0, -0.35, 1, 0.08])
+                          
+    the_table.auto_set_font_size(False)
+    the_table.set_fontsize(10)
+
+    # Adjust layout to accommodate the table
+    # Increase bottom margin
+    plt.subplots_adjust(bottom=0.3)
+    
+    # We can still use tight_layout but we might need to be careful it doesn't override subplots_adjust 
+    # if we call it after.
+    # Actually, tight_layout rect parameter can help, or we avoid tight_layout and rely on subplots_adjust.
+    # But current code calls tight_layout(). Let's try calling tight_layout with a rect to leave space at bottom?
+    # Or just rely on tight_layout but add the table as an Artist that tight_layout respects?
+    # Tables with custom bbox are often ignored by tight_layout.
+    # Let's remove tight_layout and use manual adjustment + savefig(bbox_inches='tight') if needed, 
+    # but the script uses specific figsize.
+    # Safest: call tight_layout BEFORE adding table? No, then table might be cut off.
+    # Strategy: call tight_layout first to fit elements, then add table and adjust bottom?
+    # Or just assume subplots_adjust works if we remove tight_layout.
+    
+    # Let's remove tight_layout and use subplots_adjust
+    # plt.tight_layout() 
+    
+    plt.savefig(output_path, bbox_inches='tight') # bbox_inches='tight' usually saves everything visible
     plt.close()
 
 def plot_combined_chart(frameworks_data, labels, output_path):

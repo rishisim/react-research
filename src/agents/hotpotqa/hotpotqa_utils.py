@@ -49,6 +49,9 @@ def llm(prompt, stop=["\n"], temperature=None, num_traces=1):
         - output_tokens: Number of completion tokens
         - total_tokens: Sum of input and output tokens
     """
+    import random
+    from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
+    
     # 3 second delay for paid tier rate limits
     time.sleep(3.0)
 
@@ -59,21 +62,38 @@ def llm(prompt, stop=["\n"], temperature=None, num_traces=1):
     
     # Default token usage for error cases
     default_token_usage = {'input_tokens': 0, 'output_tokens': 0, 'total_tokens': 0}
-        
-    max_retries = 3
-    for attempt in range(max_retries):
-        try:
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    thinking_config=types.ThinkingConfig(thinking_budget=0),  # Disables thinking
-                    stop_sequences=stop,
-                    temperature=temperature_setting,
-                    max_output_tokens=512,
-                    top_p=1.0
-                )
+    
+    # Timeout and retry configuration
+    REQUEST_TIMEOUT_SECONDS = 60  # Max time to wait for a single API call
+    MAX_RETRIES = 5
+    BASE_DELAY = 2.0  # Base delay for exponential backoff
+    MAX_DELAY = 32.0  # Maximum delay between retries
+    
+    def make_api_call():
+        """Inner function to make the actual API call (for timeout wrapper)"""
+        return client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                thinking_config=types.ThinkingConfig(thinking_budget=0),  # Disables thinking
+                stop_sequences=stop,
+                temperature=temperature_setting,
+                max_output_tokens=512,
+                top_p=1.0
             )
+        )
+        
+    for attempt in range(MAX_RETRIES):
+        executor = ThreadPoolExecutor(max_workers=1)
+        try:
+            # Submit the API call to the thread pool
+            future = executor.submit(make_api_call)
+            try:
+                response = future.result(timeout=REQUEST_TIMEOUT_SECONDS)
+            except FuturesTimeoutError:
+                print(f"[TIMEOUT] API call timed out after {REQUEST_TIMEOUT_SECONDS}s (attempt {attempt + 1}/{MAX_RETRIES})")
+                raise TimeoutError(f"API call timed out after {REQUEST_TIMEOUT_SECONDS} seconds")
+            
             if response and response.text:
                 # Extract token usage from response metadata
                 token_usage = default_token_usage.copy()
@@ -84,15 +104,38 @@ def llm(prompt, stop=["\n"], temperature=None, num_traces=1):
                         'total_tokens': getattr(response.usage_metadata, 'total_token_count', 0) or 0
                     }
                 return response.text, token_usage
-            time.sleep(2)  # Wait before retry if we got an empty response
+            
+            # Empty response - retry
+            print(f"[WARNING] Empty response from API (attempt {attempt + 1}/{MAX_RETRIES})")
+            
+        except (ConnectionError, TimeoutError, OSError) as e:
+            # Network-related errors - likely to be transient
+            print(f"[NETWORK ERROR] {type(e).__name__}: {str(e)} (attempt {attempt + 1}/{MAX_RETRIES})")
         except Exception as e:
-            print(f"LLM call failed (attempt {attempt + 1}/{max_retries}): {str(e)}")
-            if attempt < max_retries - 1:
-                time.sleep(2)
+            error_str = str(e)
+            # Check for rate limiting (429) - use longer backoff
+            if "429" in error_str or "RESOURCE_EXHAUSTED" in error_str:
+                print(f"[RATE LIMIT] {str(e)[:100]}... (attempt {attempt + 1}/{MAX_RETRIES})")
             else:
-                raise
+                print(f"[LLM ERROR] {type(e).__name__}: {str(e)[:200]} (attempt {attempt + 1}/{MAX_RETRIES})")
+        finally:
+             # CRITICAL: Do not wait for stuck threads!
+            executor.shutdown(wait=False, cancel_futures=True)
+        
+        # Exponential backoff with jitter before retry
+        
+        # Exponential backoff with jitter before retry
+        if attempt < MAX_RETRIES - 1:
+            delay = min(BASE_DELAY * (2 ** attempt), MAX_DELAY)
+            jitter = random.uniform(0, delay * 0.3)  # Add up to 30% jitter
+            total_delay = delay + jitter
+            print(f"[RETRY] Waiting {total_delay:.1f}s before retry...")
+            time.sleep(total_delay)
     
+    print(f"[FATAL] All {MAX_RETRIES} retry attempts failed. Returning fallback response.")
     return "I need to finish now.\nFinish[Unable to proceed due to API error]", default_token_usage
+
+
 
 
 # --- Environment Setup ---
