@@ -47,8 +47,8 @@ def llm(prompt, stop=["\n"], num_traces=1):
         - output_tokens: Number of completion tokens
         - total_tokens: Sum of input and output tokens
     """
-    # This delay ensures we don't exceed API rate limits (3 seconds between calls).
-    time.sleep(3.0)
+    # Short delay to respect rate limits without slowing long runs too much.
+    time.sleep(0.5)
 
     # Default token usage for error cases
     default_token_usage = {'input_tokens': 0, 'output_tokens': 0, 'total_tokens': 0}

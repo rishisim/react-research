@@ -1,0 +1,67 @@
+[
+  {
+    "question_idx": 1547,
+    "question_text": "Claim: Middle-earth is part of a town in New York.",
+    "answer": "REFUTES",
+    "gt_answer": "NOT ENOUGH INFO",
+    "em": 0,
+    "f1": 0,
+    "reward": 0,
+    "n_calls": 2,
+    "n_badcalls": 0,
+    "input_tokens": 2317,
+    "output_tokens": 91,
+    "total_tokens": 2408,
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 0,
+        "pruned_actions": []
+      },
+      "context_pruning": {
+        "evidence_items": 2,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 2408
+      }
+    },
+    "traj_summary": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and looku...[TRUNCATED]"
+  },
+  {
+    "question_idx": 2054,
+    "question_text": "Claim: Jenna Jameson worked as a stripper and glamor model.",
+    "answer": "SUPPORTS",
+    "gt_answer": "SUPPORTS",
+    "em": 1,
+    "f1": 1,
+    "reward": 1,
+    "n_calls": 2,
+    "n_badcalls": 0,
+    "input_tokens": 2468,
+    "output_tokens": 75,
+    "total_tokens": 2543,
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 1,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 3,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 2543
+      }
+    },
+    "traj_summary": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and looku...[TRUNCATED]"
+  }
+]

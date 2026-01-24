@@ -1,0 +1,415 @@
+[
+  {
+    "question_idx": 4373,
+    "question_text": "Claim: Edgar Wright is a singer.",
+    "answer": "REFUTES",
+    "gt_answer": "NOT ENOUGH INFO",
+    "em": 0,
+    "f1": 0,
+    "reward": 0,
+    "n_calls": 2,
+    "n_badcalls": 0,
+    "input_tokens": 2437,
+    "output_tokens": 67,
+    "total_tokens": 2504,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: Edgar Wright is a singer.\nThought 1: I need to search for Edgar Wright and determine if he is a singer.\nAction 1: Search[Edgar Wright]\nObservation 1: Edgar Howard Wright (born 18 April 1974) is an English filmmaker. He is known for his fast-paced and kinetic, satirical genre films, which feature extensive use of expressive popular music, Steadicam tracking shots, dolly zooms and a signature editing style that includes transitions, whip pans and wipes.[1] He first made independent short films before making his first feature film A Fistful of Fingers in 1995. Wright created and directed the comedy series Asylum in 1996, written with David Walliams. After directing several other television shows, Wright directed the sitcom Spaced (1999\u20132001), which aired for two series and starred frequent collaborators Simon Pegg and Nick Frost.. In 2004, Wright directed the zombie comedy Shaun of the Dead, starring Pegg and Frost, the first film in Wright's Three Flavours Cornetto trilogy.\nThought 2: The observation states that Edgar Wright is an \"English filmmaker\" and describes his work in films and television. There is no mention of him being a singer.\nAction 2: Finish[REFUTES]\nObservation 2: Episode finished, reward = 0\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 1,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 3,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 2504
+      }
+    }
+  },
+  {
+    "question_idx": 4411,
+    "question_text": "Claim: Black Canary is a character in Batman comic books.",
+    "answer": "SUPPORTS",
+    "gt_answer": "NOT ENOUGH INFO",
+    "em": 0,
+    "f1": 0,
+    "reward": 0,
+    "n_calls": 3,
+    "n_badcalls": 0,
+    "input_tokens": 4081,
+    "output_tokens": 216,
+    "total_tokens": 4297,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: Black Canary is a character in Batman comic books.\nThought 1: I need to search for Black Canary and see if she is a character in Batman comic books.\nAction 1: Search[Black Canary]\nObservation 1: Black Canary is the name of two superheroines appearing in American comic books published by DC Comics. As one of the earliest female superheroes in the DC Comics universe, the character has made numerous appearances in prominent team-up titles, including the Justice Society of America and Justice League of America. The Black Canary persona has been adopted by two individuals, portrayed as legacy heroes with a mother-daughter relationship between the two. Following DC's New 52 initiative, Black Canary was briefly amalgamated as a single character before the mother-and-daughter dynamic was restored to continuity.. Dinah Drake, the original Black Canary, was created by the writer-artist team of Robert Kanigher and Carmine Infantino, the character debuted in Flash Comics #86 on July 31, 1947 (cover dated August 1947) in the Golden Age of Comic Books.[1] Strong, mysterious, gutsy and romantic, she has been called \"the archetype of the new Film Noir era heroine.\"[2] She is a prominent member of the Justice Society of America and gifted martial artist who engaged in crime-fighting exploits alongside her love interest and eventual husband, Larry Lance, a detective in Gotham City.\nThought 2: The observation states that Black Canary is a superheroine appearing in American comic books published by DC Comics and that she engaged in crime-fighting exploits alongside Larry Lance, a detective in Gotham City. Gotham City is famously associated with Batman. However, the text doesn't explicitly state that Black Canary is a character *in Batman comic books*. It mentions her appearances in \"prominent team-up titles, including the Justice Society of America and Justice League of America.\" I need to see if there's a more direct connection to Batman comic books.\nAction 2: Lookup[Batman]\nObservation 2: (Result 1 / 17) During the DC Rebirth era, Black Canary is handpicked by Batman to become a member of the Justice League of America to fight against a group of Extremists along with Vixen, Lobo, Killer Frost, Ray, and Atom..\nThought 3: The observation states that \"During the DC Rebirth era, Black Canary is handpicked by Batman to become a member of the Justice League of America\". This directly links Black Canary to Batman, indicating she is a character within the broader Batman universe or at least interacts directly with Batman in comic books.\nAction 3: Finish[SUPPORTS]\nObservation 3: Episode finished, reward = 0\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 2,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          },
+          {
+            "step": 2,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=4"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 4,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 4297
+      }
+    }
+  },
+  {
+    "question_idx": 7752,
+    "question_text": "Claim: Noah Cyrus is the youngest daughter of Garth Brooks.",
+    "answer": "REFUTES",
+    "gt_answer": "NOT ENOUGH INFO",
+    "em": 0,
+    "f1": 0,
+    "reward": 0,
+    "n_calls": 3,
+    "n_badcalls": 0,
+    "input_tokens": 3861,
+    "output_tokens": 124,
+    "total_tokens": 3985,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: Noah Cyrus is the youngest daughter of Garth Brooks.\nThought 1: I need to determine if Noah Cyrus is the youngest daughter of Garth Brooks. I will start by searching for Noah Cyrus.\nAction 1: Search[Noah Cyrus]\nObservation 1: Noah Lindsey Cyrus (born January 8, 2000) is an American singer and actress. As a child actress, she voiced the titular character in the English dub of the film Ponyo (2008), and appeared in minor roles on shows including  Hannah Montana and Doc. In 2016, she made her debut as a singer with the single \"Make Me (Cry)\" featuring Labrinth, which peaked at number 46 on the Billboard Hot 100. Cyrus has released three extended plays: Good Cry (2018), The End of Everything (2020), People Don't Change (2021). Her first full-length album The Hardest Part was released on September 16, 2022, to widespread critical acclaim.\nThought 2: The observation does not mention Garth Brooks. I need to find information about her parents. I will look up \"parents\" in the current passage.\nAction 2: Lookup[parents]\nObservation 2: (Result 1 / 1) Noah Lindsey Cyrus[1][2] was born on January 8, 2000, in Nashville, Tennessee, to producer and director Tish Cyrus and country singer Billy Ray Cyrus.[3] Her parents each filed for divorce on several occasions.\nThought 3: The observation states that Noah Cyrus's parents are Tish Cyrus and Billy Ray Cyrus. It does not mention Garth Brooks. Therefore, the claim that Noah Cyrus is the youngest daughter of Garth Brooks is refuted.\nAction 3: Finish[REFUTES]\nObservation 3: Episode finished, reward = 0\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 2,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          },
+          {
+            "step": 2,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=4"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 4,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 3985
+      }
+    }
+  },
+  {
+    "question_idx": 2078,
+    "question_text": "Claim: Yandex functions in Turkey.",
+    "answer": "SUPPORTS",
+    "gt_answer": "SUPPORTS",
+    "em": 1,
+    "f1": 1,
+    "reward": 1,
+    "n_calls": 3,
+    "n_badcalls": 0,
+    "input_tokens": 4008,
+    "output_tokens": 122,
+    "total_tokens": 4130,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: Yandex functions in Turkey.\nThought 1: I need to search for Yandex and see if it functions in Turkey.\nAction 1: Search[Yandex]\nObservation 1: Yandex LLC (Russian: \u042f\u043d\u0434\u0435\u043a\u0441, romanized:\u00a0Yandeks, IPA: [\u02c8jand\u0259ks] \u24d8) is a Russian technology company that provides Internet-related products and services including a web browser, search engine, cloud computing, web mapping, online food ordering, streaming media, online shopping, and a ridesharing company.. Yandex Search is the largest search engine in Russia with an estimated 72% market share in Russia[6] and a 2.8% market share worldwide.[7] Yandex Taxi is the largest ridesharing company in Russia.[8]. Yandex was founded by Arkady Volozh and launched its first product, a search engine, in 1997. Due to its significant media activities in Russia, the company has long faced pressure for control by the government of Russia. In July 2024, in a transaction brought about by international sanctions during the Russian invasion of Ukraine and restrictions on foreign ownership, Nebius Group, the Dutch holding company that owned Yandex, sold its Russian assets to a group of Russian investors for a discounted price of US$5.3 billion..\nThought 2: The initial search for Yandex does not explicitly mention its operations in Turkey. I need to look for information about its international presence or specific operations in Turkey.\nAction 2: Lookup[Turkey]\nObservation 2: (Result 1 / 2) In June 2011, Yandex and Rambler signed an ad network deal to freeze out Russian competitors.[44] In August 2011, Yandex acquired The Tweeted Times, a news delivery startup.[45][46] In September 2011, the company launched its web portal in Turkey in 2011 and opened an office in Istanbul.[47][48].\nThought 3: The observation explicitly states that \"In September 2011, the company launched its web portal in Turkey in 2011 and opened an office in Istanbul.\" This directly supports the claim that Yandex functions in Turkey.\nAction 3: Finish[SUPPORTS]\nObservation 3: Episode finished, reward = 1\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 2,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          },
+          {
+            "step": 2,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=4"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 4,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 4130
+      }
+    }
+  },
+  {
+    "question_idx": 7777,
+    "question_text": "Claim: The Cincinnati Kid was announced by Norman Jewison.",
+    "answer": "REFUTES",
+    "gt_answer": "NOT ENOUGH INFO",
+    "em": 0,
+    "f1": 0,
+    "reward": 0,
+    "n_calls": 2,
+    "n_badcalls": 0,
+    "input_tokens": 2418,
+    "output_tokens": 75,
+    "total_tokens": 2493,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: The Cincinnati Kid was announced by Norman Jewison.\nThought 1: I need to search for \"The Cincinnati Kid\" and see who announced it.\nAction 1: Search[The Cincinnati Kid]\nObservation 1: The Cincinnati Kid is a 1965 American sports drama film directed by Norman Jewison. It tells the story of Eric \"The Kid\" Stoner, a young Depression-era poker player, as he seeks to establish his reputation as the best. This quest leads him to challenge Lancey \"The Man\" Howard, an older player widely considered to be the best, culminating in a climactic final poker hand between the two.. The script, adapted from Richard Jessup's 1963 novel of the same name, was written by Ring Lardner Jr. and Terry Southern; it was Lardner's first major studio work since his 1947 blacklisting as one of The Hollywood Ten.[4] The film stars Steve McQueen in the title role and Edward G.\nThought 2: The observation states that \"The Cincinnati Kid is a 1965 American sports drama film directed by Norman Jewison.\" This means Norman Jewison directed the film, not announced it.\nAction 2: Finish[REFUTES]\nObservation 2: Episode finished, reward = 0\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 1,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 3,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 2493
+      }
+    }
+  },
+  {
+    "question_idx": 7398,
+    "question_text": "Claim: Viola Davis has played supporting and minor roles in radio and theater.",
+    "answer": "NOT ENOUGH INFO",
+    "gt_answer": "NOT ENOUGH INFO",
+    "em": 1,
+    "f1": 1,
+    "reward": 1,
+    "n_calls": 5,
+    "n_badcalls": 0,
+    "input_tokens": 7776,
+    "output_tokens": 336,
+    "total_tokens": 8112,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: Viola Davis has played supporting and minor roles in radio and theater.\nThought 1: I need to search for Viola Davis and see if she has played supporting and minor roles in radio and theater.\nAction 1: Search[Viola Davis]\nObservation 1: Viola Davis (/va\u026a\u02c8o\u028al\u0259/ vy-OH-l\u0259; born August 11, 1965)[1] is an American actress and film producer. Her accolades include both the Triple Crown of Acting and EGOT.[a] Time named her one of the 100 most influential people in the world in 2012 and 2017.[2][3] The New York Times ranked her ninth on its list of the greatest actors of the 21st century (2020).[4][5] Davis received the Cecil B. DeMille Award in 2025.. A graduate of Juilliard, Davis began her career in Central Falls, Rhode Island, appearing in small stage productions. She made her Broadway debut in the August Wilson play Seven Guitars (1996) for which she earned her first Tony nomination.\nThought 2: The observation mentions her appearing in \"small stage productions\" and making her \"Broadway debut\". This supports the idea of her playing roles in theater. However, it doesn't mention radio. I need to look for information about radio roles.\nAction 2: Lookup[radio]\nObservation 2: No more results.\n\nThought 3: The current passage does not mention radio. I need to search for more information about Viola Davis's career, specifically looking for any involvement in radio.\nAction 3: Search[Viola Davis career]\nObservation 3: Could not find Viola Davis career. Similar: ['Viola Davis', 'Viola Davis on screen and stage', 'Fences (film)', \"Ma Rainey's Black Bottom (film)\", 'The Help (film)'].\nThought 4: The previous search for \"Viola Davis career\" did not yield a direct result, but suggested \"Viola Davis on screen and stage\". This might provide more details about her roles. I will search this to see if it mentions radio or further details about her stage roles.\nAction 4: Search[Viola Davis on screen and stage]\nObservation 4: Viola Davis is an American actress and producer who has appeared in film, television, and on stage.[1][2][3] She received her equity card with her stage debut in 1988 with August Wilson's The Pittsburgh Cycle play Joe Turner's Come and Gone production of Trinity Repertory Company.[4] After graduating from Juilliard School in 1993, Davis went on to perform several roles on stage in the 1990s,[5][6] earning Theater World Award for her role in Seven Guitars (1996).[7] In the same year, Davis guest-starred in the procedural drama series NYPD Blue,[8] and made her film debut with a brief one-day role alongside Timothy Hutton in The Substance of Fire.[9] In 1998, she appeared in Richard Benjamin's television movie The Pentagon Wars,[10] and Steven Soderbergh's Out of Sight,[11] before returning to the stage with an Obie Award winning titular performance in Off-Broadway Everybody's Ruby (1999).[12][13]. Davis established herself as a leading actress of Broadway in the 2000s.[14] She starred in her first recurring role in the 2000 medical drama City of Angels,[8] before winning Tony Award for Best Featured Actress in a Play for her performance as a wife of ex-con in King Hedley II (2001), the ninth play of Wilson's The Pittsburgh Cycle.[15] She received further acclaim for her role as a black seamstress in Intimate Apparel (2004) that won her the Drama Desk Award.[16] Four years later, a supporting role in the period drama Doubt (2008) proved to be a breakthrough for Davis and she received Golden Globe for Best Supporting Actress and the Academy Award for Best Supporting Actress nominations for it.[17][18] Davis starred opposite Denzel Washington as a dutiful yet strong minded wife Rose Maxson,[19] in a revival of Wilson's play Fences (2010), that earned her Tony Award for Best Actress in a Play.[20] The same year she played Julia Roberts' best friend in romantic-comedy Eat Pray Love.[21]. In 2011, Davis's role in an ensemble drama as a housemaid in The Help earned her Best Actress Oscar nomination, among other accolades.[22] Her performances in school drama Won't Back Down (2012),[23] thriller Prisoners (2013),[24] and biopic Get on Up (2014),[25] added further acclaim to her career. Davis became the first black woman to win Emmy Award for Best Actress,[26] for her role as criminal defense attorney Annalise Keating in television series How to Get Away with Murder (2014).[27] In 2015, she starred and served as an executive producer in vigilante thriller Lila & Eve,[28] and courtroom drama Custody the following year,[29] both films received a mixed reception overall.[30] She appeared as an antagonist Amanda Waller in superhero film Suicide Squad (2016),[31][32] her biggest commercial success till date.[33][34] In the same year, she and Washington reprised their role in the film-adaption of Fences,[35] for which Davis received Best Supporting Actress honors at the BAFTAs, SAG Awards, Golden Globe Awards, and Academy Awards.[36] Following her Oscar win, she became the first black actor to win Triple Crown of Acting.[37][38] Davis co-founded the JuVee Productions with her husband Julius Tennon in 2012.[39][40]. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us.\nThought 5: The observation from \"Viola Davis on screen and stage\" details her extensive career in film, television, and *stage*. It mentions numerous stage roles, including \"small stage productions,\" \"Broadway debut,\" and \"several roles on stage in the 1990s.\" This strongly supports the claim that she played supporting and minor roles in theater. However, there is still no mention of radio. Since the claim specifically includes \"radio,\" and I have searched multiple times without finding any evidence of her involvement in radio, I can conclude that there is not enough information to fully support the claim as written.\nAction 5: Finish[NOT ENOUGH INFO]\nObservation 5: Episode finished, reward = 1\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 4,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          },
+          {
+            "step": 2,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          },
+          {
+            "step": 3,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=5"
+          },
+          {
+            "step": 4,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=8"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 8,
+        "visited_pages": 3,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 8112
+      }
+    }
+  },
+  {
+    "question_idx": 2021,
+    "question_text": "Claim: Miranda Otto is the only sister of actress Gracie Otto.",
+    "answer": "NOT ENOUGH INFO",
+    "gt_answer": "NOT ENOUGH INFO",
+    "em": 1,
+    "f1": 1,
+    "reward": 1,
+    "n_calls": 2,
+    "n_badcalls": 0,
+    "input_tokens": 2414,
+    "output_tokens": 110,
+    "total_tokens": 2524,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: Miranda Otto is the only sister of actress Gracie Otto.\nThought 1: I need to determine if Miranda Otto is the only sister of Gracie Otto. I will start by searching for Miranda Otto.\nAction 1: Search[Miranda Otto]\nObservation 1: Miranda Otto (born 16 December 1967) is an Australian actress. She is the daughter of actors Barry and Lindsay Otto and the paternal half-sister of actress Gracie Otto. Otto began her acting career in 1986 at age 18 and appeared in a variety of independent and major studio films in Australia. She made her major film debut in Emma's War in 1987 in which she played a teenager who moves to Australia's bush country during World War II.[1]. After a decade of critically acclaimed roles in Australian films, Otto gained Hollywood's attention during the 1990s after appearing in supporting roles in the films The Thin Red Line and What Lies Beneath.\nThought 2: The observation states that Miranda Otto is the \"paternal half-sister of actress Gracie Otto.\" It does not state that she is the *only* sister, nor does it mention any other siblings. Therefore, I don't have enough information to confirm or refute the claim that she is the *only* sister.\nAction 2: Finish[NOT ENOUGH INFO]\nObservation 2: Episode finished, reward = 1\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 1,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 3,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 2524
+      }
+    }
+  },
+  {
+    "question_idx": 8755,
+    "question_text": "Claim: Unfree labor is a result of human trafficking.",
+    "answer": "SUPPORTS",
+    "gt_answer": "NOT ENOUGH INFO",
+    "em": 0,
+    "f1": 0,
+    "reward": 0,
+    "n_calls": 2,
+    "n_badcalls": 0,
+    "input_tokens": 2402,
+    "output_tokens": 96,
+    "total_tokens": 2498,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: Unfree labor is a result of human trafficking.\nThought 1: I need to determine if unfree labor is a result of human trafficking. I will start by searching for \"human trafficking\" to understand its definition and consequences.\nAction 1: Search[human trafficking]\nObservation 1: Human trafficking is the act of recruiting, transporting, transferring, harboring, or receiving individuals through force, fraud, or coercion for the purpose of exploiting them for profit. This exploitation may include forced labor, sexual slavery, or other forms of commercial sexual exploitation. It is considered a serious violation of human rights and a form of modern slavery, a crime against humanity. Human trafficking is different from adult voluntary sex work, in that it is not consensual and can involve minors. It is believed that human trafficking has become more common over the past two and a half decades.[1] Efforts to combat human trafficking involve international laws, national policies, and non-governmental organizations..\nThought 2: The observation states that human trafficking involves exploiting individuals for profit, and this exploitation \"may include forced labor\". Forced labor is a form of unfree labor. Therefore, unfree labor can be a result of human trafficking.\nAction 2: Finish[SUPPORTS]\nObservation 2: Episode finished, reward = 0\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 1,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 3,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 2498
+      }
+    }
+  },
+  {
+    "question_idx": 4242,
+    "question_text": "Claim: The Indian Army comprises a lot of people.",
+    "answer": "NOT ENOUGH INFO",
+    "gt_answer": "SUPPORTS",
+    "em": 0,
+    "f1": 0,
+    "reward": 0,
+    "n_calls": 1,
+    "n_badcalls": 0,
+    "input_tokens": 1108,
+    "output_tokens": 45,
+    "total_tokens": 1153,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: The Indian Army comprises a lot of people.\nThought 1: This claim is too vague to verify. \"A lot of people\" is not a quantifiable statement. I cannot determine if it is true or false with factual evidence.\nAction 1: Finish[NOT ENOUGH INFO]\nObservation 1: Episode finished, reward = 0\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 0,
+        "pruned_actions": []
+      },
+      "context_pruning": {
+        "evidence_items": 0,
+        "visited_pages": 0,
+        "observations_retained": 1,
+        "failures_tracked": 0,
+        "total_tokens": 1153
+      }
+    }
+  },
+  {
+    "question_idx": 5880,
+    "question_text": "Claim: Melancholia was directed solely by an American gymnast.",
+    "answer": "NOT ENOUGH INFO",
+    "gt_answer": "REFUTES",
+    "em": 0,
+    "f1": 0,
+    "reward": 0,
+    "n_calls": 6,
+    "n_badcalls": 0,
+    "input_tokens": 9250,
+    "output_tokens": 235,
+    "total_tokens": 9485,
+    "traj": "Solve a fact verification task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.\n\nRules (follow strictly):\n- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.\n- No search-spam: max 2 Search actions in a row; then Lookup.\n- Be specific: Search must be a concrete entity (not generic words like \"born\", \"author\", \"city\").\n- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.\n- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.\n\nThis agent uses programmatic action pruning and context compression for efficiency.\n\nHere are some examples.\n\nDetermine if there is Observation that SUPPORTS or REFUTES a Claim, or if there is NOT ENOUGH INFORMATION. \nClaim: Nikolaj Coster-Waldau worked with the Fox Broadcasting Company.\nThought 1: I need to search Nikolaj Coster-Waldau and find if he has worked with the Fox Broadcasting Company.\nAction 1: Search[Nikolaj Coster-Waldau]\nObservation 1: Nikolaj William Coster-Waldau (born 27 July 1970) is a Danish actor and producer. He graduated from the Danish National School of Performing Arts in Copenhagen in 1993,[1] and had his breakthrough role in Denmark with the film Nightwatch (1994). He played Jaime Lannister in the HBO fantasy drama series Game of Thrones, for which he received two Primetime Emmy Award nominations for Outstanding Supporting Actor in a Drama Series.. Coster-Waldau has appeared in numerous films in his native Denmark and Scandinavia, including Headhunters (2011) and A Thousand Times Good Night (2013). In the U.S, his debut film role was in the war film Black Hawk Down (2001), playing Medal of Honor recipient Gary Gordon.[2] He then played a detective in the short-lived Fox television series New Amsterdam (2008), and appeared in the 2009 Fox television film Virtuality, originally intended as a pilot.\nThought 2: Because he \"appeared in the 2009 Fox television film Virtuality\", he should have worked with the Fox Broadcasting Company.\nAction 2: Finish[SUPPORTS]\n\nClaim: Stranger Things is set in Bloomington, Indiana.\nThought 1: I should search for Stranger Things, and see if it is set in Bloomington, Indiana.\nAction 1: Search[Stranger Things]\nObservation 1: Stranger Things is an American science fiction horror drama television series created by the Duffer Brothers. Set in the 1980s, primarily in the fictional town of Hawkins, Indiana, the series centers on a number of mysteries and supernatural events occurring around the town and their impact on an ensemble of child and adult characters. \nThought 2: The observation says that it is set in a \"fictional town of Hawkins, Indiana\", so it is not set in Bloomington.\nAction 2: Finish[REFUTES]\n\nClaim: Beautiful reached number two on the Billboard Hot 100 in 2003.?\nThought 1: I need to search the song Beautiful and find if it reached number two on the Billboard Hot 100 in 2003.\nAction 1: Search[Beautiful]\nObservation 1: Could not find [Beautiful]. Similar: ['Beautiful', 'Beautiful, Beautiful', 'A Beautiful Mind (film)', 'Beautiful (Christina Aguilera song)', 'Life Is Beautiful'].\nThought 2: From suggestions, I should search \"Beautiful (Christina Aguilera song)\" to find the song.\nAction 2: Search[Beautiful (Christina Aguilera song)]\nObservation 2: \"Beautiful\" is a song recorded by American singer Christina Aguilera for her fourth studio album, Stripped (2002).\nThought 3: It does not mention Billboard, so I need to look up \"Billboard Hot 100\" to find if it reached number two on it in 2003.\nAction 3: Lookup[Billboard Hot 100]\nObservation 3: (Result 1 / 3) The song peaked at number two on the Billboard Hot 100 in the United States, where it was certified Gold for 500,000 units shipped.\nThought 4: It only says the song peaked at number two on the Billboard Hot 100, but not if it was in 2003. I am not sure if this claim is true or not.\nAction 4: Finish[NOT ENOUGH INFO]\n\nClaim: Melancholia was directed solely by an American gymnast.\nThought 1: I need to search for \"Melancholia\" and find out who directed it and their profession.\nAction 1: Search[Melancholia]\nObservation 1: Melancholia or melancholy (Ancient Greek: \u03bc\u03b5\u03bb\u03b1\u03b3\u03c7\u03bf\u03bb\u03af\u03b1, romanized:\u00a0melanchol\u00eda; from \u03bc\u03ad\u03bb\u03b1\u03b9\u03bd\u03b1 \u03c7\u03bf\u03bb\u03ae, m\u00e9laina chol\u1e17, 'black bile')[1][2] is a concept found throughout ancient, medieval, and premodern medicine in Europe that describes a condition characterized by markedly depressed mood, bodily complaints, and sometimes hallucinations and delusions. Besides a pathological condition, melancholy could also refer to a mood or temperament and at times it was even used as a description of the human condition in general.[3]. Melancholy (or more precisely the 'black bile', from which melancholy derives its name) was regarded as one of the four temperaments matching the four humours.[4][5] Until the 18th century, doctors and other scholars classified melancholic conditions as such by their perceived common cause\u00a0\u2013 an excess of a notional fluid known as \"black bile\", which was commonly linked to the spleen. Hippocrates and other ancient physicians described melancholia as a distinct disease with mental and physical symptoms, including persistent fears and despondencies, poor appetite, abulia, sleeplessness, irritability, and agitation.[6][7] Later, fixed delusions were added by Galen and other physicians to the list of symptoms.[8][9] In the Middle Ages, the understanding of melancholia shifted to a religious perspective,[10][11] with sadness seen as a vice and demonic possession, rather than somatic causes, as a potential cause of the disease.[12]. During the late 16th and early 17th centuries, a cultural and literary cult of melancholia emerged in England, linked to Neoplatonist and humanist Marsilio Ficino's transformation of melancholia from a sign of vice into a mark of genius.\nThought 2: The search result for \"Melancholia\" is about the medical condition, not the film. I need to search for the film \"Melancholia\".\nAction 2: Lookup[from previous page]\nObservation 2: No more results.\n\nThought 3: I need to search for the film \"Melancholia\". I will try searching for \"Melancholia (film)\".\nAction 3: Lookup[from previous page]\nObservation 3: No more results.\n\nThought 4: I made a mistake in the previous step. I should have used Search instead of Lookup. I need to search for the film \"Melancholia\".\nAction 4: Lookup[from previous page]\nObservation 4: No more results.\n\nThought 5: I need to search for the film \"Melancholia\". I will try searching for \"Melancholia (film)\".\nAction 5: Lookup[from previous page]\nObservation 5: No more results.\n\nThought 6: I made a mistake in the previous steps. I should have used Search instead of Lookup. I need to search for the film \"Melancholia\".\nAction 6: Lookup[from previous page]\nObservation 6: No more results.\n\n",
+    "framework": "prog_CA_pruning",
+    "pruning": {
+      "action_pruning": {
+        "total_pruned": 11,
+        "pruned_actions": [
+          {
+            "step": 1,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          },
+          {
+            "step": 2,
+            "action": "search",
+            "args": "Melancholia (film)",
+            "reason": "[PRUNE-DEDUP] Duplicate query: 'Melancholia (film)' similar to recent 'melancholia' (sim=0.81)"
+          },
+          {
+            "step": 2,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          },
+          {
+            "step": 3,
+            "action": "search",
+            "args": "Melancholia (film)",
+            "reason": "[PRUNE-DEDUP] Duplicate query: 'Melancholia (film)' similar to recent 'melancholia' (sim=0.81)"
+          },
+          {
+            "step": 3,
+            "action": "finish",
+            "args": "",
+            "reason": "[PRUNE] Success gate: confidence=0.90, evidence=3"
+          }
+        ]
+      },
+      "context_pruning": {
+        "evidence_items": 3,
+        "visited_pages": 1,
+        "observations_retained": 2,
+        "failures_tracked": 0,
+        "total_tokens": 9485
+      }
+    }
+  }
+]
