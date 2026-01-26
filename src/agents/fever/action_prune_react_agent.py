@@ -26,21 +26,14 @@ try:
     import json
     with open(prompt_path, 'r') as f:
         prompt_dict = json.load(f)
-    webthink_examples = prompt_dict['webthink_simple3']
+    webthink_examples = prompt_dict.get('webthink_short', prompt_dict.get('webthink_simple3', ""))
 except:
     webthink_examples = ""
 
-# Define instruction with action pruning rules
-instruction = """Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task. Here are some examples.
+# Define simplified instruction (rules enforced by controller)
+instruction = """Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: (1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search. (2) Lookup[keyword], which returns the next sentence containing keyword in the current passage. (3) Finish[answer], which returns the answer and finishes the task.
 
-Rules (follow strictly):
-- No repeats: don't use the same Search query twice; don't use the same Lookup keyword twice in a row.
-- No search-spam: max 2 Search actions in a row; then Lookup.
-- Be specific: Search must be a concrete entity (not generic words like "born", "author", "city").
-- Evidence-first: only Finish if you saw the supporting fact in Observations; otherwise keep searching/looking up.
-- Multi-hop: if needed, find a bridge entity first, then search it and lookup the final fact.
-
-Here are some examples.
+### BEGIN EPISODE ###
 """
 
 # Construct the full prompt template

@@ -1,0 +1,812 @@
+[
+    {
+        "steps": 6,
+        "answer": "null",
+        "gt_answer": "Stephen Roger \"Steve\" Bruce",
+        "question_idx": 1888,
+        "reward": false,
+        "em": false,
+        "f1": 0,
+        "n_calls": 6,
+        "n_badcalls": 0,
+        "input_tokens": 13167,
+        "output_tokens": 773,
+        "total_tokens": 13940,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1720,
+                "output_tokens": 85,
+                "total_tokens": 1805
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 1989,
+                "output_tokens": 74,
+                "total_tokens": 2063
+            },
+            {
+                "call_num": 3,
+                "step": 3,
+                "type": "thought_action",
+                "input_tokens": 2139,
+                "output_tokens": 239,
+                "total_tokens": 2378
+            },
+            {
+                "call_num": 4,
+                "step": 4,
+                "type": "thought_action",
+                "input_tokens": 2251,
+                "output_tokens": 87,
+                "total_tokens": 2338
+            },
+            {
+                "call_num": 5,
+                "step": 5,
+                "type": "thought_action",
+                "input_tokens": 2435,
+                "output_tokens": 126,
+                "total_tokens": 2561
+            },
+            {
+                "call_num": 6,
+                "step": 6,
+                "type": "thought_action",
+                "input_tokens": 2633,
+                "output_tokens": 162,
+                "total_tokens": 2795
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who was the football manager that played in the Football League Cup in 1985 and managed to lead the Birmingham City Football Club's 103rd season to finish in the 18th position?\nThought 1: I need to find a football manager who played in the Football League Cup in 1985 and managed Birmingham City Football Club to an 18th-place finish in their 103rd season. I will start by searching for Birmingham City Football Club's 103rd season to identify the manager.\nAction 1: Search[Birmingham City Football Club 103rd season]\nObservation 1: Could not find Birmingham City Football Club 103rd season. Similar: ['2005\u201306 Birmingham City F.C. season', '2007\u201308 Leicester City F.C. season', '2001\u201302 Football League', '2008\u201309 Chelsea F.C. season', '2019\u201320 Stoke City F.C. season'].\nThought 2: The search for \"Birmingham City Football Club 103rd season\" failed. I need to find out which season was the 103rd for Birmingham City Football Club. I will search for \"Birmingham City Football Club\" to find its history and then determine the 103rd season.\nAction 2: Search[Birmingham City Football Club]\nObservation 2: Birmingham City Football Club is a professional football club based in Birmingham, England. Formed in 1875 as Small Heath Alliance, it was renamed Small Heath in 1888, Birmingham in 1905, and Birmingham City in 1943.[6] The club competes in the Championship, the second tier of English football.. As Small Heath, they played in the Football Alliance before becoming founder members and first champions of the Football League Second Division. The most successful period in their history was in the 1950s and early 1960s. They achieved their highest finishing position of sixth in the First Division in the 1955\u201356 season and reached the 1956 FA Cup final.\nThought 3: I need to find out which season was the 103rd season of Birmingham City Football Club. Since the club was formed in 1875, I can calculate the 103rd season. 1875 + 103 - 1 = 1977. So the 103rd season would be 1977-78. I need to search for \"Birmingham City F.C. 1977-78 season\" to find the manager and their performance in the Football League Cup in 1985. However, the question asks about the Football League Cup in 1985, which is a different season. I need to find the manager who led the Birmingham City Football Club's 103rd season to finish in the 18th position, and also played in the Football League Cup in 1985. This implies two different time periods. I will first focus on the 103rd season and the manager.\nAction 3: Search[Birmingham City F.C. 1977-78 season]\nObservation 3: Could not find Birmingham City F.C. 1977-78 season. Similar: ['1977\u201378 Birmingham City F.C. season', '1977\u201378 Manchester City F.C. season', '1977\u201378 Cardiff City F.C. season', '1977\u201378 Arsenal F.C. season', '1977\u201378 Nottingham Forest F.C. season'].\nThought 4: I was trying to find the 103rd season of Birmingham City Football Club. Since I couldn't find \"Birmingham City Football Club 103rd season\", I need to figure out when the club was formed and then calculate which season was the 103rd. Birmingham City Football Club was formed in 1875.\nAction 4: Search[Birmingham City F.C. seasons]\nObservation 4: Birmingham City Football Club, an association football club based in Birmingham, England, was founded in 1875 as Small Heath Alliance. For the first thirteen years of their existence, there was no league football, so matches were arranged on an ad hoc basis, supplemented by cup competitions organised at local and national level. Small Heath first entered the FA Cup in the 1881\u201382 season, and won their first trophy, the Walsall Cup, the following season.[1] During the 1880s, they played between 20 and 30 matches each season.[2]. In 1888, the club became a limited company under the name of Small Heath F.C. Ltd,[3] and joined the Combination, a league set up to provide organised football for those clubs not invited to join the Football League which was to start the same year.\nThought 5: I need to find the 103rd season of Birmingham City Football Club. Since the club was founded in 1875, I can calculate the year of the 103rd season. 1875 + 103 - 1 = 1977. So the 103rd season would be the 1977-78 season. I will search for \"1977-78 Birmingham City F.C. season\".\nAction 5: Search[1977-78 Birmingham City F.C. season]\nObservation 5: The 1977\u201378 Football League season was Birmingham City Football Club's 75th in the Football League and their 44th in the First Division. They finished in 11th position in the 22-team division. They entered the 1977\u201378 FA Cup at the third round proper and lost to Derby County in the fourth, and lost to Notts County in their opening second-round match in the League Cup. They entered the Anglo-Scottish Cup but failed to progress past the group stage.. Twenty-two players made at least one appearance in nationally organised first-team competition, and there were ten different goalscorers.\nThought 6: I have found that the 1977-78 season was the 75th season. I need to find the 103rd season.\n103 - 75 = 28. So I need to add 28 years to 1977-78.\n1977 + 28 = 2005. So the 103rd season would be 2005-06.\nI need to search for \"2005-06 Birmingham City F.C. season\" and check if they finished in 18th position and who was the manager.\nAction 6: Finish[null]\nObservation 6: Episode finished, reward = 0\n\n",
+        "question_text": "Question: Who was the football manager that played in the Football League Cup in 1985 and managed to lead the Birmingham City Football Club's 103rd season to finish in the 18th position?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 1,
+                "pruned_actions": [
+                    {
+                        "step": 6,
+                        "action": "search",
+                        "args": "2005-06 Birmingham City F.C. season",
+                        "reason": "[PRUNE-STAGNATION] Search at step 6 is likely inefficient. Use existing knowledge or Finish."
+                    }
+                ]
+            },
+            "context_pruning": {
+                "evidence_items": 15,
+                "visited_pages": 5,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 13940,
+                "pruned_sentences_count": 14
+            }
+        },
+        "status": "success",
+        "llm_correct": false,
+        "llm_explanation": "The predicted answer is null, which means no answer was provided. The ground truth answer is \"Stephen Roger \"Steve\" Bruce\". Therefore, the predicted answer is not semantically equivalent to the ground truth answer."
+    },
+    {
+        "steps": 2,
+        "answer": "Ricky Skaggs",
+        "gt_answer": "Rickie Lee Skaggs",
+        "question_idx": 3545,
+        "reward": false,
+        "em": false,
+        "f1": 0.4,
+        "n_calls": 2,
+        "n_badcalls": 0,
+        "input_tokens": 3639,
+        "output_tokens": 154,
+        "total_tokens": 3793,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1698,
+                "output_tokens": 68,
+                "total_tokens": 1766
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 1941,
+                "output_tokens": 86,
+                "total_tokens": 2027
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: \"Heartbreak Hurricane\" was recorded by which country artist, that also goes by the name Ricky Skaggs?\nThought 1: The question asks for the country artist who recorded \"Heartbreak Hurricane\" and also goes by the name Ricky Skaggs. This is a trick question, as it directly states the artist's name. I just need to confirm that Ricky Skaggs recorded \"Heartbreak Hurricane\".\nAction 1: Search[Heartbreak Hurricane]\nObservation 1: \"Heartbreak Hurricane\" is a song written by Larry Cordle and Jim Rushing, and recorded by American country music artist Ricky Skaggs. It was released in December 1989 as the third single from the album Kentucky Thunder. The song reached No. 13 on the Billboard Hot Country Singles & Tracks chart.[1]. This 1990 country song-related article is a stub.\nThought 2: The question asks for the country artist who recorded \"Heartbreak Hurricane\" and also goes by the name Ricky Skaggs. The search result for \"Heartbreak Hurricane\" directly states that it was recorded by \"American country music artist Ricky Skaggs\". The question already provides the name \"Ricky Skaggs\" as a hint, and the search result confirms it.\nAction 2: Finish[Ricky Skaggs]\nObservation 2: Episode finished, reward = 0\n\n",
+        "question_text": "Question: \"Heartbreak Hurricane\" was recorded by which country artist, that also goes by the name Ricky Skaggs?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 0,
+                "pruned_actions": []
+            },
+            "context_pruning": {
+                "evidence_items": 3,
+                "visited_pages": 1,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 3793,
+                "pruned_sentences_count": 2
+            }
+        },
+        "status": "success",
+        "llm_correct": true,
+        "llm_explanation": "The question asks for the artist who also goes by the name Ricky Skaggs, and the ground truth provides \"Rickie Lee Skaggs\". The predicted answer \"Ricky Skaggs\" is a common alias for the artist, and the question explicitly states \"that also goes by the name Ricky Skaggs\". Therefore, the predicted answer is semantically equivalent and directly answers the question's premise."
+    },
+    {
+        "steps": 2,
+        "answer": "Michigan",
+        "gt_answer": "Great Lakes and Midwestern",
+        "question_idx": 2587,
+        "reward": false,
+        "em": false,
+        "f1": 0,
+        "n_calls": 2,
+        "n_badcalls": 0,
+        "input_tokens": 3653,
+        "output_tokens": 97,
+        "total_tokens": 3750,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1690,
+                "output_tokens": 36,
+                "total_tokens": 1726
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 1963,
+                "output_tokens": 61,
+                "total_tokens": 2024
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: In what regions of the United States is the Eastern Market, Detroit located?\nThought 1: I need to search for \"Eastern Market, Detroit\" and find the regions of the United States where it is located.\nAction 1: Search[Eastern Market, Detroit]\nObservation 1: Eastern Market is a commercial district in Detroit, Michigan. It is located approximately one mile (1.6 km) northeast of the city's downtown and is bordered on the south by Gratiot Avenue, the north by Mack Avenue, the east by St. Aubin Street, and the west by Interstate 75 (I-75, Chrysler Freeway). Eastern Market is located on the city's central east side near St. Joseph Roman Catholic Church and the Lafayette Park neighborhood.\nThought 2: The question asks for the regions of the United States where the Eastern Market, Detroit is located. The search result states that \"Eastern Market is a commercial district in Detroit, Michigan.\" Michigan is a state in the United States. Therefore, the region is Michigan.\nAction 2: Finish[Michigan]\nObservation 2: Episode finished, reward = 0\n\n",
+        "question_text": "Question: In what regions of the United States is the Eastern Market, Detroit located?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 0,
+                "pruned_actions": []
+            },
+            "context_pruning": {
+                "evidence_items": 3,
+                "visited_pages": 1,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 3750,
+                "pruned_sentences_count": 2
+            }
+        },
+        "status": "success",
+        "llm_correct": false,
+        "llm_explanation": "The ground truth answer provides the regions (Great Lakes and Midwestern) while the predicted answer provides the state (Michigan). While Michigan is within those regions, the question asks for regions, not the specific state. Therefore, the predicted answer is missing the key information requested."
+    },
+    {
+        "steps": 8,
+        "answer": "null",
+        "gt_answer": "British",
+        "question_idx": 3726,
+        "reward": false,
+        "em": false,
+        "f1": 0,
+        "n_calls": 7,
+        "n_badcalls": 0,
+        "input_tokens": 13361,
+        "output_tokens": 519,
+        "total_tokens": 13880,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1687,
+                "output_tokens": 27,
+                "total_tokens": 1714
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 1988,
+                "output_tokens": 50,
+                "total_tokens": 2038
+            },
+            {
+                "call_num": 3,
+                "step": 3,
+                "type": "thought_action",
+                "input_tokens": 1883,
+                "output_tokens": 75,
+                "total_tokens": 1958
+            },
+            {
+                "call_num": 4,
+                "step": 4,
+                "type": "thought_action",
+                "input_tokens": 1974,
+                "output_tokens": 74,
+                "total_tokens": 2048
+            },
+            {
+                "call_num": 5,
+                "step": 5,
+                "type": "thought_action",
+                "input_tokens": 1943,
+                "output_tokens": 80,
+                "total_tokens": 2023
+            },
+            {
+                "call_num": 6,
+                "step": 6,
+                "type": "thought_action",
+                "input_tokens": 1943,
+                "output_tokens": 82,
+                "total_tokens": 2025
+            },
+            {
+                "call_num": 7,
+                "step": 7,
+                "type": "thought_action",
+                "input_tokens": 1943,
+                "output_tokens": 131,
+                "total_tokens": 2074
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the nationality of the illustrator of Chaos Marauders?\nThought 1: I need to find the illustrator of Chaos Marauders, then find their nationality.\nAction 1: Search[Chaos Marauders]\nObservation 1: Chaos Marauders is a card-based board game published by Games Workshop in 1987 that is set in the Warhammer universe.. Chaos Marauders is a game for 2-4 players in which each player tries to build up warbands of creatures and attack the warbands of other players to loot Victory Points from them.[1]. Each player has a mat with three lines, each with 12 empty squares, which represent the three battle lines each player will try to build. The custom deck of cards is placed in the centre of the table.[2]. The players try to complete a full battle line by drawing cards from the deck.\nThought 2: The current search result for \"Chaos Marauders\" does not mention the illustrator. I need to find information about the illustrator. I will try to look up \"illustrator\" in the current passage.\nAction 2: Lookup[illustrator]\nObservation 2: No more results.\n\nThought 3: The previous lookup for \"illustrator\" on the Chaos Marauders page yielded no results. This means the Wikipedia page for Chaos Marauders does not contain information about its illustrator. I need to try a different approach. I will search for \"Chaos Marauders illustrator\" to see if I can find this information directly.\nAction 3: Search[Chaos Marauders illustrator]\nObservation 3: Could not find Chaos Marauders illustrator. Similar: ['Chaos Marauders', 'To the Lake', 'Games Workshop', 'X-Force', 'X-Men'].\nThought 4: The previous search for \"Chaos Marauders illustrator\" did not yield a direct result. I need to go back to the \"Chaos Marauders\" page and look for any mention of illustrators or artists. If not, I will try to search for \"Games Workshop\" and see if they list their illustrators.\nAction 4: Lookup[previous term]\nObservation 4: No more results.\n\nThought 5: The previous search for \"Chaos Marauders illustrator\" did not yield a direct result. I need to go back to the \"Chaos Marauders\" page and see if there's any mention of the illustrator there. If not, I might need to broaden my search to \"Games Workshop\" and see if they list illustrators for their games.\nAction 5: Lookup[previous term]\nObservation 5: No more results.\n\nThought 6: The previous search for \"Chaos Marauders illustrator\" did not yield a direct result. I need to go back to the \"Chaos Marauders\" page and see if there's any mention of the illustrator there. If not, I might need to broaden my search to \"Games Workshop illustrators\" or \"Warhammer illustrators\" from that era.\nAction 6: Lookup[previous term]\nObservation 6: No more results.\n\nThought 7: Thought 7: I have searched for \"Chaos Marauders\" and \"Chaos Marauders illustrator\" but haven't found the illustrator's nationality. The previous lookup for \"illustrator\" within the \"Chaos Marauders\" page also yielded no results. I need to find information about the illustrator of Chaos Marauders. Since a direct search for \"Chaos Marauders illustrator\" didn't work, I should try to find the illustrator's name first, then search for their nationality. I will go back to the \"Chaos Marauders\" page and look for any mention of the illustrator.\nAction 7: Lookup[previous term]\nObservation 7: No more results.\n\n",
+        "question_text": "Question: What is the nationality of the illustrator of Chaos Marauders?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 4,
+                "pruned_actions": [
+                    {
+                        "step": 4,
+                        "action": "search",
+                        "args": "Chaos Marauders",
+                        "reason": "[PRUNE-LOOP] Repeated action detected: search[Chaos Marauders] in recent history"
+                    },
+                    {
+                        "step": 5,
+                        "action": "search",
+                        "args": "Chaos Marauders",
+                        "reason": "[PRUNE-LOOP] Repeated action detected: search[Chaos Marauders] in recent history"
+                    },
+                    {
+                        "step": 6,
+                        "action": "search",
+                        "args": "Chaos Marauders",
+                        "reason": "[PRUNE-LOOP] Repeated action detected: search[Chaos Marauders] in recent history"
+                    },
+                    {
+                        "step": 7,
+                        "action": "search",
+                        "args": "Chaos Marauders",
+                        "reason": "[PRUNE-LOOP] Repeated action detected: search[Chaos Marauders] in recent history"
+                    }
+                ]
+            },
+            "context_pruning": {
+                "evidence_items": 5,
+                "visited_pages": 2,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 13880,
+                "pruned_sentences_count": 7
+            }
+        },
+        "status": "success",
+        "llm_correct": false,
+        "llm_explanation": "The predicted answer \"null\" indicates that the system could not find an answer, which is not semantically equivalent to the ground truth answer \"British\"."
+    },
+    {
+        "steps": 6,
+        "answer": "null",
+        "gt_answer": "Rachel, Nevada",
+        "question_idx": 3469,
+        "reward": false,
+        "em": false,
+        "f1": 0,
+        "n_calls": 6,
+        "n_badcalls": 0,
+        "input_tokens": 11800,
+        "output_tokens": 524,
+        "total_tokens": 12324,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1686,
+                "output_tokens": 35,
+                "total_tokens": 1721
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 2049,
+                "output_tokens": 73,
+                "total_tokens": 2122
+            },
+            {
+                "call_num": 3,
+                "step": 3,
+                "type": "thought_action",
+                "input_tokens": 1978,
+                "output_tokens": 71,
+                "total_tokens": 2049
+            },
+            {
+                "call_num": 4,
+                "step": 4,
+                "type": "thought_action",
+                "input_tokens": 1929,
+                "output_tokens": 121,
+                "total_tokens": 2050
+            },
+            {
+                "call_num": 5,
+                "step": 5,
+                "type": "thought_action",
+                "input_tokens": 2037,
+                "output_tokens": 124,
+                "total_tokens": 2161
+            },
+            {
+                "call_num": 6,
+                "step": 6,
+                "type": "thought_action",
+                "input_tokens": 2121,
+                "output_tokens": 100,
+                "total_tokens": 2221
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is 25 miles south of Groom Lake?\nThought 1: I need to find what is 25 miles south of Groom Lake. I will start by searching for Groom Lake.\nAction 1: Search[Groom Lake]\nObservation 1: Area 51 is a highly classified United States Air Force (USAF) facility within the Nevada Test and Training Range in southern Nevada, 83 miles (134\u00a0km) north-northwest of Las Vegas.. A remote detachment administered by Edwards Air Force Base, the facility is officially called Homey Airport (ICAO: KXTA, FAA LID: XTA)[2] or Groom Lake (after the salt flat next to its airfield). Details of its operations are not made public, but the USAF says that it is an open training range,[3] and it is commonly thought to support the development and testing of experimental aircraft and weapons.[3][4] The USAF and U.S. Central Intelligence Agency (CIA) acquired the site in 1955, primarily for flight tests of the Lockheed U-2 aircraft.[5]. All research and occurrences in Area 51 are Top Secret/Sensitive Compartmented Information (TS/SCI).[6] The CIA publicly acknowledged the base's existence on 25 June 2013, through a Freedom of Information Act (FOIA) request filed in 2005; it has declassified documents detailing its history and purpose.[7] The intense secrecy surrounding the base has made it the frequent subject of conspiracy theories and a central component of unidentified flying object (UFO) folklore.[8][9].\nThought 2: The current search result for \"Groom Lake\" describes what Groom Lake is and its location relative to Las Vegas, but it doesn't mention anything 25 miles south of it. I need to find information about the area south of Groom Lake. I will try to look for more information about the surrounding area.\nAction 2: Lookup[south]\nObservation 2: (Result 1 / 15) Area 51 is a highly classified United States Air Force (USAF) facility within the Nevada Test and Training Range in southern Nevada, 83 miles (134\u00a0km) north-northwest of Las Vegas..\nThought 3: The previous lookup for \"south\" returned a sentence that mentions \"southern Nevada\" and \"north-northwest of Las Vegas\", but it doesn't specify what is 25 miles south of Groom Lake. I need to find more specific information about the area directly south of Groom Lake.\nAction 3: Lookup[25 miles south]\nObservation 3: No more results.\n\nThought 4: The previous lookup for \"25 miles south\" yielded no results. I need to re-evaluate how to find what is 25 miles south of Groom Lake. The current information about Groom Lake (Area 51) mentions its location in southern Nevada and its distance from Las Vegas. It doesn't directly state what is 25 miles south. I will try a broader search for \"Groom Lake surroundings\" or \"Groom Lake nearby locations\" to see if I can find a map or a description of the area.\nAction 4: Search[Groom Lake surroundings]\nObservation 4: Could not find Groom Lake surroundings. Similar: ['Kennisis Lake', 'Marriage in Pakistan', 'Ted Bundy (category Criminals from Salt Lake City)', 'Andinia Plan', 'List of Heartland episodes'].\nThought 5: The previous search for \"Groom Lake surroundings\" was too broad and didn't yield useful results. I need to find a more specific way to determine what is 25 miles south of Groom Lake. Since Groom Lake is a specific location, I should try to find a map or geographical information about the area. However, I don't have access to a map. I will try to search for \"Groom Lake nearby locations\" or \"Groom Lake geographical features\" to see if any prominent features are mentioned in relation to its south.\nAction 5: Search[Groom Lake nearby locations]\nObservation 5: Could not find Groom Lake nearby locations. Similar: ['Area 51 (redirect from Groom Dry Lake Air Force Base)', 'Groom Lake (salt flat)', 'Groom Mine', 'Tonopah Test Range', 'Skunk Works'].\nThought 6: I need to find what is 25 miles south of Groom Lake. The previous searches for \"Groom Lake surroundings\" and \"Groom Lake nearby locations\" were not successful. I should try to find a map or a list of specific locations around Groom Lake. Since Groom Lake is also known as Area 51, I will search for \"Area 51 nearby locations\" or \"Area 51 map\".\nAction 6: Finish[null]\nObservation 6: Episode finished, reward = 0\n\n",
+        "question_text": "Question: What is 25 miles south of Groom Lake?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 1,
+                "pruned_actions": [
+                    {
+                        "step": 6,
+                        "action": "search",
+                        "args": "Area 51 nearby locations",
+                        "reason": "[PRUNE-STAGNATION] Search at step 6 is likely inefficient. Use existing knowledge or Finish."
+                    }
+                ]
+            },
+            "context_pruning": {
+                "evidence_items": 7,
+                "visited_pages": 3,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 12324,
+                "pruned_sentences_count": 3
+            }
+        },
+        "status": "success",
+        "llm_correct": false,
+        "llm_explanation": "The predicted answer \"null\" is not semantically equivalent to \"Rachel, Nevada\"."
+    },
+    {
+        "steps": 6,
+        "answer": "null",
+        "gt_answer": "Christine MacIntyre",
+        "question_idx": 7385,
+        "reward": false,
+        "em": false,
+        "f1": 0,
+        "n_calls": 6,
+        "n_badcalls": 0,
+        "input_tokens": 11776,
+        "output_tokens": 526,
+        "total_tokens": 12302,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1686,
+                "output_tokens": 32,
+                "total_tokens": 1718
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 1833,
+                "output_tokens": 36,
+                "total_tokens": 1869
+            },
+            {
+                "call_num": 3,
+                "step": 3,
+                "type": "thought_action",
+                "input_tokens": 2023,
+                "output_tokens": 64,
+                "total_tokens": 2087
+            },
+            {
+                "call_num": 4,
+                "step": 4,
+                "type": "thought_action",
+                "input_tokens": 1921,
+                "output_tokens": 138,
+                "total_tokens": 2059
+            },
+            {
+                "call_num": 5,
+                "step": 5,
+                "type": "thought_action",
+                "input_tokens": 2072,
+                "output_tokens": 113,
+                "total_tokens": 2185
+            },
+            {
+                "call_num": 6,
+                "step": 6,
+                "type": "thought_action",
+                "input_tokens": 2241,
+                "output_tokens": 143,
+                "total_tokens": 2384
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Elizabeth Austin wrote for a fitness magazine founded by who?\nThought 1: I need to find out which fitness magazine Elizabeth Austin wrote for, and then find out who founded that magazine.\nAction 1: Search[Elizabeth Austin]\nObservation 1: Could not find [Elizabeth Austin]. Similar: ['Elizabeth Austin', 'Elizabeth Austin (writer)', 'Elizabeth Austin (soprano)', 'Elizabeth R. Austin', 'Elizabeth Jean Austin'].\nThought 2: I need to search for \"Elizabeth Austin (writer)\" to find information about her and the fitness magazine she wrote for.\nAction 2: Search[Elizabeth Austin (writer)]\nObservation 2: Elizabeth Austin (born 1958) is an American writer living in Oak Park, Illinois. Austin has lived in the Midwestern United States all her life. She began her journalism career at the now-defunct City News Bureau of Chicago and has written articles for national news magazines such as Newsweek and Time, in addition to a wide range of other national and regional publications, such as People, and the Chicago Tribune. She has also written for The Washington Monthly, Ladies Home Journal, Good Housekeeping, Self, and Shape. She has often written about medicine and health care.[1] Austin also has been heard on WBEZ, the National Public Radio station in Chicago, as well as the BBC in the UK and Scotland.\nThought 3: The current search result for \"Elizabeth Austin (writer)\" mentions that she has written for various national and regional publications, but it doesn't specifically mention a \"fitness magazine\" or who founded it. I need to look for information about a fitness magazine she wrote for.\nAction 3: Lookup[fitness magazine]\nObservation 3: No more results.\n\nThought 4: I have searched for \"Elizabeth Austin\" and found \"Elizabeth Austin (writer)\". The current information states that she has written for various national news magazines and other publications, but it doesn't specifically mention a \"fitness magazine\" or who founded it. I tried to lookup \"fitness magazine\" but there were no more results. I need to find out if she wrote for a fitness magazine and, if so, who founded it. Since the current page doesn't provide this information, I need to broaden my search. I will try to search for \"Elizabeth Austin fitness magazine\" to see if I can find more specific information.\nAction 4: Search[Elizabeth Austin fitness magazine]\nObservation 4: Could not find Elizabeth Austin fitness magazine. Similar: [\"Women's Health (magazine)\", 'Results (film) (category Physical fitness in popular culture)', 'Miss Elizabeth', \"Woman's Day (redirect from Women's Day (magazine))\", 'Glen Powell (category Male actors from Austin, Texas)'].\nThought 5: I have searched for \"Elizabeth Austin\" and found \"Elizabeth Austin (writer)\". The current information about Elizabeth Austin (writer) does not mention her writing for a fitness magazine. I also tried searching for \"Elizabeth Austin fitness magazine\" and it returned no direct results, but suggested \"Women's Health (magazine)\". It's possible she wrote for Women's Health. I need to find out if Elizabeth Austin wrote for Women's Health magazine, and if so, who founded it.\nAction 5: Search[Women's Health (magazine)]\nObservation 5: Women's Health (WH), published by Hearst, is a lifestyle magazine centered on the health, sex, nutrition, and fitness of women. It is published 10 times per year in the United States and has a circulation of 1.5 million readers. The magazine has 13 international editions, circulates in over 25 countries, and reaches over 8 million readers globally. Before its acquisition by Hearst, it was initially founded by Rodale, Inc. in Emmaus, Pennsylvania.[2].\nThought 6: Thought 6: I have found that Elizabeth Austin is a writer and has written for various publications. I also found that \"Women's Health\" is a fitness magazine. I need to connect Elizabeth Austin to \"Women's Health\" or another fitness magazine and then find who founded that magazine. The previous search for \"Elizabeth Austin fitness magazine\" did not directly link her to a specific fitness magazine. However, \"Women's Health (magazine)\" was suggested as a similar entity. I need to check if Elizabeth Austin wrote for Women's Health. I will look up \"Elizabeth Austin\" and \"Women's Health\" together.\nAction 6: Finish[null]\nObservation 6: Episode finished, reward = 0\n\n",
+        "question_text": "Question: Elizabeth Austin wrote for a fitness magazine founded by who?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 1,
+                "pruned_actions": [
+                    {
+                        "step": 6,
+                        "action": "search",
+                        "args": "Elizabeth Austin Women's Health",
+                        "reason": "[PRUNE-STAGNATION] Search at step 6 is likely inefficient. Use existing knowledge or Finish."
+                    }
+                ]
+            },
+            "context_pruning": {
+                "evidence_items": 10,
+                "visited_pages": 4,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 12302,
+                "pruned_sentences_count": 6
+            }
+        },
+        "status": "success",
+        "llm_correct": false,
+        "llm_explanation": "The predicted answer is null, which means no answer was provided. The ground truth answer is \"Christine MacIntyre\". Therefore, the predicted answer is not semantically equivalent to the ground truth answer."
+    },
+    {
+        "steps": 3,
+        "answer": "The Contortionist",
+        "gt_answer": "The Contortionist",
+        "question_idx": 1873,
+        "reward": true,
+        "em": true,
+        "f1": 1.0,
+        "n_calls": 3,
+        "n_badcalls": 0,
+        "input_tokens": 5847,
+        "output_tokens": 143,
+        "total_tokens": 5990,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1692,
+                "output_tokens": 35,
+                "total_tokens": 1727
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 2026,
+                "output_tokens": 36,
+                "total_tokens": 2062
+            },
+            {
+                "call_num": 3,
+                "step": 3,
+                "type": "thought_action",
+                "input_tokens": 2129,
+                "output_tokens": 72,
+                "total_tokens": 2201
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Which band was formed first, Fitz and The Tantrums or The Contortionist?\nThought 1: I need to search Fitz and The Tantrums and The Contortionist, and find which was formed first.\nAction 1: Search[Fitz and The Tantrums]\nObservation 1: Fitz and the Tantrums are an American indie pop and neo soul band from Los Angeles, California, that formed in 2008. The band consists of Michael Fitzpatrick (lead vocals), Noelle Scaggs (co-lead vocals and percussion), James King (saxophone, flute, keyboard, percussion and guitar), Joseph Karnes (bass guitar), and Jeremy Ruzumna (keyboards). John Wicks, who played drums and percussion, left the band in 2022 to teach at the University of Montana. Their debut studio album, Pickin' Up the Pieces, was released in August 2010 on indie label Dangerbird Records and received critical acclaim; it also reached no.\u00a01 on the Billboard Heatseekers chart.[1] In early 2013 the band signed to their current label, Elektra Records, which released their second LP, More Than Just a Dream, the same year. Their self-titled third album was released in 2016, which contains their most notable song, \"HandClap\".\nThought 2: Fitz and The Tantrums was formed in 2008. I need to search The Contortionist next.\nAction 2: Search[The Contortionist]\nObservation 2: The Contortionist is an American progressive metal band from Indianapolis, Indiana. Formed in 2007, the band consists of guitarists Robby Baca and Cameron Maynard, drummer Joey Baca, vocalist Mike Lessard, bassist Jordan Eberhardt, and keyboardist Eric Guenther. They have released four studio albums and three EPs. The band signed with eOne Music and Good Fight Entertainment in early 2010.[1]. The Contortionist formed in 2007 under the name At the Hands of Machines with vocalist Jake Morris, guitarists Robby Baca and Cameron Maynard, bassist Christopher Tilley, and drummer Joey Baca.\nThought 3: The Contortionist was formed in 2007. Fitz and The Tantrums was formed in 2008. 2007 (The Contortionist) < 2008 (Fitz and The Tantrums), so The Contortionist was formed first.\nAction 3: Finish[The Contortionist]\nObservation 3: Episode finished, reward = 1\n\n",
+        "question_text": "Question: Which band was formed first, Fitz and The Tantrums or The Contortionist?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 0,
+                "pruned_actions": []
+            },
+            "context_pruning": {
+                "evidence_items": 6,
+                "visited_pages": 2,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 5990,
+                "pruned_sentences_count": 5
+            }
+        },
+        "status": "success",
+        "llm_correct": true,
+        "llm_explanation": "The predicted answer is identical to the ground truth answer."
+    },
+    {
+        "steps": 5,
+        "answer": "null",
+        "gt_answer": "Orson Welles",
+        "question_idx": 672,
+        "reward": false,
+        "em": false,
+        "f1": 0,
+        "n_calls": 5,
+        "n_badcalls": 0,
+        "input_tokens": 10097,
+        "output_tokens": 405,
+        "total_tokens": 10502,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1706,
+                "output_tokens": 54,
+                "total_tokens": 1760
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 1914,
+                "output_tokens": 69,
+                "total_tokens": 1983
+            },
+            {
+                "call_num": 3,
+                "step": 3,
+                "type": "thought_action",
+                "input_tokens": 2139,
+                "output_tokens": 115,
+                "total_tokens": 2254
+            },
+            {
+                "call_num": 4,
+                "step": 4,
+                "type": "thought_action",
+                "input_tokens": 2053,
+                "output_tokens": 85,
+                "total_tokens": 2138
+            },
+            {
+                "call_num": 5,
+                "step": 5,
+                "type": "thought_action",
+                "input_tokens": 2285,
+                "output_tokens": 82,
+                "total_tokens": 2367
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Angelo Francesco Lavignino scored a 1965 English-language Spanish-Swiss co-produced film that was directed by and also starred who?\nThought 1: I need to find a 1965 English-language Spanish-Swiss co-produced film scored by Angelo Francesco Lavignino. Then I need to find who directed and starred in that film.\nAction 1: Search[Angelo Francesco Lavignino]\nObservation 1: Could not find Angelo Francesco Lavignino. Similar: ['Angelo Francesco Lavagnino', 'Lavagnino', 'St. Elsewhere (album)', 'Angelo', 'Chimes at Midnight (category Films scored by Angelo Francesco Lavagnino)'].\nThought 2: The search for \"Angelo Francesco Lavignino\" returned \"Could not find Angelo Francesco Lavignino\" and suggested \"Angelo Francesco Lavagnino\". It's highly likely there was a typo in the question. I will search for \"Angelo Francesco Lavagnino\" instead.\nAction 2: Search[Angelo Francesco Lavagnino]\nObservation 2: Angelo Francesco Lavagnino (22 February 1909 \u2013 21 August 1987) was an Italian composer, born in Genoa. He is best known for scoring many films, including Legend of the Lost, Conspiracy of Hearts, Gorgo, The Legion's Last Patrol, The Naked Maja, Daisy Miller, and two directed by Orson Welles, Othello and Chimes at Midnight. He also scored several peplums and Spaghetti Westerns.. Lavagnino won the Nastro d'Argento award for Best Score twice, for Continente perduto (1955) and Vertigine bianca (1956).[1][2]. This article about an Italian composer is a stub.\nThought 3: The question asks about a 1965 English-language Spanish-Swiss co-produced film scored by Angelo Francesco Lavignino. I have found information about Angelo Francesco Lavagnino, who is likely the correct person despite the slight spelling difference. I need to find a film he scored in 1965 that fits the description and then identify its director and co-star. I will look for films scored by him, specifically focusing on 1965 and the co-production details.\nAction 3: Lookup[1965]\nObservation 3: (Result 1 / 11) Goliath at the Conquest of Damascus (1965).\nThought 4: I have found that Angelo Francesco Lavagnino scored many films, including \"Chimes at Midnight\" which was directed by Orson Welles. The question asks about a 1965 English-language Spanish-Swiss co-produced film. I need to check if \"Chimes at Midnight\" fits this description and if Orson Welles also starred in it.\nAction 4: Search[Chimes at Midnight]\nObservation 4: Chimes at Midnight (Spanish: Campanadas a medianoche, released in most of Europe as Falstaff) is a 1966 period comedy-drama film written, directed by, and starring Orson Welles. Its plot centers on William Shakespeare's recurring character Sir John Falstaff and his fatherly relationship with Prince Hal, who must choose loyalty to Falstaff or to his actual father, King Henry IV. The English-language film was an international co-production of Spain, France,[1] and Switzerland.[3]. Welles said that the core of the film's story was \"betrayal of friendship\". It stars Welles as Falstaff, Keith Baxter as Prince Hal, John Gielgud as Henry IV, Jeanne Moreau as Doll Tearsheet, and Margaret Rutherford as Mistress Quickly.\nThought 5: The question asks about a 1965 film, but \"Chimes at Midnight\" is from 1966. I need to find a 1965 film scored by Angelo Francesco Lavagnino that was an English-language Spanish-Swiss co-production. I will look for other films scored by Lavagnino.\nAction 5: Finish[null]\nObservation 5: Episode finished, reward = 0\n\n",
+        "question_text": "Question: Angelo Francesco Lavignino scored a 1965 English-language Spanish-Swiss co-produced film that was directed by and also starred who?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 1,
+                "pruned_actions": [
+                    {
+                        "step": 5,
+                        "action": "lookup",
+                        "args": "1965",
+                        "reason": "[PRUNE-LOOP] Repeated action detected: lookup[1965] in recent history"
+                    }
+                ]
+            },
+            "context_pruning": {
+                "evidence_items": 10,
+                "visited_pages": 3,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 10502,
+                "pruned_sentences_count": 4
+            }
+        },
+        "status": "success",
+        "llm_correct": false,
+        "llm_explanation": "The predicted answer is \"null\", which means no answer was provided. The ground truth answer is \"Orson Welles\". Since the predicted answer is null and the ground truth is a specific entity, they are not semantically equivalent."
+    },
+    {
+        "steps": 5,
+        "answer": "Hepatovirus",
+        "gt_answer": "Flavivirus",
+        "question_idx": 6679,
+        "reward": false,
+        "em": false,
+        "f1": 0,
+        "n_calls": 5,
+        "n_badcalls": 0,
+        "input_tokens": 10424,
+        "output_tokens": 431,
+        "total_tokens": 10855,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1713,
+                "output_tokens": 44,
+                "total_tokens": 1757
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 1898,
+                "output_tokens": 78,
+                "total_tokens": 1976
+            },
+            {
+                "call_num": 3,
+                "step": 3,
+                "type": "thought_action",
+                "input_tokens": 2290,
+                "output_tokens": 127,
+                "total_tokens": 2417
+            },
+            {
+                "call_num": 4,
+                "step": 4,
+                "type": "thought_action",
+                "input_tokens": 2180,
+                "output_tokens": 88,
+                "total_tokens": 2268
+            },
+            {
+                "call_num": 5,
+                "step": 5,
+                "type": "thought_action",
+                "input_tokens": 2343,
+                "output_tokens": 94,
+                "total_tokens": 2437
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the genus of the viral disease that has symptoms such as fever, chills, loss of appetite, nausea, muscle pains, and headaches, and has a chance of causing liver damage?\nThought 1: I need to find a viral disease with the listed symptoms and the potential for liver damage. I will start by searching for common viral diseases that affect the liver.\nAction 1: Search[viral diseases liver damage]\nObservation 1: Could not find viral diseases liver damage. Similar: ['Liver disease', 'Hepatitis (redirect from Liver inflammation)', 'Liver regeneration', 'Gastrointestinal disease', 'Cirrhosis (redirect from End-stage liver disease)'].\nThought 2: The previous search for \"viral diseases liver damage\" did not yield a direct result. However, \"Hepatitis\" was suggested as a similar term, and it is known to be a viral disease that affects the liver. I will search for \"Hepatitis\" to see if its symptoms match the ones listed in the question.\nAction 2: Search[Hepatitis]\nObservation 2: Hepatitis is inflammation of the liver tissue.[3][5] Some people or animals with hepatitis have no symptoms, whereas others develop yellow discoloration of the skin and whites of the eyes (jaundice), poor appetite, vomiting, tiredness, abdominal pain, and diarrhea.[1][2] Hepatitis is acute if it resolves within six months, and chronic if it lasts longer than six months.[1][6] Acute hepatitis can resolve on its own, progress to chronic hepatitis, or (rarely) result in acute liver failure.[7] Chronic hepatitis may progress to scarring of the liver (cirrhosis), liver failure, and liver cancer.[3][8]. Hepatitis is most commonly caused by the virus hepatovirus A, B, C, D, and E.[2][3] Other viruses can also cause liver inflammation, including cytomegalovirus, Epstein\u2013Barr virus, and yellow fever virus. Other common causes of hepatitis include heavy alcohol use, certain medications, toxins, other infections, autoimmune diseases,[2][3] and non-alcoholic steatohepatitis (NASH).[9] Hepatitis A and E are mainly spread by contaminated food and water.[3] Hepatitis B is mainly sexually transmitted,[10] but may also be passed from mother to baby during pregnancy or childbirth and spread through infected blood.[3] Hepatitis C is commonly spread through infected blood; for example, during needle sharing by intravenous drug users.[3] Hepatitis D can only infect people already infected with hepatitis B.[3]. Hepatitis A, B, and D are preventable with immunization.[2] Medications may be used to treat chronic viral hepatitis.[1] Antiviral medications are recommended in all with chronic hepatitis C, except those with conditions that limit their life expectancy.[11] There is no specific treatment for NASH; physical activity, a healthy diet, and weight loss are recommended.[9] Autoimmune hepatitis may be treated with medications to suppress the immune system.[12] A liver transplant may be an option in both acute and chronic liver failure.[4]. Worldwide in 2015, hepatitis A occurred in about 114 million people, chronic hepatitis B affected about 343 million people and chronic hepatitis C about 142 million people.[13] In the United States, NASH affects about 11 million people and alcoholic hepatitis affects about 5 million people.[9][14] Hepatitis results in more than a million deaths a year, most of which occur indirectly from liver scarring or liver cancer.[3][15] In the United States, hepatitis A is estimated to occur in about 2,500 people a year and results in about 75 deaths.[16] The word is derived from the Greek h\u00eapar (\u1f27\u03c0\u03b1\u03c1), meaning \"liver\", and -itis (-\u1fd6\u03c4\u03b9\u03c2), meaning \"inflammation\".[17].\nThought 3: Thought 3: The question describes symptoms like fever, chills, loss of appetite, nausea, muscle pains, headaches, and a chance of liver damage. The search for \"Hepatitis\" mentions \"inflammation of the liver tissue\" and symptoms like \"poor appetite, vomiting, tiredness, abdominal pain, and diarrhea.\" It also states that \"Hepatitis is most commonly caused by the virus hepatovirus A, B, C, D, and E.\" The question asks for the *genus* of the viral disease. I need to find the genus of the viruses that cause hepatitis.\nAction 3: Lookup[genus]\nObservation 3: No more results.\n\nThought 4: The question asks for the genus of the viral disease. I have identified that Hepatitis is a viral disease that causes liver damage and has similar symptoms. I also found that Hepatitis is most commonly caused by the virus hepatovirus A, B, C, D, and E. The term \"hepatovirus\" sounds like a genus. I need to confirm if hepatovirus is indeed a genus.\nAction 4: Search[Hepatovirus]\nObservation 4: Hepatovirus is a genus of viruses. The genus has nine species, including Hepatitis A virus, which is the causative agent of hepatitis A.[1]. The genus contains the following species, listed by scientific name and followed by the exemplar virus of the species:[1][2]. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us. HelpLearn to editCommunity portalRecent changesUpload fileSpecial pages.\nThought 5: The question asks for the genus of the viral disease. I have identified that Hepatitis is a viral disease with the described symptoms and potential for liver damage. I also found that Hepatitis is most commonly caused by the virus hepatovirus A, B, C, D, and E. Finally, I searched \"Hepatovirus\" and found that \"Hepatovirus is a genus of viruses.\" This directly answers the question.\nAction 5: Finish[Hepatovirus]\nObservation 5: Episode finished, reward = 0\n\n",
+        "question_text": "Question: What is the genus of the viral disease that has symptoms such as fever, chills, loss of appetite, nausea, muscle pains, and headaches, and has a chance of causing liver damage?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 0,
+                "pruned_actions": []
+            },
+            "context_pruning": {
+                "evidence_items": 8,
+                "visited_pages": 3,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 10855,
+                "pruned_sentences_count": 5
+            }
+        },
+        "status": "success",
+        "llm_correct": false,
+        "llm_explanation": "The question asks for the genus of the viral disease. The ground truth answer is Flavivirus, which is the correct genus for diseases like Yellow Fever or Dengue, which fit the symptoms described. Hepatovirus is a genus of viruses that primarily cause hepatitis (liver inflammation), but the symptoms listed (fever, chills, muscle pains, headaches) are more characteristic of arboviruses within the Flavivirus genus, which can also cause liver damage. Therefore, Hepatovirus is not semantically equivalent in this context as it points to a different primary viral genus for the described symptoms."
+    },
+    {
+        "steps": 6,
+        "answer": "null",
+        "gt_answer": "German",
+        "question_idx": 3619,
+        "reward": false,
+        "em": false,
+        "f1": 0,
+        "n_calls": 6,
+        "n_badcalls": 0,
+        "input_tokens": 11492,
+        "output_tokens": 566,
+        "total_tokens": 12058,
+        "llm_calls": [
+            {
+                "call_num": 1,
+                "step": 1,
+                "type": "thought_action",
+                "input_tokens": 1698,
+                "output_tokens": 38,
+                "total_tokens": 1736
+            },
+            {
+                "call_num": 2,
+                "step": 2,
+                "type": "thought_action",
+                "input_tokens": 1870,
+                "output_tokens": 56,
+                "total_tokens": 1926
+            },
+            {
+                "call_num": 3,
+                "step": 3,
+                "type": "thought_action",
+                "input_tokens": 2007,
+                "output_tokens": 85,
+                "total_tokens": 2092
+            },
+            {
+                "call_num": 4,
+                "step": 4,
+                "type": "thought_action",
+                "input_tokens": 1926,
+                "output_tokens": 147,
+                "total_tokens": 2073
+            },
+            {
+                "call_num": 5,
+                "step": 5,
+                "type": "thought_action",
+                "input_tokens": 1931,
+                "output_tokens": 136,
+                "total_tokens": 2067
+            },
+            {
+                "call_num": 6,
+                "step": 6,
+                "type": "thought_action",
+                "input_tokens": 2060,
+                "output_tokens": 104,
+                "total_tokens": 2164
+            }
+        ],
+        "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: The terminology of algebraic geometry changed drastically with the introduction of the general methods, initiated by a mathematician of what nationality?\nThought 1: I need to find the mathematician who initiated the general methods that changed the terminology of algebraic geometry, and then determine their nationality.\nAction 1: Search[algebraic geometry general methods]\nObservation 1: Could not find algebraic geometry general methods. Similar: ['Algebraic geometry', 'Motive (algebraic geometry)', 'Diophantine geometry', 'Numerical algebraic geometry', 'Algebraic geometry and analytic geometry'].\nThought 2: The previous search for \"algebraic geometry general methods\" failed. I should search for \"Algebraic geometry\" to get a general overview and then look for information about the \"general methods\" and the mathematician who initiated them.\nAction 2: Search[Algebraic geometry]\nObservation 2: Algebraic geometry is a branch of mathematics which uses abstract algebraic techniques, mainly from commutative algebra, to solve geometrical problems. Classically, it studies zeros of multivariate polynomials; the modern approach generalizes this in a few different aspects.. The fundamental objects of study in algebraic geometry are algebraic varieties, which are geometric manifestations of solutions of systems of polynomial equations. Examples of the most studied classes of algebraic varieties are lines, circles, parabolas, ellipses, hyperbolas, cubic curves like elliptic curves, and quartic curves like lemniscates and Cassini ovals. These are plane algebraic curves.\nThought 3: The question asks about the nationality of a mathematician who initiated the general methods that changed the terminology of algebraic geometry. My previous search for \"algebraic geometry general methods\" was unsuccessful. I need to find information about the \"general methods\" in algebraic geometry and who initiated them. I will try to look up \"general methods\" in the current \"Algebraic geometry\" page.\nAction 3: Lookup[general methods]\nObservation 3: No more results.\n\nThought 4: I have searched for \"algebraic geometry general methods\" and it returned no results. I also looked up \"general methods\" in the \"Algebraic geometry\" page, but it returned no results. This suggests that the specific phrase \"general methods\" might not be the exact terminology used to describe the change in algebraic geometry. I need to re-evaluate my search strategy.\n\nI should go back to the \"Algebraic geometry\" page and look for information about the *change* in terminology or the *introduction of new methods* and see if any specific mathematicians are mentioned in that context. I'm looking for a shift in the field and the person responsible for it.\nAction 4: Lookup[previous term]\nObservation 4: No more results.\n\nThought 5: Thought 5: I have searched for \"algebraic geometry general methods\" and it returned no results. I also looked up \"general methods\" in the \"Algebraic geometry\" page, but it didn't yield any relevant information about the introduction of general methods or the nationality of the mathematician who initiated them. I need to re-evaluate my search strategy. The question asks about the \"introduction of the general methods, initiated by a mathematician of what nationality?\". I should try to search for \"algebraic geometry general methods introduction\" or \"mathematician who introduced general methods algebraic geometry\".\nAction 5: Search[mathematician who introduced general methods algebraic geometry]\nObservation 5: Could not find mathematician who introduced general methods algebraic geometry. Similar: ['Algebraic geometry', 'History of geometry', 'Geometry', 'Algebra', 'Mathematics in the medieval Islamic world (redirect from Islamic mathematician)'].\nThought 6: I have tried searching for \"algebraic geometry general methods\" and \"mathematician who introduced general methods algebraic geometry\" without success. The question implies a specific shift in the terminology of algebraic geometry due to the introduction of general methods by a particular mathematician. I need to find out who this mathematician is and their nationality. I will try a broader search for \"history of algebraic geometry\" to see if I can find information about this change and the mathematician responsible.\nAction 6: Finish[null]\nObservation 6: Episode finished, reward = 0\n\n",
+        "question_text": "Question: The terminology of algebraic geometry changed drastically with the introduction of the general methods, initiated by a mathematician of what nationality?",
+        "framework": "prog_CA_pruning_hotpot",
+        "pruning": {
+            "action_pruning": {
+                "total_pruned": 2,
+                "pruned_actions": [
+                    {
+                        "step": 4,
+                        "action": "search",
+                        "args": "Algebraic geometry",
+                        "reason": "[PRUNE-LOOP] Repeated action detected: search[Algebraic geometry] in recent history"
+                    },
+                    {
+                        "step": 6,
+                        "action": "search",
+                        "args": "history of algebraic geometry",
+                        "reason": "[PRUNE-STAGNATION] Search at step 6 is likely inefficient. Use existing knowledge or Finish."
+                    }
+                ]
+            },
+            "context_pruning": {
+                "evidence_items": 7,
+                "visited_pages": 3,
+                "observations_retained": 2,
+                "failures_tracked": 0,
+                "total_tokens": 12058,
+                "pruned_sentences_count": 4
+            }
+        },
+        "status": "success",
+        "llm_correct": false,
+        "llm_explanation": "The predicted answer is \"null\", which means no answer was provided. The ground truth answer is \"German\". Since no answer was provided, it cannot be semantically equivalent."
+    }
+]

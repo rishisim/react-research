@@ -1,5 +1,5 @@
 """
-Context Pruning Module for FEVER
+Context Pruning Module
 
 Implements context compression techniques:
 1. Evidence State - keep only extracted facts with attribution
@@ -16,7 +16,6 @@ import re
 from typing import List, Dict, Optional, Set, Tuple
 from dataclasses import dataclass, field
 from collections import deque
-
 
 @dataclass
 class Evidence:
@@ -40,11 +39,12 @@ class ContextState:
     step_count: int = 0
     total_input_tokens: int = 0
     total_output_tokens: int = 0
+    pruned_sentences_count: int = 0
 
 
 class ContextPruner:
     """
-    Context pruning for FEVER agent.
+    Context pruning for ReAct agents.
     
     Compresses trajectory history into essential components.
     """
@@ -66,6 +66,12 @@ class ContextPruner:
             enable_evidence_dedup: Whether to deduplicate evidence
         """
         self.state = ContextState()
+        # Update deque maxlen if different from default
+        if max_observations_kept != 2:
+            self.state.recent_observations = deque(maxlen=max_observations_kept)
+        if max_failures_kept != 3:
+            self.state.recent_failures = deque(maxlen=max_failures_kept)
+            
         self.max_evidence_items = max_evidence_items
         self.max_observations_kept = max_observations_kept
         self.max_failures_kept = max_failures_kept
@@ -129,7 +135,12 @@ class ContextPruner:
             
             # Keep only top evidence items
             if len(self.state.evidence) > self.max_evidence_items:
+                self.state.pruned_sentences_count += (len(self.state.evidence) - self.max_evidence_items)
                 self.state.evidence = self.state.evidence[-self.max_evidence_items:]
+        
+        # Track items that were NOT added
+        pruned_count = len(sentences) - len(relevant_sentences)
+        self.state.pruned_sentences_count += pruned_count
     
     def add_visited_page(self, page_name: str):
         """Track that a page was visited."""
@@ -216,6 +227,7 @@ class ContextPruner:
             'observations_retained': len(self.state.recent_observations),
             'failures_tracked': len(self.state.recent_failures),
             'total_tokens': self.state.total_input_tokens + self.state.total_output_tokens,
+            'pruned_sentences_count': self.state.pruned_sentences_count
         }
     
     # --- Private helper methods ---
@@ -287,7 +299,7 @@ def build_compact_prompt(base_template: str, claim: str, context_pruner: Context
     
     Args:
         base_template: Original prompt template
-        claim: The FEVER claim
+        claim: The question/claim
         context_pruner: ContextPruner with current state
         
     Returns:
@@ -296,7 +308,15 @@ def build_compact_prompt(base_template: str, claim: str, context_pruner: Context
     compact_context = context_pruner.build_context_string()
     
     # Construct the prompt
-    prompt = base_template + f"\nClaim: {claim}\n\n"
+    # Handle different prompt labels (Claim vs Question) if needed
+    # For now, we assume simple appending, or we can look for 'Claim:'/ 'Question:'
+    
+    # Heuristic: if claim ends with '?', it's likely a question.
+    label = "Claim"
+    if claim.strip().endswith('?'):
+        label = "Question"
+    
+    prompt = base_template + f"\n{label}: {claim}\n\n"
     prompt += compact_context
     prompt += "\n\nContinue reasoning:"
     

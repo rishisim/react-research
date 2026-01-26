@@ -25,6 +25,7 @@ from majority_voting_agent import run_majority_voting
 from cot_sc_agent import run_cot_sc
 from self_reflection_agent import run_self_reflection
 from action_prune_react_agent import run_action_prune_react
+from prog_ca_pruning_agent import run_prog_ca_pruning_hotpot
 
 
 class HotPotQAExperimentRunner:
@@ -36,7 +37,8 @@ class HotPotQAExperimentRunner:
         'majority_voting': run_majority_voting,
         'cot_sc': run_cot_sc,
         'self_reflection': run_self_reflection,
-        'action_prune': run_action_prune_react
+        'action_prune': run_action_prune_react,
+        'prog_ca_pruning': run_prog_ca_pruning_hotpot
     }
     
     def __init__(
@@ -84,6 +86,8 @@ class HotPotQAExperimentRunner:
             base_results_path = project_root / "results/hotpotqa/majority_voting"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'action_prune':
             base_results_path = project_root / "results/hotpotqa/action_prune"
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'prog_ca_pruning':
+            base_results_path = project_root / "results/hotpotqa/prog_ca_pruning"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'self_reflection':
             base_results_path = project_root / "results/hotpotqa/self_reflection"
         elif all(f in ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'action_prune'] for f in self.frameworks):
@@ -476,7 +480,7 @@ def main():
                        help='Number of examples to run')
     parser.add_argument('--frameworks', type=str, nargs='+',
                        default=['react'],
-                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'action_prune'],
+                       choices=['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'action_prune', 'prog_ca_pruning'],
                        help='Frameworks to run')
     parser.add_argument('--seed', type=int, default=42,
                        help='Random seed for reproducibility')

@@ -6,8 +6,8 @@ failure patterns, confidence stabilization) with context pruning (evidence state
 dropped thoughts, compact summary).
 """
 
-from .action_pruner import ActionPruner, PrunerState
-from .context_pruner import ContextPruner, ContextState, Evidence, build_compact_prompt
+from src.agents.pruning.action_pruner import ActionPruner, PrunerState
+from src.agents.pruning.context_pruner import ContextPruner, ContextState, Evidence, build_compact_prompt
 from .prog_ca_pruning_agent import run_prog_ca_pruning_react, PROG_CA_PRUNING_PROMPT_TEMPLATE
 
 __all__ = [

@@ -1,5 +1,5 @@
 """
-Programmatic Action Pruning Module for FEVER
+Programmatic Action Pruning Module
 
 Implements 6 action pruning techniques:
 1. Loop Detection - prevent repeated same search/lookup
@@ -13,12 +13,10 @@ This is used in the ReAct step loop to gate actions before execution.
 """
 
 import re
-import hashlib
 from typing import Tuple, Optional, Dict, List, Set
 from collections import deque
 from dataclasses import dataclass, field
 from difflib import SequenceMatcher
-
 
 @dataclass
 class PrunerState:
@@ -52,7 +50,7 @@ class PrunerState:
 
 class ActionPruner:
     """
-    Programmatic action pruning for FEVER agent.
+    Programmatic action pruning for ReAct agents.
     
     Provides pre-action and post-action gating to prevent redundant/failed actions.
     """
@@ -63,12 +61,14 @@ class ActionPruner:
                  enable_query_dedup: bool = True,
                  enable_cooldowns: bool = True,
                  enable_failure_patterns: bool = True,
-                 enable_confidence_stabilization: bool = True):
+                 enable_confidence_stabilization: bool = True,
+                 max_search_steps: int = 4):
         """
         Initialize the pruner with all techniques enabled by default.
         
         Args:
             enable_*: Toggle individual pruning techniques
+            max_search_steps: Step count after which 'search' actions are considered stagnation
         """
         self.state = PrunerState()
         
@@ -89,6 +89,7 @@ class ActionPruner:
         self.confidence_plateau_steps = 2  # Steps for stabilization check
         self.success_confidence_threshold = 0.80  # Still earlier than before, but less aggressive
         self.success_evidence_count = 2  # Min evidence items for finishing
+        self.max_search_steps = max_search_steps # Configurable max steps for search
     
     def pre_action(self, action: str, args: str, step_num: int) -> Tuple[bool, Optional[str]]:
         """
@@ -117,8 +118,10 @@ class ActionPruner:
         if self.enable_query_dedup and action in ['search', 'lookup']:
             allow, reason = self._check_query_dedup(action, args)
             if not allow:
+                # Add specific redirect guidance
+                redirect = " Search a specific, different entity title." if action == 'search' else " Lookup a different keyword."
                 self._log_prune_decision(action, args, reason)
-                return False, reason
+                return False, reason + redirect
         
         # 3. Cooldowns
         if self.enable_cooldowns and action == 'lookup':
@@ -134,6 +137,15 @@ class ActionPruner:
                 self._log_prune_decision(action, args, reason)
                 return False, reason
         
+        
+        # 5. Stagnation / Depth Pruning
+        # The base prompt often causes the agent to search endlessly or loop. 
+        # We enforce a strict step limit for SEARCH actions.
+        if step_num >= self.max_search_steps and action == 'search':
+             reason = f"[PRUNE-STAGNATION] Search at step {step_num} is likely inefficient. Use existing knowledge or Finish."
+             self._log_prune_decision(action, args, reason)
+             return False, reason + " Return Finish[answer] or Finish[NOT ENOUGH INFO]."
+
         return True, None
     
     def post_action(self, action: str, args: str, observation: str, is_done: bool):
@@ -276,9 +288,21 @@ class ActionPruner:
         Returns:
             (allow, reason) - allow=False if duplicate found
         """
-        query = args  # For search/lookup, args is the query
+        query = args
         
-        # Check against recent queries
+        # Allow disambiguation search even if similar
+        if action == 'search':
+            if '(' in query or ')' in query:  # Explicit disambiguation like "Melancholia (film)"
+                return True, None
+            
+            # For entities, use exact title caching only (no fuzzy matching)
+            # This prevents "Melancholia" vs "Melancholia (film)" blocking
+            normalized = self._normalize_query(query)
+            if normalized in self.state.seen_queries:
+                 return False, f"[PRUNE-DEDUP] Exact entity duplicate: '{query}'"
+            return True, None
+
+        # For Lookup, use similarity
         for recent_query in list(self.state.query_history)[-5:]:
             similarity = self._query_similarity(query, recent_query)
             if similarity >= self.query_similarity_threshold:
