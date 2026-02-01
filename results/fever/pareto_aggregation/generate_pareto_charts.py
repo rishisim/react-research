@@ -163,7 +163,7 @@ def main():
         bin_stats, cumul_acc = calculate_metrics(df_fw, bins, labels)
         
         # Save for combined plotting
-        if fw != 'react_sample_10_tuned_v6_run2' and fw != 'prog_CA_pruning':
+        if fw != 'react_sample_10_tuned_v6_run2' and fw != 'prog_CA_pruning' and fw != 'action_prune_react':
              combined_data[fw] = {'cumulative': cumul_acc}
         
         # Plot Individual
