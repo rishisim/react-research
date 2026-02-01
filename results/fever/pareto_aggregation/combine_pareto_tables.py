@@ -55,7 +55,11 @@ def main():
                 
                 # Select specific columns
                 cols_to_keep = ['question_idx', 'framework', 'em', 'f1', 'total_tokens']
-                df_subset = df[cols_to_keep]
+                df_subset = df[cols_to_keep].copy()
+
+                # Rename self_reflection to Trajectory-Conditioned Answer Revision (TCAR)
+                df_subset['framework'] = df_subset['framework'].replace('self_reflection', 'Trajectory-Conditioned Answer Revision (TCAR)')
+
                 
                 all_data.append(df_subset)
                 print(f"Processed {file_path} (Rows: {len(df_subset)})")

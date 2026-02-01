@@ -15,7 +15,9 @@ FRAMEWORKS = {
     'react': 'react.json',
     'cot_sc': 'cot_sc.json',
     'action_prune': 'action_prune.json',
-    'majority_voting': 'majority_voting.json'
+    'majority_voting': 'majority_voting.json',
+    'prog_ca_pruning': 'prog_ca_pruning.json',
+    'self_reflection': 'self_reflection.json'
 }
 
 def load_data():
@@ -43,8 +45,13 @@ def load_data():
                     # We need: question_idx, em (bool), total_tokens (int)
                     # Some files might have missing fields, safe get
                     
+                    # Handle renaming for self_reflection
+                    display_name = fw_name
+                    if fw_name == 'self_reflection':
+                        display_name = 'Trajectory-Conditioned Answer Revision (TCAR)'
+
                     record = {
-                        'framework': fw_name,
+                        'framework': display_name,
                         'question_idx': item.get('question_idx'),
                         'em': 1 if item.get('em') else 0, # Convert bool to int for easy summing
                         'total_tokens': item.get('total_tokens', 0)

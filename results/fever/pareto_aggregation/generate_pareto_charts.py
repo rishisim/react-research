@@ -71,7 +71,7 @@ def plot_individual_chart(framework_name, bin_stats, cumulative_accuracy, labels
     ax1.tick_params(axis='y', labelcolor='blue')
     ax1.set_xlabel('Token Bins', fontsize=12)
     ax1.set_xticklabels(labels, rotation=45, ha='right')
-    ax1.set_title(f'Pareto Chart: {framework_name}', fontsize=16)
+    ax1.set_title(f'Pareto Chart (FEVER): {framework_name}', fontsize=16)
     
     # Line Chart (Right Y) - Cumulative Accuracy
     ax2 = ax1.twinx()
@@ -131,7 +131,7 @@ def plot_combined_chart(frameworks_data, labels, output_path):
         cumulative_acc = stats['cumulative']
         ax.plot(labels, cumulative_acc, marker='', linewidth=2.5, label=name, color=colors[i])
         
-    ax.set_title('Combined Pareto Comparison: Cumulative Accuracy vs Token Budget', fontsize=16)
+    ax.set_title('Combined Pareto Comparison (FEVER): Cumulative Accuracy vs Token Budget', fontsize=16)
     ax.set_xlabel('Token Budget', fontsize=12)
     ax.set_ylabel('Cumulative Accuracy (Tasks Solved / Total)', fontsize=12)
     ax.set_xticklabels(labels, rotation=45, ha='right')
@@ -163,7 +163,8 @@ def main():
         bin_stats, cumul_acc = calculate_metrics(df_fw, bins, labels)
         
         # Save for combined plotting
-        combined_data[fw] = {'cumulative': cumul_acc}
+        if fw != 'react_sample_10_tuned_v6_run2' and fw != 'prog_CA_pruning':
+             combined_data[fw] = {'cumulative': cumul_acc}
         
         # Plot Individual
         out_file = os.path.join(OUTPUT_DIR, f'pareto_{fw}.png')
