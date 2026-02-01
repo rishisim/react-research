@@ -10,6 +10,18 @@ OUTPUT_DIR = '/Users/rishisim/Documents/research/react-research/results/fever/pa
 BIN_WIDTH = 2500
 MAX_TOKEN_LIMIT = 50000  # Cap for visualization focus, covering most cases except extreme outliers
 
+
+# Validated mappings for FEVER
+FRAMEWORK_MAPPING = {
+    'react': 'ReAct',
+    'reflexion_react': 'Reflexion', 
+    'cot_sc': 'CoT-SC',
+    'majority_voting': 'Majority Voting',
+    'Trajectory-Conditioned Answer Revision (TCAR)': 'Trajectory-Conditioned Answer Revision (TCAR)',
+    'action_prune_react': 'Action Prune',
+    'prog_CA_pruning': 'Prog. CA Pruning'
+}
+
 def setup_plotting_style():
     sns.set_theme(style="whitegrid")
     plt.rcParams.update({'figure.figsize': (12, 6), 'figure.dpi': 300})
@@ -63,6 +75,9 @@ def calculate_metrics(df_framework, bins, labels):
     return bin_stats, cumulative_accuracy
 
 def plot_individual_chart(framework_name, bin_stats, cumulative_accuracy, labels, output_path):
+    # Use proper name if available, else original
+    display_name = FRAMEWORK_MAPPING.get(framework_name, framework_name)
+
     fig, ax1 = plt.subplots(figsize=(14, 7))
     
     # Bar Chart (Left Y) - Accuracy per Bin
@@ -71,7 +86,7 @@ def plot_individual_chart(framework_name, bin_stats, cumulative_accuracy, labels
     ax1.tick_params(axis='y', labelcolor='blue')
     ax1.set_xlabel('Token Bins', fontsize=12)
     ax1.set_xticklabels(labels, rotation=45, ha='right')
-    ax1.set_title(f'Pareto Chart (FEVER): {framework_name}', fontsize=16)
+    ax1.set_title(f'Pareto Chart (FEVER): {display_name}', fontsize=16)
     
     # Line Chart (Right Y) - Cumulative Accuracy
     ax2 = ax1.twinx()
@@ -123,12 +138,13 @@ def plot_individual_chart(framework_name, bin_stats, cumulative_accuracy, labels
     plt.close()
 
 def plot_combined_chart(frameworks_data, labels, output_path):
-    fig, ax = plt.subplots(figsize=(14, 8))
+    fig, ax = plt.subplots(figsize=(14, 9))
     
     colors = sns.color_palette("tab10", n_colors=len(frameworks_data))
     
     for i, (name, stats) in enumerate(frameworks_data.items()):
         cumulative_acc = stats['cumulative']
+        # Name is already mapped
         ax.plot(labels, cumulative_acc, marker='', linewidth=2.5, label=name, color=colors[i])
         
     ax.set_title('Combined Pareto Comparison (FEVER): Cumulative Accuracy vs Token Budget', fontsize=16)
@@ -136,11 +152,14 @@ def plot_combined_chart(frameworks_data, labels, output_path):
     ax.set_ylabel('Cumulative Accuracy (Tasks Solved / Total)', fontsize=12)
     ax.set_xticklabels(labels, rotation=45, ha='right')
     ax.set_xticks(range(len(labels)))
-    ax.legend(title='Framework', bbox_to_anchor=(1.05, 1), loc='upper left')
+    
+    # Move legend to bottom
+    ax.legend(title='Framework', loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=3, fontsize=12, title_fontsize=14)
     ax.grid(True, linestyle='--', alpha=0.7)
     
-    plt.tight_layout()
-    plt.savefig(output_path)
+    # Adjust layout
+    plt.subplots_adjust(bottom=0.2)
+    plt.savefig(output_path, bbox_inches='tight')
     plt.close()
 
 def main():
@@ -164,7 +183,9 @@ def main():
         
         # Save for combined plotting
         if fw != 'react_sample_10_tuned_v6_run2' and fw != 'prog_CA_pruning' and fw != 'action_prune_react':
-             combined_data[fw] = {'cumulative': cumul_acc}
+             # Use mapped name for key
+             display_name = FRAMEWORK_MAPPING.get(fw, fw)
+             combined_data[display_name] = {'cumulative': cumul_acc}
         
         # Plot Individual
         out_file = os.path.join(OUTPUT_DIR, f'pareto_{fw}.png')

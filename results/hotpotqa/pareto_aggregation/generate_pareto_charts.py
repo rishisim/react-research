@@ -10,6 +10,18 @@ OUTPUT_DIR = '/Users/rishisim/Documents/research/react-research/results/hotpotqa
 BIN_WIDTH = 5000
 MAX_TOKEN_LIMIT = 200000  # High limit to cover Reflexion's heavy usage
 
+
+# Validated mappings for HotpotQA
+FRAMEWORK_MAPPING = {
+    'react': 'ReAct',
+    'reflexion': 'Reflexion', 
+    'cot_sc': 'CoT-SC',
+    'majority_voting': 'Majority Voting',
+    'Trajectory-Conditioned Answer Revision (TCAR)': 'Trajectory-Conditioned Answer Revision (TCAR)',
+    'action_prune': 'Action Prune',
+    'prog_ca_pruning': 'Prog. CA Pruning'
+}
+
 def setup_plotting_style():
     sns.set_theme(style="whitegrid")
     plt.rcParams.update({'figure.figsize': (12, 6), 'figure.dpi': 300})
@@ -53,6 +65,9 @@ def calculate_metrics(df_framework, bins, labels):
     return bin_stats, cumulative_accuracy
 
 def plot_individual_chart(framework_name, bin_stats, cumulative_accuracy, labels, output_path):
+    # Use proper name if available, else original
+    display_name = FRAMEWORK_MAPPING.get(framework_name, framework_name)
+    
     fig, ax1 = plt.subplots(figsize=(16, 8)) # Wider figure for many bins
     
     # Bar Chart (Left Y) - Accuracy per Bin
@@ -71,7 +86,7 @@ def plot_individual_chart(framework_name, bin_stats, cumulative_accuracy, labels
     else:
         ax1.set_xticklabels(labels, rotation=45, ha='right')
         
-    ax1.set_title(f'Pareto Chart (HotPotQA): {framework_name}', fontsize=16)
+    ax1.set_title(f'Pareto Chart (HotPotQA): {display_name}', fontsize=16)
     
     # Line Chart (Right Y) - Cumulative Accuracy
     ax2 = ax1.twinx()
@@ -98,12 +113,13 @@ def plot_individual_chart(framework_name, bin_stats, cumulative_accuracy, labels
     plt.close()
 
 def plot_combined_chart(frameworks_data, labels, output_path):
-    fig, ax = plt.subplots(figsize=(16, 9))
+    fig, ax = plt.subplots(figsize=(16, 10))
     
     colors = sns.color_palette("tab10", n_colors=len(frameworks_data))
     
     for i, (name, stats) in enumerate(frameworks_data.items()):
         cumulative_acc = stats['cumulative']
+        # Name is already mapped in main loop before passing here
         ax.plot(labels, cumulative_acc, marker='', linewidth=2.5, label=name, color=colors[i])
         
     ax.set_title('Combined Pareto Comparison (HotPotQA): Cumulative Accuracy vs Token Budget', fontsize=16)
@@ -116,11 +132,13 @@ def plot_combined_chart(frameworks_data, labels, output_path):
     else:
         ax.set_xticklabels(labels, rotation=45, ha='right')
         
-    ax.legend(title='Framework', bbox_to_anchor=(1.01, 1), loc='upper left')
+    # Move legend to bottom
+    ax.legend(title='Framework', loc='upper center', bbox_to_anchor=(0.5, -0.2), ncol=3, fontsize=12, title_fontsize=14)
     ax.grid(True, linestyle='--', alpha=0.7)
     
-    plt.tight_layout()
-    plt.savefig(output_path)
+    # Adjust layout to make room for bottom legend
+    plt.subplots_adjust(bottom=0.25)
+    plt.savefig(output_path, bbox_inches='tight')
     plt.close()
 
 def main():
@@ -144,7 +162,9 @@ def main():
         
         # Save for combined plotting
         if fw != 'prog_ca_pruning' and fw != 'action_prune_react' and fw != 'action_prune':
-            combined_data[fw] = {'cumulative': cumul_acc}
+            # Use mapped name for key
+            display_name = FRAMEWORK_MAPPING.get(fw, fw)
+            combined_data[display_name] = {'cumulative': cumul_acc}
         
         # Plot Individual
         out_file = os.path.join(OUTPUT_DIR, f'pareto_{fw}.png')
