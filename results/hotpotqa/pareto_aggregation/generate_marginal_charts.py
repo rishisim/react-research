@@ -5,8 +5,8 @@ import numpy as np
 import os
 
 # Configuration
-INPUT_FILE = '/Users/rishisim/Documents/research/react-research/results/fever/pareto_aggregation/pareto_summary.csv'
-OUTPUT_DIR = '/Users/rishisim/Documents/research/react-research/results/fever/pareto_aggregation/fever_charts_500'
+INPUT_FILE = '/Users/rishisim/Documents/research/react-research/results/hotpotqa/pareto_aggregation/pareto_summary.csv'
+OUTPUT_DIR = '/Users/rishisim/Documents/research/react-research/results/hotpotqa/pareto_aggregation/hotpotqa_charts_500'
 TASK_BIN_SIZE = 10  # Number of tasks per bin for smoothing
 
 def setup_plotting_style():
@@ -26,13 +26,13 @@ def calculate_marginal_data(df, bin_size=TASK_BIN_SIZE):
     # Define the frameworks we want to include and their display names
     # Framework ID -> Display Name
     FRAMEWORK_MAPPING = {
-        'reflexion_react': 'Reflexion',
+        'reflexion': 'Reflexion',
         'cot_sc': 'CoT-SC',
         'Trajectory-Conditioned Answer Revision (TCAR)': 'Trajectory-Conditioned Answer Revision (TCAR)',
         'react': 'ReAct',
         'majority_voting': 'Majority Voting'
     }
-    
+
     results = {}
 
     for fw_id, fw_label in FRAMEWORK_MAPPING.items():
@@ -85,7 +85,7 @@ def plot_marginal_chart(data, output_path):
     for i, (name, stats) in enumerate(data.items()):
         ax.plot(stats['x'], stats['y'], marker='o', markersize=4, linewidth=2.5, label=name, color=colors[i])
         
-    ax.set_title(f'Marginal Cost Analysis: Tokens per Additional Task Solved (Smoothed by {TASK_BIN_SIZE} tasks)', fontsize=16)
+    ax.set_title(f'Marginal Cost Analysis (HotPotQA): Tokens per Additional Task Solved (Smoothed by {TASK_BIN_SIZE} tasks)', fontsize=16)
     ax.set_xlabel('Number of Tasks Solved (Cheapest to Most Expensive)', fontsize=14)
     ax.set_ylabel('Average Tokens per Task (in bin)', fontsize=14)
     
