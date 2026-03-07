@@ -35,6 +35,32 @@ def llm(prompt, stop=["\n"], num_traces=1):
 
   temperature_setting = 0.0 if num_traces == 1 else 0.7
   max_retries = 3
+  
+  active_model = os.environ.get("ACTIVE_MODEL", "gemini-2.5-flash")
+  if "qwen" in active_model.lower():
+    import openai
+    oai_client = openai.OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+    for attempt in range(max_retries):
+      try:
+        response = oai_client.completions.create(
+            model=active_model,
+            prompt=prompt,
+            temperature=temperature_setting,
+            max_tokens=100,
+            top_p=1.0,
+            stop=stop
+        )
+        if response and response.choices and response.choices[0].text:
+          return response.choices[0].text
+        time.sleep(2)
+      except Exception as e:
+        print(f"LLM call failed for Qwen (attempt {attempt + 1}/{max_retries}): {str(e)}")
+        if attempt < max_retries - 1:
+          time.sleep(2)
+        else:
+          raise
+    return "I need to finish now.\nFinish[Unable to proceed due to API error]"
+
   for attempt in range(max_retries):
     try:
       response = client.models.generate_content(

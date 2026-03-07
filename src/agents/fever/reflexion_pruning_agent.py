@@ -314,7 +314,7 @@ Previous reflexions:
     
     # Log the result to file with framework/run folder structure
     # Use 'reflexion_pruning' folder
-    framework_folder = os.path.join(os.path.dirname(__file__), '../../../results/fever/reflexion_pruning')
+    framework_folder = os.path.join(os.path.dirname(__file__), '../../../results/fever/gemini/reflexion_pruning')
     run_name = get_next_run_number(framework_folder)
     run_folder = os.path.join(framework_folder, run_name)
     os.makedirs(run_folder, exist_ok=True)

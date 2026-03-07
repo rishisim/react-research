@@ -64,6 +64,7 @@ class HotPotQAExperimentRunner:
             task_ids_file: Path to JSON file containing specific task IDs to run
         """
         self.model = model
+        os.environ["ACTIVE_MODEL"] = model
         self.num_examples = num_examples
         self.frameworks = frameworks or ['react']
         self.seed = seed
@@ -77,8 +78,11 @@ class HotPotQAExperimentRunner:
         script_dir = Path(__file__).parent
         project_root = script_dir.parent.parent.parent
 
-        # Determine base directory based on frameworks
-        if len(self.frameworks) == 1 and self.frameworks[0] == 'react':
+        # Determine base directory based on model and frameworks
+        # Qwen (local on-device) results go to a dedicated model directory
+        if "qwen" in model.lower():
+            base_results_path = project_root / "results/hotpotqa/qwen"
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'react':
             base_results_path = project_root / "results/hotpotqa/react"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'reflexion':
             base_results_path = project_root / "results/hotpotqa/reflexion"

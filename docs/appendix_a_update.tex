@@ -1,0 +1,149 @@
+% Appendix A reproducibility addendum (A.8--A.12)
+% This file is intended to be \input{} into the main manuscript appendix.
+
+\subsection{A.8 Evaluation Slice and Dataset Handling}
+\paragraph{Benchmarks and split files.}
+We evaluate on:
+\begin{itemize}
+\item HotPotQA dev distractor split: \texttt{data/hotpotqa/hotpot\_dev\_distractor\_v1.json} (7,405 available examples).
+\item FEVER paper dev split: \texttt{data/fever/paper\_dev.jsonl} (9,999 available claims).
+\end{itemize}
+
+\paragraph{Evaluation slice construction.}
+For both benchmarks, we use the same two-stage deterministic slice procedure:
+\begin{enumerate}
+\item Sample 3,000 task IDs from the full dev split using \texttt{random.sample} with seed \texttt{20260115}.
+\item Shuffle those 3,000 IDs with \texttt{random.shuffle} (Fisher-Yates) using seed \texttt{42}.
+\item Take the first 500 IDs as the evaluation slice (files: \texttt{results/*/dataset\_sample\_tasks/first\_500\_task\_ids.json}).
+\end{enumerate}
+For FEVER, claim IDs are mapped to line indices in \texttt{paper\_dev.jsonl} before execution.
+
+\paragraph{Realized row counts used in aggregate tables.}
+The table-generation script operates on stored artifacts and therefore uses the following realized $N_{\text{eval}}$:
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lcc}
+\hline
+Method & HotPotQA $N_{\text{eval}}$ & FEVER $N_{\text{eval}}$ \\
+\hline
+ReAct & 500 & 500 \\
+Reflexion & 500 & 500 \\
+TCAR & 500 & 501 \\
+Majority Voting & 499 & 500 \\
+CoT-SC & 499 & 500 \\
+\hline
+\end{tabular}
+\caption{Artifact row counts used by analysis scripts. FEVER TCAR has 500 unique IDs with one duplicated retry row (one failed attempt plus one successful retry).}
+\end{table}
+
+\paragraph{Answer normalization and FEVER label handling.}
+Exact-match scoring normalizes text by: (i) lowercasing, (ii) stripping punctuation, (iii) removing articles (\texttt{a/an/the}), and (iv) collapsing whitespace. FEVER answers are constrained to \{\texttt{SUPPORTS}, \texttt{REFUTES}, \texttt{NOT ENOUGH INFO}\}. FEVER majority-vote ties default to \texttt{NOT ENOUGH INFO}.
+
+\subsection{A.9 Agent/Runtime Hyperparameters}
+\begin{itemize}
+\item Max tool steps per ReAct trajectory: 7.
+\item Early stop: terminate immediately when a \texttt{Finish[...]} action is produced.
+\item Forced finish at step cap:
+  \texttt{Finish[NOT ENOUGH INFO]} for FEVER, \texttt{Finish[null]} for HotPotQA.
+\item Parse-recovery behavior: if ``Thought/Action'' parsing fails, make a recovery action-only call; if still invalid, force the dataset fallback finish action above.
+\item CoT-SC: $n=3$ traces (temperature 0.7) + 1 synthesis call.
+\item Majority Voting: $n=3$ traces (temperature 0.7); FEVER ties default to \texttt{NOT ENOUGH INFO}, while HotPotQA uses an LLM semantic aggregator (fallback \texttt{null} only when no valid answers are available).
+\item Reflexion: max trials = 7; one verifier/reflection call per trial; stop early when current answer is judged correct (FEVER: exact match to GT label, HotPotQA: LLM-judge semantic correctness vs GT), i.e., oracle-style stopping during offline evaluation.
+\item TCAR: one base ReAct trace + one post-hoc verifier/rewrite call; no new tool actions in the revision phase.
+\item Environment timeout retries (\texttt{env.step}): up to 10 retries on request timeouts.
+\item HotPotQA LLM call retries: request timeout 60s, up to 5 retries with exponential backoff (base 2s, capped at 32s, + jitter).
+\end{itemize}
+
+\paragraph{Tool interface details.}
+\begin{itemize}
+\item \texttt{Search[entity]} resolves one Wikipedia page and returns the first 5 sentence-level snippets from that page.
+\item If no direct page is found, Search returns up to 5 similar titles.
+\item \texttt{Lookup[keyword]} returns one sentence per call from the cached page that contains the keyword (with \texttt{(Result i / N)} indexing).
+\item Observation formatting in context is literal trajectory append:
+  \texttt{Thought i}, \texttt{Action i}, \texttt{Observation i}.
+\item Additional token/character truncation is not applied in agent code beyond the 5-sentence Search observation limit.
+\end{itemize}
+
+\subsection{A.10 Offline Budgeted Curve Construction (Cheapest-First)}
+We compute budget curves post hoc from per-instance pairs $(y_i, t_i)$, where $y_i \in \{0,1\}$ is correctness and $t_i$ is total token cost.
+\begin{verbatim}
+Input: pairs {(y_i, t_i)}_{i=1}^N, budgets {B_k}
+Sort pairs by token cost ascending: (y_(1), t_(1)), ..., (y_(N), t_(N))
+
+For each budget B:
+  cum_tokens = 0
+  m = 0
+  correct = 0
+  For j = 1..N:
+    If cum_tokens + t_(j) > B: break
+    cum_tokens += t_(j)
+    m += 1
+    correct += y_(j)
+  accuracy(B) = correct / m      (if m > 0, else NA)
+  coverage(B) = m / N
+  Report method, B, m, accuracy(B), coverage(B)
+\end{verbatim}
+This is an offline optimistic throughput schedule (it assumes per-instance costs are known after full runs), not an online routing policy.
+
+\subsection{A.11 Prompt Templates (Skeletons)}
+\paragraph{ReAct base prompt skeleton.}
+\begin{verbatim}
+Instruction: Solve with Thought/Action/Observation interleaving.
+Allowed actions: Search[...], Lookup[...], Finish[...]
+
+Claim or Question: ...
+Thought 1: ...
+Action 1: Search[...]
+Observation 1: ...
+...
+Action k: Finish[answer]
+\end{verbatim}
+Constraints: FEVER \texttt{Finish} output must be one of \{\texttt{SUPPORTS, REFUTES, NOT ENOUGH INFO}\}; HotPotQA uses free-form answers and \texttt{null} when unsupported.
+
+\paragraph{Reflexion critique prompt skeleton.}
+\begin{verbatim}
+Given an unsuccessful past trajectory:
+- Identify strategy mistakes tied to specific actions.
+- Produce a concise "Plan:" for the next trial.
+- Avoid generic summary; give actionable next-step searches/lookups.
+\end{verbatim}
+
+\paragraph{TCAR verifier/rewrite prompt skeleton.}
+\begin{verbatim}
+Given one completed trajectory and final answer:
+Verification: [CORRECT or INCORRECT]
+Reasoning: ...
+Final Answer: [original if correct, corrected if incorrect]
+\end{verbatim}
+Constraint: corrected answer must use only evidence present in the trace observations.
+
+\paragraph{CoT-SC synthesis prompt skeleton.}
+\begin{verbatim}
+Input: original claim/question + n trajectories (n=3)
+Task: select best final answer from trajectory evidence.
+Output:
+- FEVER: one label in {SUPPORTS, REFUTES, NOT ENOUGH INFO}
+- HotPotQA: one final answer string only
+\end{verbatim}
+
+\subsection{A.12 Decoding and API Settings}
+\begin{itemize}
+\item Model: \texttt{gemini-2.5-flash}.
+\item Thinking budget: disabled (\texttt{thinking\_budget=0}).
+\item \texttt{top\_p = 1.0}.
+\item \texttt{max\_output\_tokens = 512}.
+\item Inter-call pacing: 0.5s sleep before FEVER LLM calls; 3.0s sleep before HotPotQA LLM calls.
+\item Temperature:
+  \begin{itemize}
+  \item 0.0 for single-trace, verifier, and synthesis calls.
+  \item 0.7 for diversified multi-trace calls (\(n=3\): CoT-SC and Majority Voting; per-trace generation in those modes).
+  \end{itemize}
+\item Stop sequences by call type:
+  \begin{itemize}
+  \item ReAct generation call: stop at \texttt{"\textbackslash nObservation i:"}.
+  \item Recovery action-only call: stop at \texttt{"\textbackslash n"}.
+  \item Verifier/reflection/judge/synthesis calls use either empty stop list or single-newline stop depending on helper function.
+  \end{itemize}
+\item Safety/MIME constraints: no additional custom safety settings and no response MIME-type constraints are set in agent code.
+\end{itemize}

@@ -38,8 +38,13 @@ class CombinedExperimentRunner:
         project_root = script_dir.parent.parent.parent
         
         # Setup separate result directories
-        base_mv_path = project_root / "results/fever/majority_voting"
-        base_cot_path = project_root / "results/fever/cot_sc"
+        # Route Qwen vs Gemini to appropriate model directories
+        if "qwen" in model.lower():
+            base_mv_path = project_root / "results/fever/qwen"
+            base_cot_path = project_root / "results/fever/qwen"
+        else:
+            base_mv_path = project_root / "results/fever/gemini/majority_voting"
+            base_cot_path = project_root / "results/fever/gemini/cot_sc"
         
         run_name = f"seed{seed}_{model.replace('/', '-')}"
         

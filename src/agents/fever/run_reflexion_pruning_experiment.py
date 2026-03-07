@@ -26,7 +26,7 @@ def run_experiment():
     print(f"Starting Reflexion Pruning Experiment on {len(task_ids)} tasks...")
     
     # Define output directory
-    output_dir = os.path.join(root_dir, 'results/fever/reflexion_pruning/experiment_10_tasks')
+    output_dir = os.path.join(root_dir, 'results/fever/gemini/reflexion_pruning/experiment_10_tasks')
     os.makedirs(output_dir, exist_ok=True)
     
     json_path = os.path.join(output_dir, 'results.json')

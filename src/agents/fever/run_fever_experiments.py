@@ -61,6 +61,7 @@ class FEVERExperimentRunner:
             task_ids_file: Path to JSON file containing task IDs to use
         """
         self.model = model
+        os.environ["ACTIVE_MODEL"] = model
         self.num_examples = num_examples
         self.frameworks = frameworks or ['react']
         self.seed = seed
@@ -82,33 +83,27 @@ class FEVERExperimentRunner:
         script_dir = Path(__file__).parent
         project_root = script_dir.parent.parent.parent
         
-        # Determine base directory based on frameworks
-        if len(self.frameworks) == 1 and self.frameworks[0] == 'react':
-            base_results_path = project_root / "results/fever/react"
+        # Determine base directory based on model and frameworks
+        # Qwen (local on-device) results go to a dedicated model directory
+        if "qwen" in model.lower():
+            base_results_path = project_root / "results/fever/qwen"
+        elif len(self.frameworks) == 1 and self.frameworks[0] == 'react':
+            base_results_path = project_root / "results/fever/gemini/react"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'reflexion':
-            base_results_path = project_root / "results/fever/reflexion"
+            base_results_path = project_root / "results/fever/gemini/reflexion"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'majority_voting':
-            base_results_path = project_root / "results/fever/majority_voting"
+            base_results_path = project_root / "results/fever/gemini/majority_voting"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'action_prune':
-            base_results_path = project_root / "results/fever/action_prune"
+            base_results_path = project_root / "results/fever/gemini/action_prune"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'self_reflection':
-            base_results_path = project_root / "results/fever/self_reflection"
+            base_results_path = project_root / "results/fever/gemini/self_reflection"
         elif len(self.frameworks) == 1 and self.frameworks[0] == 'cot_sc':
-            base_results_path = project_root / "results/fever/cot_sc"
+            base_results_path = project_root / "results/fever/gemini/cot_sc"
         elif all(f in ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'action_prune'] for f in self.frameworks):
-             # For mixed runs or other types, we might want a general folder or stick to the previous behavior
-             # The user asked for "general folders are created for hotpotQA and FEVER" 
-             # but specifically mentioned outputs of runs should go with dedicated folders.
-             # Let's default to results/fever/mixed if it's a mix, or just respect the passed in arg if it feels safer,
-             # but the user requested changes.
-             # However, the user request "react fodlers general folders are created for hotpotQA and FEVER" implies splitting by method.
-             # If running multiple methods, it complicates things. 
-             # Let's stick to the user's specific request for "dedicated folders".
-             # If it's a mix, I'll put it in a 'mixed' subfolder in fever.
-             base_results_path = project_root / "results/fever/mixed"
+             base_results_path = project_root / "results/fever/gemini/mixed"
         else:
              # Fallback
-             base_results_path = project_root / "results/fever"
+             base_results_path = project_root / "results/fever/gemini"
 
         self.results_dir = (base_results_path / run_name).resolve()
         self.results_dir.mkdir(parents=True, exist_ok=True)

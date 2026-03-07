@@ -292,7 +292,7 @@ Previous reflexions:
         print("="*60)
     
     # Log the result to file with framework/run folder structure
-    framework_folder = os.path.join(os.path.dirname(__file__), '../../../results/fever/reflexion')
+    framework_folder = os.path.join(os.path.dirname(__file__), '../../../results/fever/gemini/reflexion')
     run_name = get_next_run_number(framework_folder)
     run_folder = os.path.join(framework_folder, run_name)
     os.makedirs(run_folder, exist_ok=True)

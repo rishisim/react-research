@@ -21,7 +21,7 @@ def run_experiment_batch2():
     new_task_ids = [4795, 9500, 344, 2194, 3125, 7350, 4187, 1564, 8501, 7826]
     
     # Define output directory
-    output_dir = os.path.join(root_dir, 'results/fever/reflexion_pruning/experiment_10_tasks')
+    output_dir = os.path.join(root_dir, 'results/fever/gemini/reflexion_pruning/experiment_10_tasks')
     os.makedirs(output_dir, exist_ok=True)
     json_path = os.path.join(output_dir, 'results.json')
     

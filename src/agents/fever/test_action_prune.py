@@ -75,7 +75,7 @@ def main():
     
     # Save results to action_prune folder
     script_dir = Path(__file__).parent
-    results_dir = (script_dir / "../../../results/fever/action_prune").resolve()
+    results_dir = (script_dir / "../../../results/fever/gemini/action_prune").resolve()
     results_dir.mkdir(parents=True, exist_ok=True)
     
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
