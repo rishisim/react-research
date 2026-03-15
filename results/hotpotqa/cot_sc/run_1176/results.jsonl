@@ -1,0 +1,276 @@
+[
+    {
+        "question_idx": 1283,
+        "question_text": "Question: How long is the tidal estuary in which Branford is a shoreline town?",
+        "answer": "110 mi (180 km)",
+        "gt_answer": "110 miles",
+        "em": false,
+        "f1": 0.3333333333333333,
+        "reward": false,
+        "n_calls": 18,
+        "n_badcalls": 0,
+        "input_tokens": 46155,
+        "output_tokens": 1325,
+        "total_tokens": 47480,
+        "num_traces_run": 3,
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "110 mi (180 km)",
+                "em": false,
+                "n_calls": 7,
+                "input_tokens": 15060,
+                "output_tokens": 467
+            },
+            {
+                "trace_num": 2,
+                "answer": "110 miles (180 km)",
+                "em": false,
+                "n_calls": 7,
+                "input_tokens": 15328,
+                "output_tokens": 674
+            },
+            {
+                "trace_num": 3,
+                "answer": "110 miles",
+                "em": true,
+                "n_calls": 4,
+                "input_tokens": 7760,
+                "output_tokens": 139
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 7,
+                "answer": "110 mi (180 km)",
+                "gt_answer": "110 miles",
+                "question_idx": 1283,
+                "reward": false,
+                "em": false,
+                "f1": 0.3333333333333333,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 15060,
+                "output_tokens": 467,
+                "total_tokens": 15527,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1690,
+                        "output_tokens": 34,
+                        "total_tokens": 1724
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1771,
+                        "output_tokens": 85,
+                        "total_tokens": 1856
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2047,
+                        "output_tokens": 51,
+                        "total_tokens": 2098
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2151,
+                        "output_tokens": 47,
+                        "total_tokens": 2198
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2256,
+                        "output_tokens": 112,
+                        "total_tokens": 2368
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2415,
+                        "output_tokens": 31,
+                        "total_tokens": 2446
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2560,
+                        "output_tokens": 72,
+                        "total_tokens": 2632
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 170,
+                        "output_tokens": 35,
+                        "total_tokens": 205
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: How long is the tidal estuary in which Branford is a shoreline town?\nThought 1: I need to find the tidal estuary in which Branford is a shoreline town, then find the length of that estuary.\nAction 1: Search[Branford]\nObservation 1: Could not find [Branford]. Similar: ['Branford Marsalis', 'Branford', 'Branford, Connecticut', 'Branford (surname)', 'Branford, Florida'].\nThought 2: I need to specify \"Branford, Connecticut\" or \"Branford, Florida\" to find more specific information. Given the nature of the question (tidal estuary), it's more likely to be a town on the coast, so \"Branford, Connecticut\" or \"Branford, Florida\" are good choices. I will start with Branford, Connecticut.\nAction 2: Search[Branford, Connecticut]\nObservation 2: Branford is a shoreline town located on Long Island Sound in New Haven County, Connecticut, United States, about 6 miles (10\u00a0km) east of downtown New Haven. The town is part of the South Central Connecticut Planning Region. Branford borders East Haven to the west, Guilford to the east, and North Branford to the north. The population was 28,273 in the 2020 census.[2]. According to the United States Census Bureau, the town has a total area of 28.0 square miles (73\u00a0km2); 22.0 square miles (57\u00a0km2) are land and 6.0 square miles (16\u00a0km2) (21.5%) are water, including the Branford River, Queach Brook and the Branford Supply Ponds.\nThought 3: The passage mentions Branford River, Queach Brook and the Branford Supply Ponds as water bodies. I need to determine if any of these are a tidal estuary and then find its length.\nAction 3: Search[Branford River estuary]\nObservation 3: Could not find Branford River estuary. Similar: ['Farm River (Connecticut)', 'Hudson River', 'Raritan River', 'Long Island Sound (category Estuaries of Connecticut)', 'Farm River State Park'].\nThought 4: I did not find information about the Branford River estuary directly. I should try searching for \"Branford River\" and see if it mentions being a tidal estuary and its length.\nAction 4: Search[Branford River]\nObservation 4: Could not find Branford River. Similar: ['Branford, Connecticut', 'Branford Center, Connecticut', 'Branford Point Historic District', 'Branford, Florida', 'Stony Creek Brewery (category Branford, Connecticut)'].\nThought 5: I am having trouble finding information about \"Branford River estuary\" or \"Branford River\" directly. The initial search for \"Branford, Connecticut\" mentioned \"Branford River\" as one of its water bodies. I need to find which tidal estuary Branford is a shoreline town on. The initial search for \"Branford, Connecticut\" mentioned \"Long Island Sound\". I should check if Long Island Sound is a tidal estuary and if Branford is on it, and then find its length.\nAction 5: Search[Long Island Sound estuary]\nObservation 5: Could not find Long Island Sound estuary. Similar: ['Long Island Sound', 'Long Island', 'Skate (fish)', 'Estuary', 'Long Island (disambiguation)'].\nThought 6: I need to search for Long Island Sound and check if it is a tidal estuary and its length.\nAction 6: Search[Long Island Sound]\nObservation 6: Long Island Sound is a marine sound and tidal estuary of the Atlantic Ocean. It lies predominantly between the U.S. state of Connecticut to the north and Long Island in New York state to the south. From west to east, the sound stretches 110\u00a0mi (180\u00a0km) from the East River and the Throgs Neck Bridge in New York City, along the North Shore of Long Island, to Block Island Sound. The sound forms part of the Intracoastal Waterway..\nThought 7: Long Island Sound is a tidal estuary and it stretches 110 mi (180 km). Branford is located on Long Island Sound, as per Observation 2. So the length of the tidal estuary is 110 miles (180 km).\nAction 7: Finish[110 mi (180 km)]\nObservation 7: Episode finished, reward = 0\n\n",
+                "question_text": "Question: How long is the tidal estuary in which Branford is a shoreline town?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer provides the same numerical value and unit as the ground truth, with additional correct context (the conversion to kilometers) which is acceptable."
+            },
+            {
+                "steps": 7,
+                "answer": "110 miles (180 km)",
+                "gt_answer": "110 miles",
+                "question_idx": 1283,
+                "reward": false,
+                "em": false,
+                "f1": 0.6666666666666666,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 15328,
+                "output_tokens": 674,
+                "total_tokens": 16002,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1690,
+                        "output_tokens": 32,
+                        "total_tokens": 1722
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1769,
+                        "output_tokens": 69,
+                        "total_tokens": 1838
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2029,
+                        "output_tokens": 41,
+                        "total_tokens": 2070
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2128,
+                        "output_tokens": 158,
+                        "total_tokens": 2286
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2300,
+                        "output_tokens": 140,
+                        "total_tokens": 2440
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2494,
+                        "output_tokens": 140,
+                        "total_tokens": 2634
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2748,
+                        "output_tokens": 60,
+                        "total_tokens": 2808
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 170,
+                        "output_tokens": 34,
+                        "total_tokens": 204
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: How long is the tidal estuary in which Branford is a shoreline town?\nThought 1: I need to find the tidal estuary that Branford is a shoreline town of, and then find its length.\nAction 1: Search[Branford]\nObservation 1: Could not find [Branford]. Similar: ['Branford Marsalis', 'Branford', 'Branford, Connecticut', 'Branford (surname)', 'Branford, Florida'].\nThought 2: I should search for \"Branford, Connecticut\" or \"Branford, Florida\" since the question mentions it being a shoreline town, implying a specific location. Given the context of \"tidal estuary,\" \"Branford, Connecticut\" seems more likely to be associated with such a feature.\nAction 2: Search[Branford, Connecticut]\nObservation 2: Branford is a shoreline town located on Long Island Sound in New Haven County, Connecticut, United States, about 6 miles (10\u00a0km) east of downtown New Haven. The town is part of the South Central Connecticut Planning Region. Branford borders East Haven to the west, Guilford to the east, and North Branford to the north. The population was 28,273 in the 2020 census.[2]. According to the United States Census Bureau, the town has a total area of 28.0 square miles (73\u00a0km2); 22.0 square miles (57\u00a0km2) are land and 6.0 square miles (16\u00a0km2) (21.5%) are water, including the Branford River, Queach Brook and the Branford Supply Ponds.\nThought 3: The passage mentions Branford River, which could be the tidal estuary. I need to find if Branford River is a tidal estuary and its length.\nAction 3: Search[Branford River]\nObservation 3: Could not find Branford River. Similar: ['Branford, Connecticut', 'Branford Center, Connecticut', 'Branford Point Historic District', 'Branford, Florida', 'Stony Creek Brewery (category Branford, Connecticut)'].\nThought 4: The initial search for \"Branford\" yielded options for \"Branford, Connecticut\" and \"Branford, Florida.\" I chose \"Branford, Connecticut\" as it is described as a \"shoreline town\" and is located on Long Island Sound, which is consistent with a tidal estuary. The search for \"Branford, Connecticut\" mentions the \"Branford River.\" Now I need to confirm if the Branford River is a tidal estuary and its length. Since a direct search for \"Branford River\" failed, I will try to find information about the Branford River within the context of Branford, Connecticut, or the Long Island Sound. I will try to lookup \"tidal estuary\" in the Branford, Connecticut page.\nAction 4: Lookup[tidal estuary]\nObservation 4: No more results.\n\nThought 5: The previous search for \"Branford River\" did not yield a direct result. I need to find information about the Branford River specifically as a tidal estuary and its length. Since I couldn't find it directly, it might be that the Branford River itself isn't a widely recognized major tidal estuary with a distinct Wikipedia page about its length, or it's part of a larger system. I will broaden my search to see if \"Branford River tidal estuary\" yields better results, or if there's a larger \"tidal estuary\" in the area of Branford, Connecticut, that the town is associated with.\nAction 5: Search[Branford River tidal estuary]\nObservation 5: Could not find Branford River tidal estuary. Similar: ['Hudson River', 'Farm River (Connecticut)', 'Long Island Sound (category Estuaries of Connecticut)', 'Raritan River', 'Farm River State Park'].\nThought 6: Thought 6: The search for \"Branford River tidal estuary\" did not yield a direct result, but it did suggest \"Long Island Sound (category Estuaries of Connecticut)\" and \"Farm River (Connecticut)\". Branford is located on Long Island Sound, and the Branford River feeds into it. It's possible that the question is referring to the Long Island Sound itself as the tidal estuary, or a specific part of it related to Branford. Or it could be the Farm River which is also in the area. I will first search for Long Island Sound to see if it's described as a tidal estuary and its length.\nAction 6: Search[Long Island Sound]\nObservation 6: Long Island Sound is a marine sound and tidal estuary of the Atlantic Ocean. It lies predominantly between the U.S. state of Connecticut to the north and Long Island in New York state to the south. From west to east, the sound stretches 110\u00a0mi (180\u00a0km) from the East River and the Throgs Neck Bridge in New York City, along the North Shore of Long Island, to Block Island Sound. The sound forms part of the Intracoastal Waterway..\nThought 7: Long Island Sound is described as a tidal estuary and its length is 110 miles (180 km). Branford is a shoreline town on Long Island Sound. This seems to be the correct answer.\nAction 7: Finish[110 miles (180 km)]\nObservation 7: Episode finished, reward = 0\n\n",
+                "question_text": "Question: How long is the tidal estuary in which Branford is a shoreline town?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer provides the same numerical value as the ground truth answer, with additional correct context (the conversion to kilometers) which is acceptable."
+            },
+            {
+                "steps": 4,
+                "answer": "110 miles",
+                "gt_answer": "110 miles",
+                "question_idx": 1283,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 7760,
+                "output_tokens": 139,
+                "total_tokens": 7899,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1690,
+                        "output_tokens": 34,
+                        "total_tokens": 1724
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1772,
+                        "output_tokens": 29,
+                        "total_tokens": 1801
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1992,
+                        "output_tokens": 36,
+                        "total_tokens": 2028
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2142,
+                        "output_tokens": 23,
+                        "total_tokens": 2165
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 164,
+                        "output_tokens": 17,
+                        "total_tokens": 181
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: How long is the tidal estuary in which Branford is a shoreline town?\nThought 1: I need to find the tidal estuary that Branford is a shoreline town in and then find the length of that estuary.\nAction 1: Search[Branford]\nObservation 1: Could not find [Branford]. Similar: ['Branford Marsalis', 'Branford', 'Branford, Connecticut', 'Branford (surname)', 'North Branford, Connecticut'].\nThought 2: I should search for \"Branford, Connecticut\" since it's a town.\nAction 2: Search[Branford, Connecticut]\nObservation 2: Branford is a shoreline town located on Long Island Sound in New Haven County, Connecticut, United States, about 6 miles (10\u00a0km) east of downtown New Haven. The town is part of the South Central Connecticut Planning Region. Branford borders East Haven to the west, Guilford to the east, and North Branford to the north. The population was 28,273 in the 2020 census.[2]. According to the United States Census Bureau, the town has a total area of 28.0 square miles (73\u00a0km2); 22.0 square miles (57\u00a0km2) are land and 6.0 square miles (16\u00a0km2) (21.5%) are water, including the Branford River, Queach Brook and the Branford Supply Ponds.\nThought 3: The text mentions Branford is a shoreline town on Long Island Sound. I need to find the length of Long Island Sound.\nAction 3: Search[Long Island Sound]\nObservation 3: Long Island Sound is a marine sound and tidal estuary of the Atlantic Ocean. It lies predominantly between the U.S. state of Connecticut to the north and Long Island in New York state to the south. From west to east, the sound stretches 110\u00a0mi (180\u00a0km) from the East River and the Throgs Neck Bridge in New York City, along the North Shore of Long Island, to Block Island Sound. The sound forms part of the Intracoastal Waterway..\nThought 4: Long Island Sound is 110 miles long.\nAction 4: Finish[110 miles]\nObservation 4: Episode finished, reward = 1\n\n",
+                "question_text": "Question: How long is the tidal estuary in which Branford is a shoreline town?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer is identical to the ground truth answer."
+            }
+        ],
+        "llm_correct": true,
+        "llm_explanation": "The predicted answer provides the same numerical value and unit as the ground truth, with additional correct context (the conversion to kilometers) which is acceptable.",
+        "framework": "cot_sc"
+    }
+]

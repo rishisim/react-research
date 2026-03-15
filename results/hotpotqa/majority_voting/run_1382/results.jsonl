@@ -1,0 +1,289 @@
+[
+    {
+        "question_idx": 5987,
+        "question_text": "Question: What else was Baghdad known as during the Abbasid Caliphate?",
+        "answer": "Round City",
+        "gt_answer": "the City of Peace",
+        "em": false,
+        "f1": 0.4,
+        "reward": false,
+        "n_calls": 19,
+        "n_badcalls": 0,
+        "input_tokens": 39668,
+        "output_tokens": 1485,
+        "total_tokens": 41153,
+        "num_traces_run": 3,
+        "individual_votes": [
+            "Round City",
+            "null",
+            "null"
+        ],
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "Round City",
+                "em": false,
+                "n_calls": 5,
+                "input_tokens": 9881,
+                "output_tokens": 429
+            },
+            {
+                "trace_num": 2,
+                "answer": "null",
+                "em": false,
+                "n_calls": 7,
+                "input_tokens": 14874,
+                "output_tokens": 517
+            },
+            {
+                "trace_num": 3,
+                "answer": "null",
+                "em": false,
+                "n_calls": 7,
+                "input_tokens": 14626,
+                "output_tokens": 387
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 5,
+                "answer": "Round City",
+                "gt_answer": "the City of Peace",
+                "question_idx": 5987,
+                "reward": false,
+                "em": false,
+                "f1": 0.4,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 9881,
+                "output_tokens": 429,
+                "total_tokens": 10310,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1689,
+                        "output_tokens": 34,
+                        "total_tokens": 1723
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1812,
+                        "output_tokens": 82,
+                        "total_tokens": 1894
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1960,
+                        "output_tokens": 67,
+                        "total_tokens": 2027
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2088,
+                        "output_tokens": 71,
+                        "total_tokens": 2159
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2173,
+                        "output_tokens": 90,
+                        "total_tokens": 2263
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 159,
+                        "output_tokens": 85,
+                        "total_tokens": 244
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What else was Baghdad known as during the Abbasid Caliphate?\nThought 1: I need to search Baghdad and the Abbasid Caliphate to find what else Baghdad was known as during that period.\nAction 1: Search[Baghdad]\nObservation 1: Baghdad[a] is the capital and largest city in Iraq. It is located on the banks of the Tigris in central Iraq. The city has an estimated population of 8 million. It ranks among the most populous and largest cities in the Middle East and the Arab world and constitutes 22% of Iraq's population. Baghdad is a primary financial and commercial center in the region..\nThought 2: This initial search for Baghdad doesn't mention the Abbasid Caliphate or alternative names. I need to look for information specifically about Baghdad during the Abbasid Caliphate. I'll try searching for \"Baghdad Abbasid Caliphate\" or looking up \"Abbasid Caliphate\" within the current Baghdad article.\nAction 2: Lookup[Abbasid Caliphate]\nObservation 2: (Result 1 / 3) Founded in 762 AD by Al-Mansur on a site with settlement dating back to at least the Neo-Babylonian period, Baghdad became the capital of the Abbasid Caliphate and its most notable development project.\nThought 3: The previous sentence says Baghdad became the capital of the Abbasid Caliphate. I need to find if it was known by any other names during this period. I will look up for \"known as\" or \"also called\" in the context of the Abbasid Caliphate.\nAction 3: Lookup[known as]\nObservation 3: (Result 1 / 8) The city's layout consisted of two large semicircles, with a 2\u00a0km-wide circular core known as the \"Round City.\" It had parks, gardens, villas, and promenades.\nThought 4: The previous lookup result mentions the \"Round City\" as a part of Baghdad's layout during the Abbasid Caliphate, specifically the circular core. This suggests that \"Round City\" was a known name for a significant part of Baghdad during that time. I will check if there are other names.\nAction 4: Lookup[also called]\nObservation 4: No more results.\n\nThought 5: The search for \"known as\" yielded \"Round City\" in the context of Baghdad's layout during the Abbasid Caliphate. While it refers to a specific core, it was a name used for a significant part of the city at that time. Given no other names were found with \"known as\" or \"also called\", \"Round City\" appears to be the most relevant answer.\nAction 5: Finish[Round City]\nObservation 5: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What else was Baghdad known as during the Abbasid Caliphate?",
+                "llm_correct": false,
+                "llm_explanation": "The Ground Truth Answer \"the City of Peace\" and the Predicted Answer \"Round City\" are both names Baghdad was known by during the Abbasid Caliphate, but they are distinct names. The question asks \"What else was Baghdad known as,\" implying other names. While \"Round City\" is a correct name, it is not semantically equivalent to \"the City of Peace.\""
+            },
+            {
+                "steps": 8,
+                "answer": "null",
+                "gt_answer": "the City of Peace",
+                "question_idx": 5987,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 14874,
+                "output_tokens": 517,
+                "total_tokens": 15391,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1689,
+                        "output_tokens": 31,
+                        "total_tokens": 1720
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1809,
+                        "output_tokens": 53,
+                        "total_tokens": 1862
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1928,
+                        "output_tokens": 62,
+                        "total_tokens": 1990
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2051,
+                        "output_tokens": 87,
+                        "total_tokens": 2138
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2181,
+                        "output_tokens": 45,
+                        "total_tokens": 2226
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2457,
+                        "output_tokens": 79,
+                        "total_tokens": 2536
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2601,
+                        "output_tokens": 115,
+                        "total_tokens": 2716
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 158,
+                        "output_tokens": 45,
+                        "total_tokens": 203
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What else was Baghdad known as during the Abbasid Caliphate?\nThought 1: I need to search Baghdad and find what else it was known as during the Abbasid Caliphate.\nAction 1: Search[Baghdad]\nObservation 1: Baghdad[a] is the capital and largest city in Iraq. It is located on the banks of the Tigris in central Iraq. The city has an estimated population of 8 million. It ranks among the most populous and largest cities in the Middle East and the Arab world and constitutes 22% of Iraq's population. Baghdad is a primary financial and commercial center in the region..\nThought 2: The first paragraph does not mention the Abbasid Caliphate or alternative names for Baghdad during that period. I need to look up \"Abbasid Caliphate\" or \"known as\".\nAction 2: Lookup[Abbasid Caliphate]\nObservation 2: (Result 1 / 3) Founded in 762 AD by Al-Mansur on a site with settlement dating back to at least the Neo-Babylonian period, Baghdad became the capital of the Abbasid Caliphate and its most notable development project.\nThought 3: The current passage mentions Baghdad became the capital of the Abbasid Caliphate, but does not mention other names for Baghdad during this period. I need to look up \"known as\" or search for more information about Baghdad during the Abbasid Caliphate.\nAction 3: Lookup[known as]\nObservation 3: (Result 1 / 8) The city's layout consisted of two large semicircles, with a 2\u00a0km-wide circular core known as the \"Round City.\" It had parks, gardens, villas, and promenades.\nThought 4: The passage mentions the \"Round City\" as a part of Baghdad's layout but doesn't explicitly state that Baghdad itself was known by this name during the Abbasid Caliphate. I need to find a direct reference to Baghdad being known by another name during that time. I will continue to look up \"known as\" to see if I can find a more direct answer.\nAction 4: Lookup[known as]\nObservation 4: (Result 2 / 8) Many of the One Thousand and One Nights tales, widely known as the Arabian Nights, are set in Baghdad during this period.\nThought 5: This does not help. I need to keep looking up \"known as\" or search for more information about Baghdad during the Abbasid Caliphate to find its alternative names.\nAction 5: Lookup[known as]\nObservation 5: (Result 3 / 8) By the 19th century, Baghdad emerged as a leading center for Jewish learning.[93] The city had a Jewish population of over 6,000 and had numerous yeshivas.[93] The Jewish population has grown so rapidly that by 1884, there were 30,000 Jews in Baghdad and by 1900, around 50,000, comprising over a quarter of the city's total population.[93] Large-scale Jewish immigration from Kurdistan to Baghdad continued throughout this period.[93] By the mid-19th century, the religious infrastructure of Baghdad grew to include a large yeshiva which trained up to sixty rabbis at time.[93] Religious scholarship flourished in Baghdad, which produced great rabbis, such as Joseph Hayyim ben Eliahu Mazal-Tov, known as the Ben Ish Chai (1834\u20131909) or Rabbi Abdallah Somekh (1813\u20131889).\nThought 6: This result is about Jewish learning and rabbis in Baghdad, not alternative names for the city during the Abbasid Caliphate. I need to continue looking for information specifically about what Baghdad was known as during the Abbasid Caliphate. I'll try searching for \"Abbasid Baghdad names\" to get more specific results.\nAction 6: Search[Abbasid Baghdad names]\nObservation 6: Could not find Abbasid Baghdad names. Similar: ['Round City of Baghdad', 'Abbasid Caliphate', 'Abbasid Palace', 'List of Abbasid caliphs', \"Al-Qa'im (Abbasid caliph at Baghdad)\"].\nThought 7: The search for \"Abbasid Baghdad names\" did not yield direct results. However, \"Round City of Baghdad\" was suggested as a similar search. From previous observations, I know that the \"Round City\" was the core of Baghdad's layout during the Abbasid Caliphate. It's plausible that the city itself was also referred to by this name. I will search for \"Round City of Baghdad\" to confirm if it was an alternative name for Baghdad during the Abbasid Caliphate.\nAction 7: Search[Round City of Baghdad]\nObservation 7: The Round City of Baghdad is the original core of Baghdad, built by the Abbasid Caliph al-Mansur in 762\u2013766 CE as the official residence of the Abbasid court. Its official name in Abbasid times was City of Peace (Arabic: \u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0633\u0644\u0627\u0645, romanized:\u00a0Mad\u012bnat as-Sal\u0101m). The famous library known as the House of Wisdom was located within its grounds.. According to Ya'qubi, the plans for the city were drawn up, but it was not until 2 August 762 that construction began, under the supervision of four architects.[1] Huge resources were amassed for the project: the Arab chroniclers report 100,000 workers and craftsmen, and sums of 18 million gold dinars or 100 million silver dirhams.[2] The caliphal Palace of the Golden Gate and the main mosque, as well as some of the administration offices, were apparently completed by 763, allowing al-Mansur to move his residence into the city, and the rest of the Round City was completed by 766.[1]. Mansur believed that Baghdad was the perfect city to be the capital of the Islamic empire under the Abbasids.\nThought 8: Agent did not finish. Forcing.\nAction 8: Finish[null]\nObservation 8: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What else was Baghdad known as during the Abbasid Caliphate?",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer is null, which means it did not provide any answer. The ground truth answer is \"the City of Peace\". Therefore, the predicted answer is not semantically equivalent."
+            },
+            {
+                "steps": 8,
+                "answer": "null",
+                "gt_answer": "the City of Peace",
+                "question_idx": 5987,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 14626,
+                "output_tokens": 387,
+                "total_tokens": 15013,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1689,
+                        "output_tokens": 31,
+                        "total_tokens": 1720
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1809,
+                        "output_tokens": 52,
+                        "total_tokens": 1861
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1927,
+                        "output_tokens": 41,
+                        "total_tokens": 1968
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2029,
+                        "output_tokens": 40,
+                        "total_tokens": 2069
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2112,
+                        "output_tokens": 39,
+                        "total_tokens": 2151
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2382,
+                        "output_tokens": 71,
+                        "total_tokens": 2453
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2520,
+                        "output_tokens": 68,
+                        "total_tokens": 2588
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 158,
+                        "output_tokens": 45,
+                        "total_tokens": 203
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What else was Baghdad known as during the Abbasid Caliphate?\nThought 1: I need to search Baghdad and find what else it was known as during the Abbasid Caliphate.\nAction 1: Search[Baghdad]\nObservation 1: Baghdad[a] is the capital and largest city in Iraq. It is located on the banks of the Tigris in central Iraq. The city has an estimated population of 8 million. It ranks among the most populous and largest cities in the Middle East and the Arab world and constitutes 22% of Iraq's population. Baghdad is a primary financial and commercial center in the region..\nThought 2: The first paragraph does not mention what else Baghdad was known as during the Abbasid Caliphate. I need to look up \"Abbasid Caliphate\" or \"known as\".\nAction 2: Lookup[Abbasid Caliphate]\nObservation 2: (Result 1 / 3) Founded in 762 AD by Al-Mansur on a site with settlement dating back to at least the Neo-Babylonian period, Baghdad became the capital of the Abbasid Caliphate and its most notable development project.\nThought 3: The paragraph mentions Baghdad became the capital of the Abbasid Caliphate, but not what else it was known as. I need to keep looking up.\nAction 3: Lookup[known as]\nObservation 3: (Result 1 / 8) The city's layout consisted of two large semicircles, with a 2\u00a0km-wide circular core known as the \"Round City.\" It had parks, gardens, villas, and promenades.\nThought 4: The \"Round City\" was a part of Baghdad's layout, not what the entire city was known as. I need to keep looking up.\nAction 4: Lookup[known as]\nObservation 4: (Result 2 / 8) Many of the One Thousand and One Nights tales, widely known as the Arabian Nights, are set in Baghdad during this period.\nThought 5: This mentions \"Arabian Nights\" but it is a collection of tales, not what Baghdad itself was known as. I need to keep looking.\nAction 5: Lookup[known as]\nObservation 5: (Result 3 / 8) By the 19th century, Baghdad emerged as a leading center for Jewish learning.[93] The city had a Jewish population of over 6,000 and had numerous yeshivas.[93] The Jewish population has grown so rapidly that by 1884, there were 30,000 Jews in Baghdad and by 1900, around 50,000, comprising over a quarter of the city's total population.[93] Large-scale Jewish immigration from Kurdistan to Baghdad continued throughout this period.[93] By the mid-19th century, the religious infrastructure of Baghdad grew to include a large yeshiva which trained up to sixty rabbis at time.[93] Religious scholarship flourished in Baghdad, which produced great rabbis, such as Joseph Hayyim ben Eliahu Mazal-Tov, known as the Ben Ish Chai (1834\u20131909) or Rabbi Abdallah Somekh (1813\u20131889).\nThought 6: This also doesn't provide the information I'm looking for. I need to find if Baghdad was known by another name during the Abbasid Caliphate. I will try a different search strategy. I will search for \"Baghdad Abbasid Caliphate names\".\nAction 6: Search[Baghdad Abbasid Caliphate names]\nObservation 6: Could not find Baghdad Abbasid Caliphate names. Similar: ['Abbasid Caliphate', 'List of Abbasid caliphs', \"Al-Qa'im (Abbasid caliph at Baghdad)\", 'Siege of Baghdad', 'Abbasid dynasty'].\nThought 7: The search \"Baghdad Abbasid Caliphate names\" did not yield direct results. I will go back to the original Baghdad search and look for more information about the city's names or descriptions during the Abbasid Caliphate. I need to be more specific in my lookup.\nAction 7: Search[Baghdad]\nObservation 7: Baghdad[a] is the capital and largest city in Iraq. It is located on the banks of the Tigris in central Iraq. The city has an estimated population of 8 million. It ranks among the most populous and largest cities in the Middle East and the Arab world and constitutes 22% of Iraq's population. Baghdad is a primary financial and commercial center in the region..\nThought 8: Agent did not finish. Forcing.\nAction 8: Finish[null]\nObservation 8: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What else was Baghdad known as during the Abbasid Caliphate?",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer is null, which means it did not provide any answer. The ground truth answer is \"the City of Peace\". Therefore, the predicted answer is not semantically equivalent."
+            }
+        ],
+        "llm_correct": false,
+        "llm_explanation": "The Ground Truth Answer \"the City of Peace\" and the Predicted Answer \"Round City\" are both names Baghdad was known by during the Abbasid Caliphate. They are distinct names, not synonyms or aliases of each other. The question asks \"What else was Baghdad known as...\", implying there could be multiple names. While \"Round City\" is a correct name for Baghdad, it is not semantically equivalent to \"the City of Peace\". The question is asking for *another* name, and the predicted answer provides a different, but also correct, name. However, the task is to determine if the predicted answer is semantically equivalent to the ground truth answer. In this case, they are not.",
+        "framework": "majority_voting"
+    }
+]

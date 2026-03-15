@@ -73,32 +73,16 @@ class HotPotQAExperimentRunner:
         self.max_hotpotqa_dev_examples = 7405
         
         # Create seed-based run directory (accumulates across runs)
-        run_name = f"seed{seed}_{model.replace('/', '-')}"
+        run_name = f"seed{seed}_mixed"
         
         script_dir = Path(__file__).parent
         project_root = script_dir.parent.parent.parent
 
-        # Determine base directory based on model and frameworks
-        # Qwen (local on-device) results go to a dedicated model directory
+        # Determine base directory based on model
         if "qwen" in model.lower():
             base_results_path = project_root / "results/hotpotqa/qwen"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'react':
-            base_results_path = project_root / "results/hotpotqa/react"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'reflexion':
-            base_results_path = project_root / "results/hotpotqa/reflexion"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'majority_voting':
-            base_results_path = project_root / "results/hotpotqa/majority_voting"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'action_prune':
-            base_results_path = project_root / "results/hotpotqa/action_prune"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'prog_ca_pruning':
-            base_results_path = project_root / "results/hotpotqa/prog_ca_pruning"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'self_reflection':
-            base_results_path = project_root / "results/hotpotqa/self_reflection"
-        elif all(f in ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'action_prune'] for f in self.frameworks):
-             base_results_path = project_root / "results/hotpotqa/mixed"
         else:
-             # Fallback
-             base_results_path = project_root / "results/hotpotqa"
+            base_results_path = project_root / "results/hotpotqa/gemini"
 
         self.results_dir = (base_results_path / run_name).resolve()
         self.results_dir.mkdir(parents=True, exist_ok=True)

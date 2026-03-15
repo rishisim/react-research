@@ -1,0 +1,273 @@
+[
+    {
+        "question_idx": 29,
+        "question_text": "Question: What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?",
+        "answer": "Buffalo Castle",
+        "gt_answer": "Arena of Khazan",
+        "em": false,
+        "f1": 0,
+        "reward": false,
+        "n_calls": 17,
+        "n_badcalls": 0,
+        "input_tokens": 36139,
+        "output_tokens": 1278,
+        "total_tokens": 37417,
+        "num_traces_run": 3,
+        "individual_votes": [
+            "Buffalo Castle",
+            "Buffalo Castle",
+            "Buffalo Castle"
+        ],
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "Buffalo Castle",
+                "em": false,
+                "n_calls": 6,
+                "input_tokens": 12640,
+                "output_tokens": 376
+            },
+            {
+                "trace_num": 2,
+                "answer": "Buffalo Castle",
+                "em": false,
+                "n_calls": 6,
+                "input_tokens": 12695,
+                "output_tokens": 376
+            },
+            {
+                "trace_num": 3,
+                "answer": "Buffalo Castle",
+                "em": false,
+                "n_calls": 5,
+                "input_tokens": 10495,
+                "output_tokens": 483
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 6,
+                "answer": "Buffalo Castle",
+                "gt_answer": "Arena of Khazan",
+                "question_idx": 29,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 6,
+                "n_badcalls": 0,
+                "input_tokens": 12640,
+                "output_tokens": 376,
+                "total_tokens": 13016,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1699,
+                        "output_tokens": 34,
+                        "total_tokens": 1733
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1836,
+                        "output_tokens": 33,
+                        "total_tokens": 1869
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1989,
+                        "output_tokens": 57,
+                        "total_tokens": 2046
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2126,
+                        "output_tokens": 88,
+                        "total_tokens": 2214
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2278,
+                        "output_tokens": 48,
+                        "total_tokens": 2326
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2543,
+                        "output_tokens": 75,
+                        "total_tokens": 2618
+                    },
+                    {
+                        "call_num": 7,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 169,
+                        "output_tokens": 41,
+                        "total_tokens": 210
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?\nThought 1: I need to search \"Tunnels and Trolls\" and find the name for the adventure in it.\nAction 1: Search[Tunnels and Trolls]\nObservation 1: Tunnels & Trolls (abbreviated T&T) is a fantasy role-playing game designed by Ken St. Andre and first published in 1975 by Flying Buffalo. The second modern role-playing game published, it was written by Ken St. Andre to be a more accessible alternative to Dungeons & Dragons[1][2][3] and is suitable for solitaire, group, and play-by-mail gameplay.. Ken St.\nThought 2: The first paragraph does not mention the name for the adventure. I will search for \"adventure\" in the current passage.\nAction 2: Lookup[adventure]\nObservation 2: (Result 1 / 18) published a second edition of Tunnels & Trolls in June 1975, which soon became a serious competitor to D&D.[6] Tunnels & Trolls had similar game statistics, character classes, and adventures to Dungeons & Dragons but used a magic system based on points and used only six-sided dice.[7] According to Michael Tresca, Tunnels & Trolls explained its rules better overall, and \"brought a sense of impish fun to the genre\".[7].\nThought 3: The passage mentions \"adventures\" but not a specific name for an adventure within the game. I will try to search for \"Tunnels and Trolls adventure\" to see if I can find a specific name.\nAction 3: Search[Tunnels and Trolls adventure]\nObservation 3: Could not find Tunnels and Trolls adventure. Similar: ['Tunnels & Trolls', 'Buffalo Castle (category Tunnels & Trolls adventures)', \"When the Cat's Away (Tunnels & Trolls)\", 'Arena of Khazan (category Tunnels & Trolls adventures)', 'Troll (2022 film)'].\nThought 4: The search results suggest \"Buffalo Castle\" and \"Arena of Khazan\" are categories of \"Tunnels & Trolls adventures\". This implies these are names of adventures within the game. The question asks for \"the name for the adventure\", implying a singular adventure. Given the search results, \"Buffalo Castle\" seems like a good candidate for a specific adventure.\nAction 4: Search[Buffalo Castle (Tunnels & Trolls)]\nObservation 4: Could not find Buffalo Castle (Tunnels & Trolls). Similar: ['Buffalo Castle', 'Tunnels & Trolls', 'Ken St. Andre', 'List of tunnels in Pennsylvania', 'The Dungeon of the Bear (category Tunnels & Trolls adventures)'].\nThought 5: Since \"Buffalo Castle\" was listed as a \"category Tunnels & Trolls adventures\", I will search for \"Buffalo Castle\" to see if it is indeed an adventure within the game.\nAction 5: Search[Buffalo Castle]\nObservation 5: Buffalo Castle is a gamebook first published by Flying Buffalo in 1976 (ISBN\u00a00-940244-01-2). Using the Tunnels & Trolls role-playing system, Buffalo Castle consists of 150 paragraphs in A4 format.. After a friend suggested that someone should make a dungeon adventure book that allows the player to choose an answer and turn to another page, Rick Loomis wrote Buffalo Castle (1976).[1]:\u200a36\u200a Buffalo Castle was an introduction to Tunnels & Trolls, a basic dungeon for a warrior of level 1\u20132.[2]:\u200a226. Although it is widely believed that the Fighting Fantasy series of books were the first gamebooks to use dice and allow the character to possess statistics and equipment, Buffalo Castle pre-dates the Fighting Fantasy series by six years and used the same types of mechanics. Buffalo Castle may have been the first published adventure gamebook.[3].\nThought 6: \"Buffalo Castle\" is explicitly stated as a gamebook using the \"Tunnels & Trolls\" system and described as a \"dungeon adventure book\" and an \"introduction to Tunnels & Trolls, a basic dungeon for a warrior of level 1\u20132.\" This confirms it is an adventure within the game.\nAction 6: Finish[Buffalo Castle]\nObservation 6: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer \"Buffalo Castle\" is a different adventure module for Tunnels and Trolls, not the \"Arena of Khazan\" which is the correct answer."
+            },
+            {
+                "steps": 6,
+                "answer": "Buffalo Castle",
+                "gt_answer": "Arena of Khazan",
+                "question_idx": 29,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 6,
+                "n_badcalls": 0,
+                "input_tokens": 12695,
+                "output_tokens": 376,
+                "total_tokens": 13071,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1699,
+                        "output_tokens": 35,
+                        "total_tokens": 1734
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1837,
+                        "output_tokens": 38,
+                        "total_tokens": 1875
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1995,
+                        "output_tokens": 70,
+                        "total_tokens": 2065
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2145,
+                        "output_tokens": 80,
+                        "total_tokens": 2225
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2284,
+                        "output_tokens": 65,
+                        "total_tokens": 2349
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2566,
+                        "output_tokens": 47,
+                        "total_tokens": 2613
+                    },
+                    {
+                        "call_num": 7,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 169,
+                        "output_tokens": 41,
+                        "total_tokens": 210
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?\nThought 1: I need to search \"Tunnels and Trolls\" and find the name for the adventure in the game.\nAction 1: Search[Tunnels and Trolls]\nObservation 1: Tunnels & Trolls (abbreviated T&T) is a fantasy role-playing game designed by Ken St. Andre and first published in 1975 by Flying Buffalo. The second modern role-playing game published, it was written by Ken St. Andre to be a more accessible alternative to Dungeons & Dragons[1][2][3] and is suitable for solitaire, group, and play-by-mail gameplay.. Ken St.\nThought 2: The information about the \"adventure\" in Tunnels & Trolls is not in the first paragraph. I will try to look up \"adventure\".\nAction 2: Lookup[adventure]\nObservation 2: (Result 1 / 18) published a second edition of Tunnels & Trolls in June 1975, which soon became a serious competitor to D&D.[6] Tunnels & Trolls had similar game statistics, character classes, and adventures to Dungeons & Dragons but used a magic system based on points and used only six-sided dice.[7] According to Michael Tresca, Tunnels & Trolls explained its rules better overall, and \"brought a sense of impish fun to the genre\".[7].\nThought 3: The text mentions \"adventures\" in a general sense, but not the specific name for an adventure. I need to keep looking for information about specific adventures within \"Tunnels and Trolls\". I will try searching for \"Tunnels and Trolls adventure names\" or similar.\nAction 3: Search[Tunnels and Trolls adventure]\nObservation 3: Could not find Tunnels and Trolls adventure. Similar: ['Tunnels & Trolls', \"When the Cat's Away (Tunnels & Trolls)\", 'Buffalo Castle (category Tunnels & Trolls adventures)', 'Arena of Khazan (category Tunnels & Trolls adventures)', 'Troll (2022 film)'].\nThought 4: \"Buffalo Castle (category Tunnels & Trolls adventures)\" and \"Arena of Khazan (category Tunnels & Trolls adventures)\" are listed as similar terms, which suggests they are names of adventures. I will search for \"Buffalo Castle (Tunnels & Trolls)\" to see if it is indeed an adventure.\nAction 4: Search[Buffalo Castle (Tunnels & Trolls)]\nObservation 4: Could not find Buffalo Castle (Tunnels & Trolls). Similar: ['Buffalo Castle', 'Tunnels & Trolls', 'Ken St. Andre', 'List of tunnels in Pennsylvania', 'Rick Loomis (section Founding Flying Buffalo)'].\nThought 5: The search for \"Buffalo Castle (Tunnels & Trolls)\" did not yield a direct result, but \"Buffalo Castle\" was a similar term. I will try searching for \"Buffalo Castle\" to see if it is described as an adventure for Tunnels & Trolls.\nAction 5: Search[Buffalo Castle]\nObservation 5: Buffalo Castle is a gamebook first published by Flying Buffalo in 1976 (ISBN\u00a00-940244-01-2). Using the Tunnels & Trolls role-playing system, Buffalo Castle consists of 150 paragraphs in A4 format.. After a friend suggested that someone should make a dungeon adventure book that allows the player to choose an answer and turn to another page, Rick Loomis wrote Buffalo Castle (1976).[1]:\u200a36\u200a Buffalo Castle was an introduction to Tunnels & Trolls, a basic dungeon for a warrior of level 1\u20132.[2]:\u200a226. Although it is widely believed that the Fighting Fantasy series of books were the first gamebooks to use dice and allow the character to possess statistics and equipment, Buffalo Castle pre-dates the Fighting Fantasy series by six years and used the same types of mechanics. Buffalo Castle may have been the first published adventure gamebook.[3].\nThought 6: Buffalo Castle is described as a gamebook using the Tunnels & Trolls system and the first published adventure gamebook. This fits the description of an \"adventure\" in the game.\nAction 6: Finish[Buffalo Castle]\nObservation 6: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer \"Buffalo Castle\" is a different adventure module for Tunnels and Trolls, not the \"Arena of Khazan\" which is the correct answer."
+            },
+            {
+                "steps": 5,
+                "answer": "Buffalo Castle",
+                "gt_answer": "Arena of Khazan",
+                "question_idx": 29,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10495,
+                "output_tokens": 483,
+                "total_tokens": 10978,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1699,
+                        "output_tokens": 35,
+                        "total_tokens": 1734
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1837,
+                        "output_tokens": 53,
+                        "total_tokens": 1890
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2010,
+                        "output_tokens": 123,
+                        "total_tokens": 2133
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2213,
+                        "output_tokens": 137,
+                        "total_tokens": 2350
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2567,
+                        "output_tokens": 94,
+                        "total_tokens": 2661
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 169,
+                        "output_tokens": 41,
+                        "total_tokens": 210
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?\nThought 1: I need to search \"Tunnels and Trolls\" and find the name for the adventure in the game.\nAction 1: Search[Tunnels and Trolls]\nObservation 1: Tunnels & Trolls (abbreviated T&T) is a fantasy role-playing game designed by Ken St. Andre and first published in 1975 by Flying Buffalo. The second modern role-playing game published, it was written by Ken St. Andre to be a more accessible alternative to Dungeons & Dragons[1][2][3] and is suitable for solitaire, group, and play-by-mail gameplay.. Ken St.\nThought 2: The passage describes the game but doesn't mention a specific \"adventure\" by name. I need to look for a term like \"adventure\" or \"module\" within the context of \"Tunnels & Trolls.\"\nAction 2: Lookup[adventure]\nObservation 2: (Result 1 / 18) published a second edition of Tunnels & Trolls in June 1975, which soon became a serious competitor to D&D.[6] Tunnels & Trolls had similar game statistics, character classes, and adventures to Dungeons & Dragons but used a magic system based on points and used only six-sided dice.[7] According to Michael Tresca, Tunnels & Trolls explained its rules better overall, and \"brought a sense of impish fun to the genre\".[7].\nThought 3: The previous lookup did not yield the name of a specific adventure, but rather mentioned \"adventures\" in a general sense. I need to find if there is a specific adventure that is *the* adventure in \"Tunnels and Trolls\". Perhaps searching for \"Tunnels & Trolls adventures\" or \"Tunnels & Trolls modules\" would be more fruitful. Since the question asks for \"the adventure\" implying a singular, perhaps there's a flagship adventure. I will try to search for common adventure names associated with the game.\nAction 3: Search[Tunnels and Trolls adventure]\nObservation 3: Could not find Tunnels and Trolls adventure. Similar: ['Tunnels & Trolls', 'Buffalo Castle (category Tunnels & Trolls adventures)', \"When the Cat's Away (Tunnels & Trolls)\", 'Arena of Khazan (category Tunnels & Trolls adventures)', 'Troll (2022 film)'].\nThought 4: The search for \"Tunnels and Trolls adventure\" provided some specific adventure titles within a category, such as \"Buffalo Castle\" and \"Arena of Khazan\". Since the question asks for \"the adventure\" in \"Tunnels and Trolls\", it's possible that one of these is considered the iconic or primary adventure, or it could be a trick question and there isn't one singular \"the adventure\". However, \"Buffalo Castle\" is explicitly listed as a \"category Tunnels & Trolls adventures\", and it's a very early and well-known solo adventure for the game. I will investigate Buffalo Castle.\nAction 4: Search[Buffalo Castle]\nObservation 4: Buffalo Castle is a gamebook first published by Flying Buffalo in 1976 (ISBN\u00a00-940244-01-2). Using the Tunnels & Trolls role-playing system, Buffalo Castle consists of 150 paragraphs in A4 format.. After a friend suggested that someone should make a dungeon adventure book that allows the player to choose an answer and turn to another page, Rick Loomis wrote Buffalo Castle (1976).[1]:\u200a36\u200a Buffalo Castle was an introduction to Tunnels & Trolls, a basic dungeon for a warrior of level 1\u20132.[2]:\u200a226. Although it is widely believed that the Fighting Fantasy series of books were the first gamebooks to use dice and allow the character to possess statistics and equipment, Buffalo Castle pre-dates the Fighting Fantasy series by six years and used the same types of mechanics. Buffalo Castle may have been the first published adventure gamebook.[3].\nThought 5: Buffalo Castle is explicitly stated to be an \"introduction to Tunnels & Trolls\" and a \"basic dungeon for a warrior of level 1\u20132\". It's also mentioned as potentially \"the first published adventure gamebook\" using the Tunnels & Trolls system. This strongly suggests that Buffalo Castle is *the* adventure associated with the game for introductory purposes, and likely what the question is referring to.\nAction 5: Finish[Buffalo Castle]\nObservation 5: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What is the name for the adventure in \"Tunnels and Trolls\", a game designed by Ken St. Andre?",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer \"Buffalo Castle\" is a different adventure module for Tunnels and Trolls, not the \"Arena of Khazan\" which is the correct answer."
+            }
+        ],
+        "llm_correct": false,
+        "llm_explanation": "The predicted answer \"Buffalo Castle\" is a different adventure module for Tunnels and Trolls, not the \"Arena of Khazan\" which is the correct answer.",
+        "framework": "majority_voting"
+    }
+]

@@ -42,16 +42,16 @@ def llm(prompt, stop=["\n"], num_traces=1):
     oai_client = openai.OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
     for attempt in range(max_retries):
       try:
-        response = oai_client.completions.create(
+        response = oai_client.chat.completions.create(
             model=active_model,
-            prompt=prompt,
+            messages=[{"role": "user", "content": prompt}],
             temperature=temperature_setting,
             max_tokens=100,
             top_p=1.0,
             stop=stop
         )
-        if response and response.choices and response.choices[0].text:
-          return response.choices[0].text
+        if response and response.choices and response.choices[0].message.content:
+          return response.choices[0].message.content
         time.sleep(2)
       except Exception as e:
         print(f"LLM call failed for Qwen (attempt {attempt + 1}/{max_retries}): {str(e)}")

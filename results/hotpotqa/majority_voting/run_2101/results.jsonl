@@ -1,0 +1,305 @@
+[
+    {
+        "question_idx": 1996,
+        "question_text": "Question: What is the call sign of the airline that operates the flight with United Express Flight 3411 incident?",
+        "answer": "Republic Airline",
+        "gt_answer": "Brickyard",
+        "em": false,
+        "f1": 0,
+        "reward": false,
+        "n_calls": 21,
+        "n_badcalls": 0,
+        "input_tokens": 48999,
+        "output_tokens": 1708,
+        "total_tokens": 50707,
+        "num_traces_run": 3,
+        "individual_votes": [
+            "null",
+            "null",
+            "null"
+        ],
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "null",
+                "em": false,
+                "n_calls": 7,
+                "input_tokens": 16465,
+                "output_tokens": 550
+            },
+            {
+                "trace_num": 2,
+                "answer": "null",
+                "em": false,
+                "n_calls": 7,
+                "input_tokens": 15843,
+                "output_tokens": 515
+            },
+            {
+                "trace_num": 3,
+                "answer": "null",
+                "em": false,
+                "n_calls": 7,
+                "input_tokens": 16389,
+                "output_tokens": 588
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 8,
+                "answer": "null",
+                "gt_answer": "Brickyard",
+                "question_idx": 1996,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 16465,
+                "output_tokens": 550,
+                "total_tokens": 17015,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1698,
+                        "output_tokens": 43,
+                        "total_tokens": 1741
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 2006,
+                        "output_tokens": 39,
+                        "total_tokens": 2045
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2059,
+                        "output_tokens": 72,
+                        "total_tokens": 2131
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2311,
+                        "output_tokens": 69,
+                        "total_tokens": 2380
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2450,
+                        "output_tokens": 104,
+                        "total_tokens": 2554
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2819,
+                        "output_tokens": 77,
+                        "total_tokens": 2896
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2957,
+                        "output_tokens": 98,
+                        "total_tokens": 3055
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 165,
+                        "output_tokens": 48,
+                        "total_tokens": 213
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the call sign of the airline that operates the flight with United Express Flight 3411 incident?\nThought 1: I need to find the airline that operates United Express Flight 3411, and then find that airline's call sign.\nAction 1: Search[United Express Flight 3411]\nObservation 1: On April 9, 2017, at Chicago O'Hare International Airport, four paying customers were selected to be involuntarily deplaned from United Express Flight 3411 to make room for four deadheading employees.[1] One of these passengers was David Dao, 69, a Vietnamese-American physician who was injured when he was physically assaulted and forcefully removed from the flight by Chicago Department of Aviation Security officers. Dao, a pulmonologist, refused to leave his seat when directed because he needed to see patients the following day.[2] In the process of removing him, the security officers struck his face against an armrest, then dragged him \u2013 bloodied, bruised, and unconscious \u2013 by his arms down the aircraft aisle, past rows of onlooking passengers.[3][4] The incident is widely characterized by critics \u2013 and later by United Airlines itself \u2013 as an example of mishandled customer service.. A video of the incident recorded by passengers went viral on social media, resulting in anger over the use of force shown. Politicians expressed concern and called for an official investigation. Shares of United stock dipped as much as 2.5% in pre-market trading Monday following the Sunday incident, but closed the day up nearly 1%..\nThought 2: The first paragraph mentions \"United Express Flight 3411\" and \"United Airlines\". I need to confirm if United Airlines is the operator.\nAction 2: Lookup[operator]\nObservation 2: No more results.\n\nThought 3: The provided text doesn't explicitly state that \"United Airlines\" is the operator of \"United Express Flight 3411\". \"United Express\" is a brand name under which regional airlines operate flights for United Airlines. I need to find which specific airline operated United Express Flight 3411.\nAction 3: Search[United Express]\nObservation 3: United Express is a regional airline network that supports United Airlines operations, primarily by serving smaller cities and connecting traffic to United's main hubs. Representing six percent of United's total capacity for 2024, United Express operates through partnerships with regional carriers, including CommuteAir, GoJet Airlines, Mesa Airlines, Republic Airways, and SkyWest Airlines. These carriers operate under capacity purchase agreements, where United contracts for flight services, pays fixed and performance-based fees, and covers additional costs like fuel and landing fees. The regional carriers operate United-branded flights following schedules set by the airline, while United manages pricing, revenue, and loyalty programs for passengers.[1]. As of December\u00a02025[update], the combined United Express-branded fleet consists of the following regional jet aircraft:[2][3][4].\nThought 4: The text says \"United Express operates through partnerships with regional carriers, including CommuteAir, GoJet Airlines, Mesa Airlines, Republic Airways, and SkyWest Airlines.\" I need to find which of these specific carriers operated United Express Flight 3411.\nAction 4: Search[United Express Flight 3411 operator]\nObservation 4: Could not find United Express Flight 3411 operator. Similar: ['2017 United Express passenger removal', 'United Express Flight 5925', 'United Express', 'United Express Flight 6291', 'Colgan Air Flight 3407'].\nThought 5: I need to find the specific airline that operated United Express Flight 3411, as United Express is a brand name. The previous search for \"United Express Flight 3411\" did not explicitly state the operating airline, only that it was a United Express flight. I will try searching for \"2017 United Express passenger removal\" as it is a similar entity from the previous search and might contain the information.\nAction 5: Search[2017 United Express passenger removal]\nObservation 5: On April 9, 2017, at Chicago O'Hare International Airport, four paying customers were selected to be involuntarily deplaned from United Express Flight 3411 to make room for four deadheading employees.[1] One of these passengers was David Dao, 69, a Vietnamese-American physician who was injured when he was physically assaulted and forcefully removed from the flight by Chicago Department of Aviation Security officers. Dao, a pulmonologist, refused to leave his seat when directed because he needed to see patients the following day.[2] In the process of removing him, the security officers struck his face against an armrest, then dragged him \u2013 bloodied, bruised, and unconscious \u2013 by his arms down the aircraft aisle, past rows of onlooking passengers.[3][4] The incident is widely characterized by critics \u2013 and later by United Airlines itself \u2013 as an example of mishandled customer service.. A video of the incident recorded by passengers went viral on social media, resulting in anger over the use of force shown. Politicians expressed concern and called for an official investigation. Shares of United stock dipped as much as 2.5% in pre-market trading Monday following the Sunday incident, but closed the day up nearly 1%..\nThought 6: The incident description still doesn't explicitly state the operating airline for United Express Flight 3411. It's crucial to identify the specific regional carrier. I will try to search for \"United Express Flight 3411 airline\" to see if I can get a direct answer.\nAction 6: Search[United Express Flight 3411 airline]\nObservation 6: Could not find United Express Flight 3411 airline. Similar: ['United Express', 'United Airlines Flight 173', 'United Express Flight 6291', 'United Airlines', 'United Airlines Flight 232'].\nThought 7: Since directly searching for the operator of \"United Express Flight 3411\" or \"2017 United Express passenger removal\" did not yield the specific regional airline, and the \"United Express\" page lists several potential operators, I need to find the specific operator for that particular flight incident. I will try a more targeted search for the incident to see if the operating airline is mentioned.\nAction 7: Search[United Express Flight 3411 operating airline]\nObservation 7: Could not find United Express Flight 3411 operating airline. Similar: ['United Express', 'United Airlines Flight 173', 'United Express Flight 6291', 'United Airlines', 'United Express Flight 5925'].\nThought 8: Agent did not finish. Forcing.\nAction 8: Finish[null]\nObservation 8: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What is the call sign of the airline that operates the flight with United Express Flight 3411 incident?",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer is null, which means it did not provide any answer. The ground truth answer is \"Brickyard\". Therefore, the predicted answer is not semantically equivalent to the ground truth answer."
+            },
+            {
+                "steps": 8,
+                "answer": "null",
+                "gt_answer": "Brickyard",
+                "question_idx": 1996,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 15843,
+                "output_tokens": 515,
+                "total_tokens": 16358,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1698,
+                        "output_tokens": 44,
+                        "total_tokens": 1742
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 2007,
+                        "output_tokens": 80,
+                        "total_tokens": 2087
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2101,
+                        "output_tokens": 52,
+                        "total_tokens": 2153
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2202,
+                        "output_tokens": 82,
+                        "total_tokens": 2284
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2347,
+                        "output_tokens": 59,
+                        "total_tokens": 2406
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2586,
+                        "output_tokens": 90,
+                        "total_tokens": 2676
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2737,
+                        "output_tokens": 60,
+                        "total_tokens": 2797
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 165,
+                        "output_tokens": 48,
+                        "total_tokens": 213
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the call sign of the airline that operates the flight with United Express Flight 3411 incident?\nThought 1: I need to search \"United Express Flight 3411\", find the airline that operates the flight, then find its call sign.\nAction 1: Search[United Express Flight 3411]\nObservation 1: On April 9, 2017, at Chicago O'Hare International Airport, four paying customers were selected to be involuntarily deplaned from United Express Flight 3411 to make room for four deadheading employees.[1] One of these passengers was David Dao, 69, a Vietnamese-American physician who was injured when he was physically assaulted and forcefully removed from the flight by Chicago Department of Aviation Security officers. Dao, a pulmonologist, refused to leave his seat when directed because he needed to see patients the following day.[2] In the process of removing him, the security officers struck his face against an armrest, then dragged him \u2013 bloodied, bruised, and unconscious \u2013 by his arms down the aircraft aisle, past rows of onlooking passengers.[3][4] The incident is widely characterized by critics \u2013 and later by United Airlines itself \u2013 as an example of mishandled customer service.. A video of the incident recorded by passengers went viral on social media, resulting in anger over the use of force shown. Politicians expressed concern and called for an official investigation. Shares of United stock dipped as much as 2.5% in pre-market trading Monday following the Sunday incident, but closed the day up nearly 1%..\nThought 2: The paragraph mentions \"United Express Flight 3411\" but does not explicitly state the operating airline. It does mention \"United Airlines\", but \"United Express\" is often operated by regional carriers for United. I need to find the specific airline that operated this flight. I will try to look up \"operating airline\" within the current passage.\nAction 2: Lookup[operating airline]\nObservation 2: No more results.\n\nThought 3: Since the operating airline is not explicitly mentioned in the provided text for United Express Flight 3411, I need to search for the operating airline of United Express generally or specifically for that flight.\nAction 3: Search[United Express operating airline]\nObservation 3: Could not find United Express operating airline. Similar: ['United Airlines', 'United Express', 'Southern Airways Express', 'SkyWest Airlines', 'Republic Airways (redirect from Republic (airline))'].\nThought 4: Thought 4: The search for \"United Express operating airline\" did not yield a direct answer. However, \"United Express\" is a brand name. I need to find which regional airline operated the specific flight 3411. I will search for \"United Express Flight 3411 operating airline\".\nAction 4: Search[United Express Flight 3411 operating airline]\nObservation 4: Could not find United Express Flight 3411 operating airline. Similar: ['United Express', 'United Airlines Flight 173', 'United Express Flight 6291', 'United Airlines', 'United Express Flight 5925'].\nThought 5: Since directly searching for the operating airline of \"United Express Flight 3411\" didn't work, I will search for \"United Express\" to understand its nature and see if it mentions common operators or a way to identify them.\nAction 5: Search[United Express]\nObservation 5: United Express is a regional airline network that supports United Airlines operations, primarily by serving smaller cities and connecting traffic to United's main hubs. Representing six percent of United's total capacity for 2024, United Express operates through partnerships with regional carriers, including CommuteAir, GoJet Airlines, Mesa Airlines, Republic Airways, and SkyWest Airlines. These carriers operate under capacity purchase agreements, where United contracts for flight services, pays fixed and performance-based fees, and covers additional costs like fuel and landing fees. The regional carriers operate United-branded flights following schedules set by the airline, while United manages pricing, revenue, and loyalty programs for passengers.[1]. As of December\u00a02025[update], the combined United Express-branded fleet consists of the following regional jet aircraft:[2][3][4].\nThought 6: Thought 6: The \"United Express\" search result lists several regional carriers that operate under the United Express brand, including CommuteAir, GoJet Airlines, Mesa Airlines, Republic Airways, and SkyWest Airlines. I need to find out which one operated Flight 3411. I will search for \"United Express Flight 3411 airline\".\nAction 6: Search[United Express Flight 3411 airline]\nObservation 6: Could not find United Express Flight 3411 airline. Similar: ['United Express', 'United Airlines Flight 173', 'United Express Flight 6291', 'United Airlines', 'United Airlines Flight 232'].\nThought 7: Thought 7: It seems difficult to find the specific operating airline for United Express Flight 3411 directly through general searches. I will try a more specific search combining the flight number with \"airline operator\".\nAction 7: Search[United Express Flight 3411 operator]\nObservation 7: Could not find United Express Flight 3411 operator. Similar: ['2017 United Express passenger removal', 'United Express Flight 5925', 'United Express', 'United Express Flight 6291', 'Colgan Air Flight 3407'].\nThought 8: Agent did not finish. Forcing.\nAction 8: Finish[null]\nObservation 8: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What is the call sign of the airline that operates the flight with United Express Flight 3411 incident?",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer is null, which means it did not provide any answer. The ground truth answer is \"Brickyard\". Therefore, the predicted answer is not semantically equivalent to the ground truth answer."
+            },
+            {
+                "steps": 8,
+                "answer": "null",
+                "gt_answer": "Brickyard",
+                "question_idx": 1996,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 16389,
+                "output_tokens": 588,
+                "total_tokens": 16977,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1698,
+                        "output_tokens": 43,
+                        "total_tokens": 1741
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 2006,
+                        "output_tokens": 48,
+                        "total_tokens": 2054
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2153,
+                        "output_tokens": 88,
+                        "total_tokens": 2241
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2255,
+                        "output_tokens": 83,
+                        "total_tokens": 2338
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2408,
+                        "output_tokens": 98,
+                        "total_tokens": 2506
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2771,
+                        "output_tokens": 115,
+                        "total_tokens": 2886
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2933,
+                        "output_tokens": 65,
+                        "total_tokens": 2998
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 165,
+                        "output_tokens": 48,
+                        "total_tokens": 213
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the call sign of the airline that operates the flight with United Express Flight 3411 incident?\nThought 1: I need to find the airline that operates United Express Flight 3411, and then find the call sign of that airline.\nAction 1: Search[United Express Flight 3411]\nObservation 1: On April 9, 2017, at Chicago O'Hare International Airport, four paying customers were selected to be involuntarily deplaned from United Express Flight 3411 to make room for four deadheading employees.[1] One of these passengers was David Dao, 69, a Vietnamese-American physician who was injured when he was physically assaulted and forcefully removed from the flight by Chicago Department of Aviation Security officers. Dao, a pulmonologist, refused to leave his seat when directed because he needed to see patients the following day.[2] In the process of removing him, the security officers struck his face against an armrest, then dragged him \u2013 bloodied, bruised, and unconscious \u2013 by his arms down the aircraft aisle, past rows of onlooking passengers.[3][4] The incident is widely characterized by critics \u2013 and later by United Airlines itself \u2013 as an example of mishandled customer service.. A video of the incident recorded by passengers went viral on social media, resulting in anger over the use of force shown. Politicians expressed concern and called for an official investigation. Shares of United stock dipped as much as 2.5% in pre-market trading Monday following the Sunday incident, but closed the day up nearly 1%..\nThought 2: The passage mentions \"United Express Flight 3411\" and \"United Airlines itself,\" implying that United Airlines operates the flight. I need to find the call sign of United Airlines.\nAction 2: Search[United Airlines]\nObservation 2: United Airlines, Inc. is a major airline in the United States headquartered in Chicago, Illinois. It operates an extensive domestic and international route network across the United States and to destinations on six continents. Regional service is provided by independent carriers operating under the United Express brand, and the Star Alliance, of which United was one of the five founding airlines, extends its network throughout the world.. The principal figure behind the formation of the airline was William E.\nThought 3: The passage says \"Regional service is provided by independent carriers operating under the United Express brand\". This means United Airlines itself does not operate the flight, but one of the independent carriers under the United Express brand does. I need to find which independent carrier operated Flight 3411. I will look for more details about the flight in the previous search result.\nAction 3: Lookup[United Express Flight 3411]\nObservation 3: No more results.\n\nThought 4: The previous search result for \"United Express Flight 3411\" did not explicitly state which independent carrier operated the flight. I need to find out which regional carrier operates flights under the United Express brand, specifically Flight 3411. I will try searching for \"United Express Flight 3411 operator\".\nAction 4: Search[United Express Flight 3411 operator]\nObservation 4: Could not find United Express Flight 3411 operator. Similar: ['2017 United Express passenger removal', 'United Express Flight 5925', 'United Express', 'Colgan Air Flight 3407', 'United Express Flight 6291'].\nThought 5: The search for \"United Express Flight 3411 operator\" did not yield a direct answer. However, one of the similar results is \"2017 United Express passenger removal\", which is the incident described in the initial search for \"United Express Flight 3411\". I will search for \"2017 United Express passenger removal\" to see if it provides the operating airline.\nAction 5: Search[2017 United Express passenger removal]\nObservation 5: On April 9, 2017, at Chicago O'Hare International Airport, four paying customers were selected to be involuntarily deplaned from United Express Flight 3411 to make room for four deadheading employees.[1] One of these passengers was David Dao, 69, a Vietnamese-American physician who was injured when he was physically assaulted and forcefully removed from the flight by Chicago Department of Aviation Security officers. Dao, a pulmonologist, refused to leave his seat when directed because he needed to see patients the following day.[2] In the process of removing him, the security officers struck his face against an armrest, then dragged him \u2013 bloodied, bruised, and unconscious \u2013 by his arms down the aircraft aisle, past rows of onlooking passengers.[3][4] The incident is widely characterized by critics \u2013 and later by United Airlines itself \u2013 as an example of mishandled customer service.. A video of the incident recorded by passengers went viral on social media, resulting in anger over the use of force shown. Politicians expressed concern and called for an official investigation. Shares of United stock dipped as much as 2.5% in pre-market trading Monday following the Sunday incident, but closed the day up nearly 1%..\nThought 6: The information from \"2017 United Express passenger removal\" is the same as the initial search for \"United Express Flight 3411\", and it still doesn't state the operating carrier. I need to find the specific regional airline that operated United Express Flight 3411. I will try a more general search for \"United Express carriers\" to see if I can find a list, and then narrow it down if possible, or try to find information about this specific flight's operator.\nAction 6: Search[United Express carriers]\nObservation 6: Could not find United Express carriers. Similar: ['United Express', 'United Airlines', 'Nimitz-class aircraft carrier', 'Continental Express', 'List of aircraft carriers in service'].\nThought 7: The search for \"United Express carriers\" was not successful. I need to explicitly find the operating airline for United Express Flight 3411. I will try searching for \"United Express Flight 3411 operating airline\".\nAction 7: Search[United Express Flight 3411 operating airline]\nObservation 7: Could not find United Express Flight 3411 operating airline. Similar: ['United Express', 'United Airlines Flight 173', 'United Express Flight 6291', 'United Airlines', 'United Express Flight 5925'].\nThought 8: Agent did not finish. Forcing.\nAction 8: Finish[null]\nObservation 8: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What is the call sign of the airline that operates the flight with United Express Flight 3411 incident?",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer is null, which means it did not provide any answer. The ground truth answer is \"Brickyard\". Therefore, the predicted answer is not semantically equivalent to the ground truth answer."
+            }
+        ],
+        "llm_correct": false,
+        "llm_explanation": "The ground truth answer \"Brickyard\" refers to the call sign of Republic Airline. The predicted answer \"Republic Airline\" is the name of the airline, not its call sign. Therefore, they are not semantically equivalent.",
+        "framework": "majority_voting"
+    }
+]

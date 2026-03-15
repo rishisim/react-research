@@ -1,0 +1,300 @@
+[
+    {
+        "question_idx": 1943,
+        "question_text": "Question: Who was the son and heir of Henry Beauclerc?",
+        "answer": "William Adelin",
+        "gt_answer": "William Adelin",
+        "em": true,
+        "f1": 1.0,
+        "reward": true,
+        "n_calls": 21,
+        "n_badcalls": 0,
+        "input_tokens": 52919,
+        "output_tokens": 1172,
+        "total_tokens": 54091,
+        "num_traces_run": 3,
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "null",
+                "em": false,
+                "n_calls": 7,
+                "input_tokens": 14678,
+                "output_tokens": 365
+            },
+            {
+                "trace_num": 2,
+                "answer": "William Adelin",
+                "em": true,
+                "n_calls": 7,
+                "input_tokens": 14822,
+                "output_tokens": 382
+            },
+            {
+                "trace_num": 3,
+                "answer": "William Adelin",
+                "em": true,
+                "n_calls": 7,
+                "input_tokens": 15122,
+                "output_tokens": 405
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 8,
+                "answer": "null",
+                "gt_answer": "William Adelin",
+                "question_idx": 1943,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 14678,
+                "output_tokens": 365,
+                "total_tokens": 15043,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1686,
+                        "output_tokens": 28,
+                        "total_tokens": 1714
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1874,
+                        "output_tokens": 48,
+                        "total_tokens": 1922
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1936,
+                        "output_tokens": 47,
+                        "total_tokens": 1983
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2033,
+                        "output_tokens": 37,
+                        "total_tokens": 2070
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2230,
+                        "output_tokens": 53,
+                        "total_tokens": 2283
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2329,
+                        "output_tokens": 68,
+                        "total_tokens": 2397
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2436,
+                        "output_tokens": 36,
+                        "total_tokens": 2472
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 154,
+                        "output_tokens": 48,
+                        "total_tokens": 202
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who was the son and heir of Henry Beauclerc?\nThought 1: I need to search Henry Beauclerc to find out who his son and heir was.\nAction 1: Search[Henry Beauclerc]\nObservation 1: Henry I (c.\u20091068 \u2013 1 December 1135), also known as Henry Beauclerc, was King of England from 1100 to his death in 1135. He was the fourth son of William the Conqueror and was educated in Latin and the liberal arts. On William's death in 1087, Henry's elder brothers Robert Curthose and William Rufus inherited Normandy and England, respectively, thereby leaving Henry landless. He subsequently purchased the County of Cotentin in western Normandy from Robert, but his brothers deposed him in 1091. He gradually rebuilt his power base in the Cotentin and allied himself with William Rufus against Robert..\nThought 2: The initial search for \"Henry Beauclerc\" provided information about him but did not explicitly state who his son and heir was. I need to look for this information within the same article.\nAction 2: Lookup[son and heir]\nObservation 2: No more results.\n\nThought 3: The initial search and lookup didn't directly provide the son and heir. I need to search for \"Henry I children\" or \"Henry I heir\" to find this information.\nAction 3: Search[Henry I children]\nObservation 3: Could not find Henry I children. Similar: ['Henry I of England', 'Henry VIII', 'Henry Stuart, Duke of Gloucester', 'Henry IV of England', 'Henry, King of Portugal'].\nThought 4: The system suggests \"Henry I of England\". I should search for \"Henry I of England\" to get the correct information.\nAction 4: Search[Henry I of England]\nObservation 4: Henry I (c.\u20091068 \u2013 1 December 1135), also known as Henry Beauclerc, was King of England from 1100 to his death in 1135. He was the fourth son of William the Conqueror and was educated in Latin and the liberal arts. On William's death in 1087, Henry's elder brothers Robert Curthose and William Rufus inherited Normandy and England, respectively, thereby leaving Henry landless. He subsequently purchased the County of Cotentin in western Normandy from Robert, but his brothers deposed him in 1091. He gradually rebuilt his power base in the Cotentin and allied himself with William Rufus against Robert..\nThought 5: The search for \"Henry I of England\" returned the same initial paragraph. I need to find information about his children, specifically his heir. I will try a more specific lookup within the article for 'heir'.\nAction 5: Lookup[heir]\nObservation 5: (Result 1 / 22) Henry took a second wife, Adeliza of Louvain, in the hope of having another son, but their marriage was childless.\nThought 6: The lookup for 'heir' gave me a sentence about Henry taking a second wife to have another son, implying his first son might have died or he didn't have a living male heir at that point. I need to keep looking for information about his children, especially his male heir.\nAction 6: Lookup[son]\nObservation 6: (Result 1 / 46) He was the fourth son of William the Conqueror and was educated in Latin and the liberal arts.\nThought 7: This lookup is about Henry I's parentage, not his children. I need to continue looking for information about his own sons.\nAction 7: Lookup[son]\nObservation 7: (Result 2 / 46) Henry kept Robert imprisoned for the rest of his life.\nThought 8: Agent did not finish. Forcing.\nAction 8: Finish[null]\nObservation 8: Episode finished, reward = 0\n\n",
+                "question_text": "Question: Who was the son and heir of Henry Beauclerc?",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer is \"null\", which means no answer was provided. The ground truth answer is \"William Adelin\". Therefore, the predicted answer is not semantically equivalent to the ground truth answer."
+            },
+            {
+                "steps": 7,
+                "answer": "William Adelin",
+                "gt_answer": "William Adelin",
+                "question_idx": 1943,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 14822,
+                "output_tokens": 382,
+                "total_tokens": 15204,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1686,
+                        "output_tokens": 26,
+                        "total_tokens": 1712
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1872,
+                        "output_tokens": 36,
+                        "total_tokens": 1908
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1922,
+                        "output_tokens": 45,
+                        "total_tokens": 1967
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2028,
+                        "output_tokens": 58,
+                        "total_tokens": 2086
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2199,
+                        "output_tokens": 85,
+                        "total_tokens": 2284
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2343,
+                        "output_tokens": 59,
+                        "total_tokens": 2402
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2616,
+                        "output_tokens": 56,
+                        "total_tokens": 2672
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 156,
+                        "output_tokens": 17,
+                        "total_tokens": 173
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who was the son and heir of Henry Beauclerc?\nThought 1: I need to search Henry Beauclerc, then find his son and heir.\nAction 1: Search[Henry Beauclerc]\nObservation 1: Henry I (c.\u20091068 \u2013 1 December 1135), also known as Henry Beauclerc, was King of England from 1100 to his death in 1135. He was the fourth son of William the Conqueror and was educated in Latin and the liberal arts. On William's death in 1087, Henry's elder brothers Robert Curthose and William Rufus inherited Normandy and England, respectively, thereby leaving Henry landless. He subsequently purchased the County of Cotentin in western Normandy from Robert, but his brothers deposed him in 1091. He gradually rebuilt his power base in the Cotentin and allied himself with William Rufus against Robert..\nThought 2: The first paragraph does not mention Henry Beauclerc's son and heir. I need to look up \"son and heir\".\nAction 2: Lookup[son and heir]\nObservation 2: No more results.\n\nThought 3: The initial search for Henry Beauclerc did not directly mention his son and heir. I need to continue searching the article or look for information about his family.\nAction 3: Search[Children of Henry I of England]\nObservation 3: Could not find Children of Henry I of England. Similar: ['Henry I of England', 'Henry VIII', 'Empress Matilda (redirect from Matilda I of England)', 'Henry IV of England', 'Richard of Lincoln (son of Henry I)'].\nThought 4: I found \"Richard of Lincoln (son of Henry I)\". This is likely the son of Henry I, also known as Henry Beauclerc. I will search for \"Richard of Lincoln\" to confirm and see if he was the heir.\nAction 4: Search[Richard of Lincoln]\nObservation 4: Richard de Lincoln was a medieval Anglo-Norman prelate. Although of English origin, he was a royal clerk in the administration of King William of Scotland. With royal support, he was elected Bishop of Moray on 1 March 1187 and was consecrated at St Andrews on 15 March by Bishop Hugh. His appointment during the rebellion of Donald MacWilliam in the north was to a dilapidated diocese. Only after MacWilliam's defeat in July could Bishop Richard begin the strengthening of his see.\nThought 5: This is not the correct Richard. This Richard de Lincoln was a bishop and a royal clerk, not the son of Henry I. The previous similar search result mentioned \"Richard of Lincoln (son of Henry I)\". I need to search for that specifically. It's possible the article for Richard of Lincoln exists but my previous search was too general.\nAction 5: Search[Richard, son of Henry I of England]\nObservation 5: Could not find Richard, son of Henry I of England. Similar: ['Richard I of England', 'Richard of Lincoln (son of Henry I)', 'Henry I of England', 'Henry (son of Edward I)', 'Elizabeth of York'].\nThought 6: The similar search result \"Richard of Lincoln (son of Henry I)\" suggests that there was indeed a son named Richard. I will try searching for \"William Adelin\", as he is a well-known son and heir of Henry I.\nAction 6: Search[William Adelin]\nObservation 6: William \u00c6theling (Middle English: [\u02c8wili\u0259m \u02c8a\u00f0\u0259li\u014b\u0261], Old English: [\u02c8\u00e6\u00f0eli\u014b\u0261]; 5 August 1103 \u2013 25 November 1120), commonly called Adelin (sometimes Adelinus, Adelingus, A(u)delin or other Latinised Norman-French variants of \u00c6theling)[a] was the son of Henry I of England by his wife Matilda of Scotland, and was thus heir apparent to the English throne. His early death without issue caused a succession crisis, now known in English history as the Anarchy.. William was born in Winchester. His father, King Henry I of England, had married his mother, Matilda of Scotland, to conciliate his English subjects. Matilda was descended from Edmund Ironside and was a great-niece of Edward the Confessor; as such, the marriage represented a union between the new Norman rulers of England and the old Anglo-Saxon dynasty..\nThought 7: William Adelin was the son of Henry I of England and was heir apparent to the English throne. Henry I is also known as Henry Beauclerc. Therefore, William Adelin was the son and heir of Henry Beauclerc.\nAction 7: Finish[William Adelin]\nObservation 7: Episode finished, reward = 1\n\n",
+                "question_text": "Question: Who was the son and heir of Henry Beauclerc?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer is identical to the ground truth answer."
+            },
+            {
+                "steps": 7,
+                "answer": "William Adelin",
+                "gt_answer": "William Adelin",
+                "question_idx": 1943,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 15122,
+                "output_tokens": 405,
+                "total_tokens": 15527,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1686,
+                        "output_tokens": 28,
+                        "total_tokens": 1714
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1874,
+                        "output_tokens": 36,
+                        "total_tokens": 1910
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1924,
+                        "output_tokens": 108,
+                        "total_tokens": 2032
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2083,
+                        "output_tokens": 44,
+                        "total_tokens": 2127
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2287,
+                        "output_tokens": 86,
+                        "total_tokens": 2373
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2422,
+                        "output_tokens": 54,
+                        "total_tokens": 2476
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2690,
+                        "output_tokens": 32,
+                        "total_tokens": 2722
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 156,
+                        "output_tokens": 17,
+                        "total_tokens": 173
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who was the son and heir of Henry Beauclerc?\nThought 1: I need to search Henry Beauclerc to find out who his son and heir was.\nAction 1: Search[Henry Beauclerc]\nObservation 1: Henry I (c.\u20091068 \u2013 1 December 1135), also known as Henry Beauclerc, was King of England from 1100 to his death in 1135. He was the fourth son of William the Conqueror and was educated in Latin and the liberal arts. On William's death in 1087, Henry's elder brothers Robert Curthose and William Rufus inherited Normandy and England, respectively, thereby leaving Henry landless. He subsequently purchased the County of Cotentin in western Normandy from Robert, but his brothers deposed him in 1091. He gradually rebuilt his power base in the Cotentin and allied himself with William Rufus against Robert..\nThought 2: The first paragraph does not mention Henry Beauclerc's son and heir. I need to look up \"son and heir\".\nAction 2: Lookup[son and heir]\nObservation 2: No more results.\n\nThought 3: I couldn't find information about his son and heir in the provided text. I should try a more general search for \"Henry I of England children\" or similar to ensure I get that information. Since the question specifically mentions \"son and heir\" and the provided text for \"Henry Beauclerc\" (who is Henry I) doesn't contain this, I need to try a different approach. I will search for \"Henry I of England son and heir\".\nAction 3: Search[Henry I of England son and heir]\nObservation 3: Could not find Henry I of England son and heir. Similar: ['Mary I', 'Henry V of England', 'Henry I of England', 'Henry VI of England', 'Henry II of England'].\nThought 4: I need to search for \"Henry I of England\" specifically, as the initial search for \"Henry Beauclerc\" provided information about him but not his heir.\nAction 4: Search[Henry I of England]\nObservation 4: Henry I (c.\u20091068 \u2013 1 December 1135), also known as Henry Beauclerc, was King of England from 1100 to his death in 1135. He was the fourth son of William the Conqueror and was educated in Latin and the liberal arts. On William's death in 1087, Henry's elder brothers Robert Curthose and William Rufus inherited Normandy and England, respectively, thereby leaving Henry landless. He subsequently purchased the County of Cotentin in western Normandy from Robert, but his brothers deposed him in 1091. He gradually rebuilt his power base in the Cotentin and allied himself with William Rufus against Robert..\nThought 5: The initial search for \"Henry Beauclerc\" (which redirects to Henry I) did not explicitly mention his son and heir in the first paragraph. The `Lookup[son and heir]` also yielded no results in the given text. I need to find information about his children, specifically his male heir. I will try to search for \"Henry I of England children\".\nAction 5: Search[Henry I of England children]\nObservation 5: Could not find Henry I of England children. Similar: ['Henry I of England', 'Henry VIII', 'Henry VII of England', 'Henry IV of England', 'Henry V of England'].\nThought 6: The search results are not directly giving me the answer. I will try to search for \"William Adelin\", who was Henry I's only legitimate son and heir, to see if I can find the connection.\nAction 6: Search[William Adelin]\nObservation 6: William \u00c6theling (Middle English: [\u02c8wili\u0259m \u02c8a\u00f0\u0259li\u014b\u0261], Old English: [\u02c8\u00e6\u00f0eli\u014b\u0261]; 5 August 1103 \u2013 25 November 1120), commonly called Adelin (sometimes Adelinus, Adelingus, A(u)delin or other Latinised Norman-French variants of \u00c6theling)[a] was the son of Henry I of England by his wife Matilda of Scotland, and was thus heir apparent to the English throne. His early death without issue caused a succession crisis, now known in English history as the Anarchy.. William was born in Winchester. His father, King Henry I of England, had married his mother, Matilda of Scotland, to conciliate his English subjects. Matilda was descended from Edmund Ironside and was a great-niece of Edward the Confessor; as such, the marriage represented a union between the new Norman rulers of England and the old Anglo-Saxon dynasty..\nThought 7: William Adelin was the son of Henry I of England and was thus heir apparent to the English throne.\nAction 7: Finish[William Adelin]\nObservation 7: Episode finished, reward = 1\n\n",
+                "question_text": "Question: Who was the son and heir of Henry Beauclerc?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer is identical to the ground truth answer."
+            }
+        ],
+        "llm_correct": true,
+        "llm_explanation": "The predicted answer is identical to the ground truth answer.",
+        "framework": "cot_sc"
+    }
+]

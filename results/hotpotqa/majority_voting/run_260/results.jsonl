@@ -1,0 +1,249 @@
+[
+    {
+        "question_idx": 563,
+        "question_text": "Question: Where was the coach of the 1999 Oklahoma State Cowboys football team hired in 2013?",
+        "answer": "Boulder High School",
+        "gt_answer": "Boulder High School",
+        "em": true,
+        "f1": 1.0,
+        "reward": true,
+        "n_calls": 14,
+        "n_badcalls": 0,
+        "input_tokens": 28435,
+        "output_tokens": 777,
+        "total_tokens": 29212,
+        "num_traces_run": 3,
+        "individual_votes": [
+            "Boulder High School in Boulder, Colorado",
+            "Boulder High School",
+            "Boulder High School in Boulder, Colorado"
+        ],
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "Boulder High School in Boulder, Colorado",
+                "em": false,
+                "n_calls": 5,
+                "input_tokens": 10088,
+                "output_tokens": 271
+            },
+            {
+                "trace_num": 2,
+                "answer": "Boulder High School",
+                "em": true,
+                "n_calls": 5,
+                "input_tokens": 10115,
+                "output_tokens": 254
+            },
+            {
+                "trace_num": 3,
+                "answer": "Boulder High School in Boulder, Colorado",
+                "em": false,
+                "n_calls": 4,
+                "input_tokens": 7912,
+                "output_tokens": 232
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 5,
+                "answer": "Boulder High School in Boulder, Colorado",
+                "gt_answer": "Boulder High School",
+                "question_idx": 563,
+                "reward": false,
+                "em": false,
+                "f1": 0.6666666666666666,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10088,
+                "output_tokens": 271,
+                "total_tokens": 10359,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1699,
+                        "output_tokens": 50,
+                        "total_tokens": 1749
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1884,
+                        "output_tokens": 45,
+                        "total_tokens": 1929
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1984,
+                        "output_tokens": 69,
+                        "total_tokens": 2053
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2097,
+                        "output_tokens": 26,
+                        "total_tokens": 2123
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2251,
+                        "output_tokens": 39,
+                        "total_tokens": 2290
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 173,
+                        "output_tokens": 42,
+                        "total_tokens": 215
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Where was the coach of the 1999 Oklahoma State Cowboys football team hired in 2013?\nThought 1: I need to find the coach of the 1999 Oklahoma State Cowboys football team, then find where that coach was hired in 2013.\nAction 1: Search[1999 Oklahoma State Cowboys football team]\nObservation 1: The 1999 Oklahoma State Cowboys football team represented Oklahoma State University as a member of the Big 12 Conference during the 1999 NCAA Division I-A football season. Led by fifth-year head coach Bob Simmons, the Cowboys compiled an overall record of 5\u20136 with a mark of 3\u20135 in conference play, placing fifth in the Big 12's South Division. Oklahoma State played home games at Lewis Field in Stillwater, Oklahoma.. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us. HelpLearn to editCommunity portalRecent changesUpload fileSpecial pages.\nThought 2: The coach of the 1999 Oklahoma State Cowboys football team was Bob Simmons. Now I need to find where Bob Simmons was hired in 2013.\nAction 2: Search[Bob Simmons]\nObservation 2: Could not find [Bob Simmons]. Similar: ['Bob Simmons', 'Bob Simmons (stunt man)', 'Bay Hill Club and Lodge', 'Gun barrel sequence (section Bob Simmons)', 'Bob Simmons (surfer)'].\nThought 3: I should search for \"Bob Simmons (American football coach)\" or \"Bob Simmons coach\" to get specific information about the coach. Since the search results provided \"Bob Simmons (stunt man)\" and \"Bob Simmons (surfer)\", it indicates that there are multiple people named Bob Simmons.\nAction 3: Search[Bob Simmons coach]\nObservation 3: Could not find Bob Simmons coach. Similar: ['Bob Simmons (American football coach)', 'Marty Simmons', 'Bob Simmons', 'Royce Simmons', 'Ted Simmons'].\nThought 4: I should search for \"Bob Simmons (American football coach)\".\nAction 4: Search[Bob Simmons (American football coach)]\nObservation 4: Bob Simmons (born June 13, 1948) is an American former college football coach and player. He served as the head football coach at Oklahoma State University\u2013Stillwater from 1995 to 2000, compiling a record of 30\u201338. In 2013, he was hired as the head football coach at Boulder High School in Boulder, Colorado.[1]. # denotes interim head coach. This biographical article relating to a college football coach first appointed in the 1970s is a stub.\nThought 5: Bob Simmons was hired as the head football coach at Boulder High School in Boulder, Colorado in 2013.\nAction 5: Finish[Boulder High School in Boulder, Colorado]\nObservation 5: Episode finished, reward = 0\n\n",
+                "question_text": "Question: Where was the coach of the 1999 Oklahoma State Cowboys football team hired in 2013?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer provides the same core information as the ground truth (\"Boulder High School\") and adds extra correct context (\"in Boulder, Colorado\") which is acceptable according to the guidelines."
+            },
+            {
+                "steps": 5,
+                "answer": "Boulder High School",
+                "gt_answer": "Boulder High School",
+                "question_idx": 563,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10115,
+                "output_tokens": 254,
+                "total_tokens": 10369,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1699,
+                        "output_tokens": 50,
+                        "total_tokens": 1749
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1884,
+                        "output_tokens": 44,
+                        "total_tokens": 1928
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1983,
+                        "output_tokens": 76,
+                        "total_tokens": 2059
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2110,
+                        "output_tokens": 32,
+                        "total_tokens": 2142
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2270,
+                        "output_tokens": 35,
+                        "total_tokens": 2305
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 169,
+                        "output_tokens": 17,
+                        "total_tokens": 186
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Where was the coach of the 1999 Oklahoma State Cowboys football team hired in 2013?\nThought 1: I need to find the coach of the 1999 Oklahoma State Cowboys football team, then find where that coach was hired in 2013.\nAction 1: Search[1999 Oklahoma State Cowboys football team]\nObservation 1: The 1999 Oklahoma State Cowboys football team represented Oklahoma State University as a member of the Big 12 Conference during the 1999 NCAA Division I-A football season. Led by fifth-year head coach Bob Simmons, the Cowboys compiled an overall record of 5\u20136 with a mark of 3\u20135 in conference play, placing fifth in the Big 12's South Division. Oklahoma State played home games at Lewis Field in Stillwater, Oklahoma.. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us. HelpLearn to editCommunity portalRecent changesUpload fileSpecial pages.\nThought 2: The coach of the 1999 Oklahoma State Cowboys football team was Bob Simmons. I need to find where Bob Simmons was hired in 2013.\nAction 2: Search[Bob Simmons]\nObservation 2: Could not find [Bob Simmons]. Similar: ['Bob Simmons', 'Bob Simmons (stunt man)', 'Bay Hill Club and Lodge', 'Gun barrel sequence (section Bob Simmons)', 'Bob Simmons (surfer)'].\nThought 3: There are two 'Bob Simmons' in the similar list, one is 'Bob Simmons' and the other is 'Bob Simmons (stunt man)'. The coach should be 'Bob Simmons'. Since the search results are not ideal, I will try to be more specific. I will search \"Bob Simmons football coach\".\nAction 3: Search[Bob Simmons football coach]\nObservation 3: Could not find Bob Simmons football coach. Similar: ['Bob Simmons (American football coach)', 'Bob Simmons', 'Willie Simmons (American football)', 'Royce Simmons', 'Simmons (surname)'].\nThought 4: The search results suggest \"Bob Simmons (American football coach)\". I will search for that.\nAction 4: Search[Bob Simmons (American football coach)]\nObservation 4: Bob Simmons (born June 13, 1948) is an American former college football coach and player. He served as the head football coach at Oklahoma State University\u2013Stillwater from 1995 to 2000, compiling a record of 30\u201338. In 2013, he was hired as the head football coach at Boulder High School in Boulder, Colorado.[1]. # denotes interim head coach. This biographical article relating to a college football coach first appointed in the 1970s is a stub.\nThought 5: Bob Simmons was hired as the head football coach at Boulder High School in Boulder, Colorado in 2013.\nAction 5: Finish[Boulder High School]\nObservation 5: Episode finished, reward = 1\n\n",
+                "question_text": "Question: Where was the coach of the 1999 Oklahoma State Cowboys football team hired in 2013?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer is identical to the ground truth answer."
+            },
+            {
+                "steps": 4,
+                "answer": "Boulder High School in Boulder, Colorado",
+                "gt_answer": "Boulder High School",
+                "question_idx": 563,
+                "reward": false,
+                "em": false,
+                "f1": 0.6666666666666666,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 7912,
+                "output_tokens": 232,
+                "total_tokens": 8144,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1699,
+                        "output_tokens": 55,
+                        "total_tokens": 1754
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1889,
+                        "output_tokens": 51,
+                        "total_tokens": 1940
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1989,
+                        "output_tokens": 45,
+                        "total_tokens": 2034
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2162,
+                        "output_tokens": 39,
+                        "total_tokens": 2201
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 173,
+                        "output_tokens": 42,
+                        "total_tokens": 215
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Where was the coach of the 1999 Oklahoma State Cowboys football team hired in 2013?\nThought 1: I need to first identify the coach of the 1999 Oklahoma State Cowboys football team. Then, I will search for where that coach was hired in 2013.\nAction 1: Search[1999 Oklahoma State Cowboys football team]\nObservation 1: The 1999 Oklahoma State Cowboys football team represented Oklahoma State University as a member of the Big 12 Conference during the 1999 NCAA Division I-A football season. Led by fifth-year head coach Bob Simmons, the Cowboys compiled an overall record of 5\u20136 with a mark of 3\u20135 in conference play, placing fifth in the Big 12's South Division. Oklahoma State played home games at Lewis Field in Stillwater, Oklahoma.. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us. HelpLearn to editCommunity portalRecent changesUpload fileSpecial pages.\nThought 2: The coach of the 1999 Oklahoma State Cowboys football team was Bob Simmons. Now I need to find where Bob Simmons was hired in 2013.\nAction 2: Search[Bob Simmons 2013 hiring]\nObservation 2: Could not find Bob Simmons 2013 hiring. Similar: ['Bob Simmons (American football coach)', 'Bob Myers', 'Ron Simmons', 'Gene Simmons', 'Marty Simmons'].\nThought 3: I need to search for Bob Simmons (American football coach) to get more information about his career and then look for a 2013 hiring.\nAction 3: Search[Bob Simmons (American football coach)]\nObservation 3: Bob Simmons (born June 13, 1948) is an American former college football coach and player. He served as the head football coach at Oklahoma State University\u2013Stillwater from 1995 to 2000, compiling a record of 30\u201338. In 2013, he was hired as the head football coach at Boulder High School in Boulder, Colorado.[1]. # denotes interim head coach. This biographical article relating to a college football coach first appointed in the 1970s is a stub.\nThought 4: Bob Simmons was hired as the head football coach at Boulder High School in Boulder, Colorado in 2013.\nAction 4: Finish[Boulder High School in Boulder, Colorado]\nObservation 4: Episode finished, reward = 0\n\n",
+                "question_text": "Question: Where was the coach of the 1999 Oklahoma State Cowboys football team hired in 2013?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer provides the same core information as the ground truth (\"Boulder High School\") and adds extra correct context (\"in Boulder, Colorado\") which is acceptable according to the guidelines."
+            }
+        ],
+        "llm_correct": true,
+        "llm_explanation": "The predicted answer is identical to the ground truth answer.",
+        "framework": "majority_voting"
+    }
+]

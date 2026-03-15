@@ -75,35 +75,17 @@ class FEVERExperimentRunner:
             self.predefined_task_ids, self.original_claim_ids, self.line_idx_to_claim_id = self._load_task_ids_from_file()
         
         # Create seed-based run directory (accumulates across runs)
-        run_name = f"seed{seed}_{model.replace('/', '-')}"
-        
-        # Create seed-based run directory (accumulates across runs)
-        run_name = f"seed{seed}_{model.replace('/', '-')}"
+        # All frameworks go into one consolidated directory per seed
+        run_name = f"seed{seed}_mixed"
         
         script_dir = Path(__file__).parent
         project_root = script_dir.parent.parent.parent
         
-        # Determine base directory based on model and frameworks
-        # Qwen (local on-device) results go to a dedicated model directory
+        # Determine base directory based on model
         if "qwen" in model.lower():
             base_results_path = project_root / "results/fever/qwen"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'react':
-            base_results_path = project_root / "results/fever/gemini/react"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'reflexion':
-            base_results_path = project_root / "results/fever/gemini/reflexion"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'majority_voting':
-            base_results_path = project_root / "results/fever/gemini/majority_voting"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'action_prune':
-            base_results_path = project_root / "results/fever/gemini/action_prune"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'self_reflection':
-            base_results_path = project_root / "results/fever/gemini/self_reflection"
-        elif len(self.frameworks) == 1 and self.frameworks[0] == 'cot_sc':
-            base_results_path = project_root / "results/fever/gemini/cot_sc"
-        elif all(f in ['react', 'reflexion', 'majority_voting', 'cot_sc', 'self_reflection', 'action_prune'] for f in self.frameworks):
-             base_results_path = project_root / "results/fever/gemini/mixed"
         else:
-             # Fallback
-             base_results_path = project_root / "results/fever/gemini"
+            base_results_path = project_root / "results/fever/gemini"
 
         self.results_dir = (base_results_path / run_name).resolve()
         self.results_dir.mkdir(parents=True, exist_ok=True)

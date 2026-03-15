@@ -1,0 +1,228 @@
+[
+    {
+        "question_idx": 667,
+        "question_text": "Question: Who runs the website surpassed by both Baidu Baike and Hudong.com?",
+        "answer": "Wikimedia Foundation",
+        "gt_answer": "Wikimedia Foundation",
+        "em": true,
+        "f1": 1.0,
+        "reward": true,
+        "n_calls": 12,
+        "n_badcalls": 0,
+        "input_tokens": 36421,
+        "output_tokens": 833,
+        "total_tokens": 37254,
+        "num_traces_run": 3,
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "Wikimedia Foundation",
+                "em": true,
+                "n_calls": 4,
+                "input_tokens": 9216,
+                "output_tokens": 254
+            },
+            {
+                "trace_num": 2,
+                "answer": "Wikimedia Foundation",
+                "em": true,
+                "n_calls": 4,
+                "input_tokens": 9310,
+                "output_tokens": 330
+            },
+            {
+                "trace_num": 3,
+                "answer": "Wikimedia Foundation",
+                "em": true,
+                "n_calls": 4,
+                "input_tokens": 9102,
+                "output_tokens": 230
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 4,
+                "answer": "Wikimedia Foundation",
+                "gt_answer": "Wikimedia Foundation",
+                "question_idx": 667,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 9216,
+                "output_tokens": 254,
+                "total_tokens": 9470,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1692,
+                        "output_tokens": 45,
+                        "total_tokens": 1737
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 2148,
+                        "output_tokens": 41,
+                        "total_tokens": 2189
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2398,
+                        "output_tokens": 133,
+                        "total_tokens": 2531
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2818,
+                        "output_tokens": 18,
+                        "total_tokens": 2836
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 160,
+                        "output_tokens": 17,
+                        "total_tokens": 177
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who runs the website surpassed by both Baidu Baike and Hudong.com?\nThought 1: I need to find a website that has been surpassed by both Baidu Baike and Hudong.com. Then I need to find who runs that website.\nAction 1: Search[Baidu Baike]\nObservation 1: Baidu Baike (/\u02c8ba\u026adu\u02d0 \u02c8ba\u026ak\u0259/; Chinese: \u767e\u5ea6\u767e\u79d1; pinyin: B\u01ceid\u00f9 B\u01ceik\u0113; lit. 'Baidu Encyclopedia', also known as BaiduWiki internationally[1]) is a semi-regulated Chinese-language collaborative online encyclopedia owned by the Chinese technology company Baidu.[2] Modelled after Wikipedia, it was launched in April 2006.[3] As of 2025,[update] it claims more than 30 million entries[4] and around 8.03 million editors[5] \u2013 the largest number of entries of any Chinese-language online encyclopedia.[6] Baidu Baike has been criticised for its censorship, copyright violations, commercialist practices and unsourced or inaccurate information.[7][8][9][10]. Baidu Baike was created by Baidu founder Robin Li, and was released to the public around 20 April 2006, following the Chinese government's decision to censor Wikipedia in 2005.[11][2][12][3] After 20 days, it had more than 300,000 registered users and more than 100,000 articles, surpassing the number in Chinese Wikipedia.[3]. During the conference WWW2008 of the World Wide Web Consortium, Baidu's William Chang said, \"There is, in fact, no reason for China to use Wikipedia ... It's very natural for China to make its own products.\"[13] When searching with the search engine Baidu, the link to the corresponding entry in Baidu Baike, if it exists, will be put as the first result or one of the first results.[14] The Chinese government has, through the Great Firewall, blocked access to all editions of Wikipedia since 2019.[15][16].\nThought 2: The first paragraph of Baidu Baike mentions that it surpassed Chinese Wikipedia. I need to check if Hudong.com also surpassed Chinese Wikipedia.\nAction 2: Search[Hudong.com]\nObservation 2: Douyin Baike (Chinese: \u6296\u97f3\u767e\u79d1; pinyin: d\u01d2u y\u012bn b\u01cei k\u0113), formerly known as Hudong Baike (Chinese: \u4e92\u52a8\u767e\u79d1, also sometimes spelled Hoodong and also known as Baike.com), is a for-profit Chinese-language user-editable online encyclopedia and social network owned by ByteDance. Founded in 2005 in emulation of Wikipedia, it is one of the two largest wikis in China, along with its more prominent rival, Baidu Baike.. Baike.com is a wiki and lets its users edit and contribute material. Frequent users may accumulate credits redeemable for gifts.[1] It has also included features of social networking sites, including chat forums and fan groups.[2][3] Baike.com is a for-profit business partially supported by advertising and paid support services.[2]. Hudong Baike developed its own wiki software platform, called HDWiki, as a rival to MediaWiki.\nThought 3: Hudong.com is described as one of the two largest wikis in China, along with Baidu Baike, and founded in emulation of Wikipedia. This suggests that Wikipedia is the site that both Baidu Baike and Hudong.com surpassed. I need to confirm this. The Baidu Baike article states it surpassed Chinese Wikipedia, and the Hudong.com article states it was founded in emulation of Wikipedia and is a rival to Baidu Baike. This strongly implies that Wikipedia is the common site they both surpassed in terms of content or usage in China. Now I need to find who runs Wikipedia.\nAction 3: Search[Wikipedia]\nObservation 3: Wikipedia[c] is a free online encyclopedia written and maintained by a community of volunteers, known as Wikipedians, through open collaboration and the wiki software MediaWiki. Founded by Jimmy Wales and Larry Sanger in 2001, Wikipedia has been hosted since 2003 by the Wikimedia Foundation, an American nonprofit organization funded mainly by donations from readers.[1] Wikipedia is the largest and most-read reference work in history.[2][3]. Initially available only in English, Wikipedia exists in over 340 languages and is one of the world's most visited websites. The English Wikipedia, with over 7\u00a0million articles, remains the largest of the editions, which together comprise more than 66 million articles and attract more than 1.5\u00a0billion unique device visits and 13\u00a0million edits per month (about five\u00a0edits per second on average)  as of April\u00a02024[update].[W 1] As of December\u00a02025[update], over 25% of Wikipedia's traffic comes from the United States, while Japan accounts for nearly 7%, and the United Kingdom, Germany, and Russia each represent around 5%.[4]. Wikipedia has been praised for enabling the democratization of knowledge, its extensive coverage, unique structure, and culture.\nThought 4: Wikipedia is hosted by the Wikimedia Foundation.\nAction 4: Finish[Wikimedia Foundation]\nObservation 4: Episode finished, reward = 1\n\n",
+                "question_text": "Question: Who runs the website surpassed by both Baidu Baike and Hudong.com?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer is identical to the ground truth answer."
+            },
+            {
+                "steps": 4,
+                "answer": "Wikimedia Foundation",
+                "gt_answer": "Wikimedia Foundation",
+                "question_idx": 667,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 9310,
+                "output_tokens": 330,
+                "total_tokens": 9640,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1692,
+                        "output_tokens": 90,
+                        "total_tokens": 1782
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 2193,
+                        "output_tokens": 65,
+                        "total_tokens": 2258
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2467,
+                        "output_tokens": 124,
+                        "total_tokens": 2591
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2798,
+                        "output_tokens": 34,
+                        "total_tokens": 2832
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 160,
+                        "output_tokens": 17,
+                        "total_tokens": 177
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who runs the website surpassed by both Baidu Baike and Hudong.com?\nThought 1: I need to find a website that has been surpassed by both Baidu Baike and Hudong.com. This implies that Baidu Baike and Hudong.com are similar in nature, likely encyclopedic or wiki-type websites. I should start by searching for one of them, for example, Baidu Baike, and see if it mentions other websites that it surpassed.\nAction 1: Search[Baidu Baike]\nObservation 1: Baidu Baike (/\u02c8ba\u026adu\u02d0 \u02c8ba\u026ak\u0259/; Chinese: \u767e\u5ea6\u767e\u79d1; pinyin: B\u01ceid\u00f9 B\u01ceik\u0113; lit. 'Baidu Encyclopedia', also known as BaiduWiki internationally[1]) is a semi-regulated Chinese-language collaborative online encyclopedia owned by the Chinese technology company Baidu.[2] Modelled after Wikipedia, it was launched in April 2006.[3] As of 2025,[update] it claims more than 30 million entries[4] and around 8.03 million editors[5] \u2013 the largest number of entries of any Chinese-language online encyclopedia.[6] Baidu Baike has been criticised for its censorship, copyright violations, commercialist practices and unsourced or inaccurate information.[7][8][9][10]. Baidu Baike was created by Baidu founder Robin Li, and was released to the public around 20 April 2006, following the Chinese government's decision to censor Wikipedia in 2005.[11][2][12][3] After 20 days, it had more than 300,000 registered users and more than 100,000 articles, surpassing the number in Chinese Wikipedia.[3]. During the conference WWW2008 of the World Wide Web Consortium, Baidu's William Chang said, \"There is, in fact, no reason for China to use Wikipedia ... It's very natural for China to make its own products.\"[13] When searching with the search engine Baidu, the link to the corresponding entry in Baidu Baike, if it exists, will be put as the first result or one of the first results.[14] The Chinese government has, through the Great Firewall, blocked access to all editions of Wikipedia since 2019.[15][16].\nThought 2: The first paragraph mentions that Baidu Baike \"surpassing the number in Chinese Wikipedia\" after 20 days. This indicates that Chinese Wikipedia was surpassed by Baidu Baike. I need to check if Chinese Wikipedia was also surpassed by Hudong.com.\nAction 2: Search[Hudong.com]\nObservation 2: Douyin Baike (Chinese: \u6296\u97f3\u767e\u79d1; pinyin: d\u01d2u y\u012bn b\u01cei k\u0113), formerly known as Hudong Baike (Chinese: \u4e92\u52a8\u767e\u79d1, also sometimes spelled Hoodong and also known as Baike.com), is a for-profit Chinese-language user-editable online encyclopedia and social network owned by ByteDance. Founded in 2005 in emulation of Wikipedia, it is one of the two largest wikis in China, along with its more prominent rival, Baidu Baike.. Baike.com is a wiki and lets its users edit and contribute material. Frequent users may accumulate credits redeemable for gifts.[1] It has also included features of social networking sites, including chat forums and fan groups.[2][3] Baike.com is a for-profit business partially supported by advertising and paid support services.[2]. Hudong Baike developed its own wiki software platform, called HDWiki, as a rival to MediaWiki.\nThought 3: This paragraph states that Hudong Baike (now Douyin Baike) is \"one of the two largest wikis in China, along with its more prominent rival, Baidu Baike.\" This implies that both Baidu Baike and Hudong.com are larger than other wikis in China, and given that Baidu Baike surpassed Chinese Wikipedia, it's highly likely Hudong.com also surpassed Chinese Wikipedia. The question asks who *runs* the website surpassed by both. The website is Chinese Wikipedia. I need to find who runs Chinese Wikipedia.\nAction 3: Search[Chinese Wikipedia]\nObservation 3: The Chinese Wikipedia (traditional Chinese: \u4e2d\u6587\u7dad\u57fa\u767e\u79d1; simplified Chinese: \u4e2d\u6587\u7ef4\u57fa\u767e\u79d1; pinyin: Zh\u014dngw\u00e9n W\u00e9ij\u012b B\u01ceik\u0113) is the written vernacular Chinese edition of Wikipedia. It was created on 11 May 2001.[1] It is one of multiple projects supported by the Wikimedia Foundation.. The Chinese Wikipedia has been blocked in mainland China since May 2015.[2] Nonetheless, the Chinese Wikipedia is still one of the top ten most active versions of Wikipedia by number of edits and number of editors, due to contributions from users from Taiwan, Hong Kong, Macau, Singapore, Malaysia, and the Chinese diaspora. Readers from Taiwan and Hong Kong contribute most of the page views of the Chinese Wikipedia.[3]. Despite being censored in mainland China, and as VPNs are normally not allowed to edit Wikipedia, Wikipedia administrators from China have permitted IP block exemption for a select number of mainland users.\nThought 4: The Chinese Wikipedia is one of multiple projects supported by the Wikimedia Foundation. Therefore, the Wikimedia Foundation runs the Chinese Wikipedia.\nAction 4: Finish[Wikimedia Foundation]\nObservation 4: Episode finished, reward = 1\n\n",
+                "question_text": "Question: Who runs the website surpassed by both Baidu Baike and Hudong.com?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer is identical to the ground truth answer."
+            },
+            {
+                "steps": 4,
+                "answer": "Wikimedia Foundation",
+                "gt_answer": "Wikimedia Foundation",
+                "question_idx": 667,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 9102,
+                "output_tokens": 230,
+                "total_tokens": 9332,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1692,
+                        "output_tokens": 45,
+                        "total_tokens": 1737
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 2148,
+                        "output_tokens": 38,
+                        "total_tokens": 2186
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2395,
+                        "output_tokens": 106,
+                        "total_tokens": 2501
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2707,
+                        "output_tokens": 24,
+                        "total_tokens": 2731
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 160,
+                        "output_tokens": 17,
+                        "total_tokens": 177
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who runs the website surpassed by both Baidu Baike and Hudong.com?\nThought 1: I need to find a website that has been surpassed by both Baidu Baike and Hudong.com. Then I need to find who runs that website.\nAction 1: Search[Baidu Baike]\nObservation 1: Baidu Baike (/\u02c8ba\u026adu\u02d0 \u02c8ba\u026ak\u0259/; Chinese: \u767e\u5ea6\u767e\u79d1; pinyin: B\u01ceid\u00f9 B\u01ceik\u0113; lit. 'Baidu Encyclopedia', also known as BaiduWiki internationally[1]) is a semi-regulated Chinese-language collaborative online encyclopedia owned by the Chinese technology company Baidu.[2] Modelled after Wikipedia, it was launched in April 2006.[3] As of 2025,[update] it claims more than 30 million entries[4] and around 8.03 million editors[5] \u2013 the largest number of entries of any Chinese-language online encyclopedia.[6] Baidu Baike has been criticised for its censorship, copyright violations, commercialist practices and unsourced or inaccurate information.[7][8][9][10]. Baidu Baike was created by Baidu founder Robin Li, and was released to the public around 20 April 2006, following the Chinese government's decision to censor Wikipedia in 2005.[11][2][12][3] After 20 days, it had more than 300,000 registered users and more than 100,000 articles, surpassing the number in Chinese Wikipedia.[3]. During the conference WWW2008 of the World Wide Web Consortium, Baidu's William Chang said, \"There is, in fact, no reason for China to use Wikipedia ... It's very natural for China to make its own products.\"[13] When searching with the search engine Baidu, the link to the corresponding entry in Baidu Baike, if it exists, will be put as the first result or one of the first results.[14] The Chinese government has, through the Great Firewall, blocked access to all editions of Wikipedia since 2019.[15][16].\nThought 2: The first paragraph mentions Baidu Baike surpassing Chinese Wikipedia. I need to check if Hudong.com also surpassed Chinese Wikipedia.\nAction 2: Search[Hudong.com]\nObservation 2: Douyin Baike (Chinese: \u6296\u97f3\u767e\u79d1; pinyin: d\u01d2u y\u012bn b\u01cei k\u0113), formerly known as Hudong Baike (Chinese: \u4e92\u52a8\u767e\u79d1, also sometimes spelled Hoodong and also known as Baike.com), is a for-profit Chinese-language user-editable online encyclopedia and social network owned by ByteDance. Founded in 2005 in emulation of Wikipedia, it is one of the two largest wikis in China, along with its more prominent rival, Baidu Baike.. Baike.com is a wiki and lets its users edit and contribute material. Frequent users may accumulate credits redeemable for gifts.[1] It has also included features of social networking sites, including chat forums and fan groups.[2][3] Baike.com is a for-profit business partially supported by advertising and paid support services.[2]. Hudong Baike developed its own wiki software platform, called HDWiki, as a rival to MediaWiki.\nThought 3: Baidu Baike surpassed Chinese Wikipedia. The description of Hudong.com (now Douyin Baike) states it is \"one of the two largest wikis in China, along with its more prominent rival, Baidu Baike.\" This implies that Hudong.com also surpassed Chinese Wikipedia in terms of size or prominence, as Chinese Wikipedia was the primary reference point. Therefore, the website surpassed by both is Chinese Wikipedia. I need to find who runs Chinese Wikipedia.\nAction 3: Search[Chinese Wikipedia]\nObservation 3: The Chinese Wikipedia (traditional Chinese: \u4e2d\u6587\u7dad\u57fa\u767e\u79d1; simplified Chinese: \u4e2d\u6587\u7ef4\u57fa\u767e\u79d1; pinyin: Zh\u014dngw\u00e9n W\u00e9ij\u012b B\u01ceik\u0113) is the written vernacular Chinese edition of Wikipedia. It was created on 11 May 2001.[1] It is one of multiple projects supported by the Wikimedia Foundation.. The Chinese Wikipedia has been blocked in mainland China since May 2015.[2] Nonetheless, the Chinese Wikipedia is still one of the top ten most active versions of Wikipedia by number of edits and number of editors, due to contributions from users from Taiwan, Hong Kong, Macau, Singapore, Malaysia, and the Chinese diaspora. Readers from Taiwan and Hong Kong contribute most of the page views of the Chinese Wikipedia.[3]. Despite being censored in mainland China, and as VPNs are normally not allowed to edit Wikipedia, Wikipedia administrators from China have permitted IP block exemption for a select number of mainland users.\nThought 4: The Chinese Wikipedia is one of multiple projects supported by the Wikimedia Foundation.\nAction 4: Finish[Wikimedia Foundation]\nObservation 4: Episode finished, reward = 1\n\n",
+                "question_text": "Question: Who runs the website surpassed by both Baidu Baike and Hudong.com?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer is identical to the ground truth answer."
+            }
+        ],
+        "llm_correct": true,
+        "llm_explanation": "The predicted answer is identical to the ground truth answer.",
+        "framework": "cot_sc"
+    }
+]

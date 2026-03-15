@@ -1,0 +1,249 @@
+[
+    {
+        "question_idx": 1789,
+        "question_text": "Question: The Fort Worth Zoo was rated as one of the top zoos by a magazine published where? ",
+        "answer": "Los Angeles, California",
+        "gt_answer": "Birmingham, Alabama",
+        "em": false,
+        "f1": 0,
+        "reward": false,
+        "n_calls": 14,
+        "n_badcalls": 0,
+        "input_tokens": 29127,
+        "output_tokens": 857,
+        "total_tokens": 29984,
+        "num_traces_run": 3,
+        "individual_votes": [
+            "United States",
+            "Los Angeles, California",
+            "Los Angeles, California"
+        ],
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "United States",
+                "em": false,
+                "n_calls": 5,
+                "input_tokens": 10390,
+                "output_tokens": 352
+            },
+            {
+                "trace_num": 2,
+                "answer": "Los Angeles, California",
+                "em": false,
+                "n_calls": 5,
+                "input_tokens": 10304,
+                "output_tokens": 227
+            },
+            {
+                "trace_num": 3,
+                "answer": "Los Angeles, California",
+                "em": false,
+                "n_calls": 4,
+                "input_tokens": 8129,
+                "output_tokens": 234
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 5,
+                "answer": "United States",
+                "gt_answer": "Birmingham, Alabama",
+                "question_idx": 1789,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10390,
+                "output_tokens": 352,
+                "total_tokens": 10742,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1694,
+                        "output_tokens": 41,
+                        "total_tokens": 1735
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1926,
+                        "output_tokens": 58,
+                        "total_tokens": 1984
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2031,
+                        "output_tokens": 70,
+                        "total_tokens": 2101
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2148,
+                        "output_tokens": 67,
+                        "total_tokens": 2215
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2428,
+                        "output_tokens": 41,
+                        "total_tokens": 2469
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 163,
+                        "output_tokens": 75,
+                        "total_tokens": 238
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: The Fort Worth Zoo was rated as one of the top zoos by a magazine published where? \nThought 1: I need to search for \"Fort Worth Zoo\" and find out which magazine rated it as one of the top zoos and where that magazine is published.\nAction 1: Search[Fort Worth Zoo]\nObservation 1: The Fort Worth Zoo is a zoo in Fort Worth, Texas, United States, and is home to 7,000 native and exotic animals. It has been named as a top zoo in the nation by Family Life magazine, the Los Angeles Times and USA Today, as well as one of the top zoos in the South by Southern Living Reader's Choice Awards.. The Fort Worth Zoo is accredited by both the Association of Zoos and Aquariums (AZA) and Zoological Association of America (ZAA), and is a member of the World Association of Zoos and Aquariums (WAZA).. When the Fort Worth Zoo opened in 1909, it had one African lion, two bear cubs, an alligator, a coyote, a peacock and a few rabbits. From its opening until 1991, the zoo was owned and operated by the City of Fort Worth.\nThought 2: The Fort Worth Zoo has been named as a top zoo in the nation by Family Life magazine, the Los Angeles Times, and USA Today. I need to find where these magazines are published. I'll start with Family Life magazine.\nAction 2: Search[Family Life magazine]\nObservation 2: Family Life may also refer to:. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us. HelpLearn to editCommunity portalRecent changesUpload fileSpecial pages. Donate. Create account.\nThought 3: The search for \"Family Life magazine\" did not yield a relevant result for a publication. It seems to be a disambiguation page. I will try searching for \"Family Life (magazine)\" to be more specific. If that doesn't work, I will check the other publications mentioned.\nAction 3: Search[Family Life (magazine)]\nObservation 3: Family Life may also refer to:. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us. HelpLearn to editCommunity portalRecent changesUpload fileSpecial pages. Donate. Create account.\nThought 4: The search for \"Family Life (magazine)\" also led to a disambiguation page. It seems there isn't a prominent magazine by that exact name that would be widely known for rating zoos. I will now investigate the other publications mentioned: The Los Angeles Times and USA Today.\nAction 4: Search[Los Angeles Times]\nObservation 4: The Los Angeles Times is an American daily newspaper that began publishing in Los Angeles, California, in 1881.[3] Based in the Greater Los Angeles city of El Segundo since 2018,[4] it is the sixth-largest newspaper in the U.S. and the largest in the Western United States with a print circulation of 79,100.[5] As of 2022, it had 500,000 online subscribers, the fifth-largest among U.S. newspapers. Owned by Patrick Soon-Shiong, it is a subsidiary of the Los Angeles Times Media Group, and published by California Times, the paper has won over 40 Pulitzer Prizes since its founding.[6][7][8][9]. In the 19th century, the paper developed a reputation for civic boosterism and opposition to labor unions, the latter of which led to the bombing of its headquarters in 1910.\nThought 5: The Los Angeles Times is published in Los Angeles, California, United States. This fits the criteria of a magazine (or newspaper) that rated the zoo.\nAction 5: Finish[United States]\nObservation 5: Episode finished, reward = 0\n\n",
+                "question_text": "Question: The Fort Worth Zoo was rated as one of the top zoos by a magazine published where? ",
+                "llm_correct": false,
+                "llm_explanation": "The ground truth specifies a city and state (Birmingham, Alabama), which is a precise location. The predicted answer \"United States\" is a country, which is a much broader and less specific location. While Birmingham, Alabama is in the United States, the prediction is too vague and misses the key specific information provided in the ground truth."
+            },
+            {
+                "steps": 5,
+                "answer": "Los Angeles, California",
+                "gt_answer": "Birmingham, Alabama",
+                "question_idx": 1789,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10304,
+                "output_tokens": 227,
+                "total_tokens": 10531,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1694,
+                        "output_tokens": 39,
+                        "total_tokens": 1733
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1924,
+                        "output_tokens": 59,
+                        "total_tokens": 1983
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2030,
+                        "output_tokens": 31,
+                        "total_tokens": 2061
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2122,
+                        "output_tokens": 34,
+                        "total_tokens": 2156
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2369,
+                        "output_tokens": 24,
+                        "total_tokens": 2393
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 165,
+                        "output_tokens": 40,
+                        "total_tokens": 205
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: The Fort Worth Zoo was rated as one of the top zoos by a magazine published where? \nThought 1: I need to find out which magazine rated the Fort Worth Zoo as one of the top zoos, and then find where that magazine is published.\nAction 1: Search[Fort Worth Zoo]\nObservation 1: The Fort Worth Zoo is a zoo in Fort Worth, Texas, United States, and is home to 7,000 native and exotic animals. It has been named as a top zoo in the nation by Family Life magazine, the Los Angeles Times and USA Today, as well as one of the top zoos in the South by Southern Living Reader's Choice Awards.. The Fort Worth Zoo is accredited by both the Association of Zoos and Aquariums (AZA) and Zoological Association of America (ZAA), and is a member of the World Association of Zoos and Aquariums (WAZA).. When the Fort Worth Zoo opened in 1909, it had one African lion, two bear cubs, an alligator, a coyote, a peacock and a few rabbits. From its opening until 1991, the zoo was owned and operated by the City of Fort Worth.\nThought 2: The Fort Worth Zoo has been named as a top zoo in the nation by Family Life magazine, the Los Angeles Times and USA Today. I need to find out where one of these magazines is published. I will start with Family Life magazine.\nAction 2: Search[Family Life magazine]\nObservation 2: Family Life may also refer to:. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us. HelpLearn to editCommunity portalRecent changesUpload fileSpecial pages. Donate. Create account.\nThought 3: I need to be more specific. I will search for \"Family Life magazine publication location\".\nAction 3: Search[Family Life magazine publication location]\nObservation 3: Could not find Family Life magazine publication location. Similar: ['Mad (magazine)', 'List of LGBTQ periodicals (redirect from List of LGBT publications)', \"Taki's Magazine\", 'Arizona Highways (redirect from Arizona Highways (magazine))', 'Life'].\nThought 4: Since I cannot find the publication location for Family Life magazine, I will try the next option, Los Angeles Times.\nAction 4: Search[Los Angeles Times]\nObservation 4: The Los Angeles Times is an American daily newspaper that began publishing in Los Angeles, California, in 1881.[3] Based in the Greater Los Angeles city of El Segundo since 2018,[4] it is the sixth-largest newspaper in the U.S. and the largest in the Western United States with a print circulation of 79,100.[5] As of 2022, it had 500,000 online subscribers, the fifth-largest among U.S. newspapers. Owned by Patrick Soon-Shiong, it is a subsidiary of the Los Angeles Times Media Group, and published by California Times, the paper has won over 40 Pulitzer Prizes since its founding.[6][7][8][9]. In the 19th century, the paper developed a reputation for civic boosterism and opposition to labor unions, the latter of which led to the bombing of its headquarters in 1910.\nThought 5: The Los Angeles Times is published in Los Angeles, California.\nAction 5: Finish[Los Angeles, California]\nObservation 5: Episode finished, reward = 0\n\n",
+                "question_text": "Question: The Fort Worth Zoo was rated as one of the top zoos by a magazine published where? ",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer \"Los Angeles, California\" is a different city and state than the ground truth answer \"Birmingham, Alabama\". They are not semantically equivalent."
+            },
+            {
+                "steps": 4,
+                "answer": "Los Angeles, California",
+                "gt_answer": "Birmingham, Alabama",
+                "question_idx": 1789,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 8129,
+                "output_tokens": 234,
+                "total_tokens": 8363,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1694,
+                        "output_tokens": 41,
+                        "total_tokens": 1735
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1926,
+                        "output_tokens": 64,
+                        "total_tokens": 1990
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2037,
+                        "output_tokens": 57,
+                        "total_tokens": 2094
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2307,
+                        "output_tokens": 32,
+                        "total_tokens": 2339
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 165,
+                        "output_tokens": 40,
+                        "total_tokens": 205
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: The Fort Worth Zoo was rated as one of the top zoos by a magazine published where? \nThought 1: I need to search for \"Fort Worth Zoo\", find which magazine rated it as one of the top zoos, then find where that magazine is published.\nAction 1: Search[Fort Worth Zoo]\nObservation 1: The Fort Worth Zoo is a zoo in Fort Worth, Texas, United States, and is home to 7,000 native and exotic animals. It has been named as a top zoo in the nation by Family Life magazine, the Los Angeles Times and USA Today, as well as one of the top zoos in the South by Southern Living Reader's Choice Awards.. The Fort Worth Zoo is accredited by both the Association of Zoos and Aquariums (AZA) and Zoological Association of America (ZAA), and is a member of the World Association of Zoos and Aquariums (WAZA).. When the Fort Worth Zoo opened in 1909, it had one African lion, two bear cubs, an alligator, a coyote, a peacock and a few rabbits. From its opening until 1991, the zoo was owned and operated by the City of Fort Worth.\nThought 2: The Fort Worth Zoo has been named as a top zoo by Family Life magazine, the Los Angeles Times, USA Today, and Southern Living Reader's Choice Awards. I need to find where one of these magazines is published. I will start with Family Life magazine.\nAction 2: Search[Family Life magazine]\nObservation 2: Family Life may also refer to:. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us. HelpLearn to editCommunity portalRecent changesUpload fileSpecial pages. Donate. Create account.\nThought 3: The search for \"Family Life magazine\" did not return a specific magazine entity, but rather a disambiguation page. I need to find the publication location of one of the magazines mentioned. I will try the Los Angeles Times next.\nAction 3: Search[Los Angeles Times]\nObservation 3: The Los Angeles Times is an American daily newspaper that began publishing in Los Angeles, California, in 1881.[3] Based in the Greater Los Angeles city of El Segundo since 2018,[4] it is the sixth-largest newspaper in the U.S. and the largest in the Western United States with a print circulation of 79,100.[5] As of 2022, it had 500,000 online subscribers, the fifth-largest among U.S. newspapers. Owned by Patrick Soon-Shiong, it is a subsidiary of the Los Angeles Times Media Group, and published by California Times, the paper has won over 40 Pulitzer Prizes since its founding.[6][7][8][9]. In the 19th century, the paper developed a reputation for civic boosterism and opposition to labor unions, the latter of which led to the bombing of its headquarters in 1910.\nThought 4: The Los Angeles Times is published in Los Angeles, California. This is sufficient to answer the question.\nAction 4: Finish[Los Angeles, California]\nObservation 4: Episode finished, reward = 0\n\n",
+                "question_text": "Question: The Fort Worth Zoo was rated as one of the top zoos by a magazine published where? ",
+                "llm_correct": false,
+                "llm_explanation": "The predicted answer \"Los Angeles, California\" is a different city and state than the ground truth answer \"Birmingham, Alabama\". They are not semantically equivalent."
+            }
+        ],
+        "llm_correct": false,
+        "llm_explanation": "The predicted answer \"Los Angeles, California\" is a different city and state than the ground truth answer \"Birmingham, Alabama\". They are not semantically equivalent.",
+        "framework": "majority_voting"
+    }
+]

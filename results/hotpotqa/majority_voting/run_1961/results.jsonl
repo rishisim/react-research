@@ -1,0 +1,257 @@
+[
+    {
+        "question_idx": 4239,
+        "question_text": "Question: Who is the host of Wall of Fame known for his partnership with?",
+        "answer": "Matt Lucas",
+        "gt_answer": "Matt Lucas",
+        "em": true,
+        "f1": 1.0,
+        "reward": true,
+        "n_calls": 15,
+        "n_badcalls": 0,
+        "input_tokens": 32008,
+        "output_tokens": 820,
+        "total_tokens": 32828,
+        "num_traces_run": 3,
+        "individual_votes": [
+            "Matt Lucas",
+            "Matt Lucas",
+            "Matt Lucas"
+        ],
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "Matt Lucas",
+                "em": true,
+                "n_calls": 5,
+                "input_tokens": 10549,
+                "output_tokens": 263
+            },
+            {
+                "trace_num": 2,
+                "answer": "Matt Lucas",
+                "em": true,
+                "n_calls": 5,
+                "input_tokens": 10685,
+                "output_tokens": 293
+            },
+            {
+                "trace_num": 3,
+                "answer": "Matt Lucas",
+                "em": true,
+                "n_calls": 5,
+                "input_tokens": 10487,
+                "output_tokens": 236
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 5,
+                "answer": "Matt Lucas",
+                "gt_answer": "Matt Lucas",
+                "question_idx": 4239,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10549,
+                "output_tokens": 263,
+                "total_tokens": 10812,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1689,
+                        "output_tokens": 36,
+                        "total_tokens": 1725
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1917,
+                        "output_tokens": 65,
+                        "total_tokens": 1982
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2049,
+                        "output_tokens": 62,
+                        "total_tokens": 2111
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2254,
+                        "output_tokens": 40,
+                        "total_tokens": 2294
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2483,
+                        "output_tokens": 34,
+                        "total_tokens": 2517
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 157,
+                        "output_tokens": 26,
+                        "total_tokens": 183
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who is the host of Wall of Fame known for his partnership with?\nThought 1: I need to find the host of \"Wall of Fame\" and then find out who that host is known for partnering with.\nAction 1: Search[Wall of Fame]\nObservation 1: A hall of fame, wall of fame, or walk of fame is a list of individuals, achievements, or other entities, usually chosen by a group of electors, to mark their excellence, accomplishments and fame in their field. In some cases, these halls of fame consist of actual halls or museums that enshrine the honorees with sculptures, plaques, and displays of memorabilia and general information regarding the inducted recipients. Sometimes, the honorees' plaques may instead be posted on a wall (hence a \"wall of fame\") or inscribed on a sidewalk (as in a \"walk of fame\", \"walk of stars\", or \"avenue of fame\"). In other cases, the hall of fame is more figurative and consists of a list of names of noteworthy people and their achievements and contributions. The lists are maintained by an organization or community, and may be national, state, local, or private..\nThought 2: This search result is about the general concept of \"Wall of Fame\", not a specific show or program. I need to refine my search to find a host. I will try searching for \"Wall of Fame TV show\" or \"Wall of Fame host\".\nAction 2: Search[Wall of Fame (TV series)]\nObservation 2: Could not find Wall of Fame (TV series). Similar: ['List of Fame (1982 TV series) episodes', 'Rachael Carpani', 'Wall of Fame (game show)', 'Harry Potter (TV series)', 'List of Amazon Prime Video original programming'].\nThought 3: The search for \"Wall of Fame (TV series)\" was unsuccessful, but it suggested \"Wall of Fame (game show)\". This is a promising lead. I will search for \"Wall of Fame (game show)\" to find the host.\nAction 3: Search[Wall of Fame (game show)]\nObservation 3: Wall of Fame is a British comedy panel game that was first broadcast on Sky1 in 2011. It is hosted by Little Britain star David Walliams and features Jack Dee, Kate Garraway, with Tamara Ecclestone for the first two episodes then Sara Pascoe took over from episode three, and Andrew Maxwell as regular panellists, alongside two weekly guests.. The premise of the show is the two teams of panellists discuss the week's top 25 most talked about celebrities in the UK.[1]. The coloured backgrounds denote the result of each of the shows:. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us.\nThought 4: The host of \"Wall of Fame\" is David Walliams. Now I need to find who David Walliams is known for his partnership with.\nAction 4: Search[David Walliams]\nObservation 4: David Edward Williams (born 20 August 1971), known professionally as David Walliams (/\u02c8w\u00e6lj\u0259mz/), is an English actor, comedian, writer and television personality. He is best known for his work with Matt Lucas on the BBC sketch shows Little Britain (2003\u20132006) and Come Fly with Me (2010\u20132011), and for serving as a judge on Britain's Got Talent from 2012 to 2022. Walliams is also a successful children's author, with his books selling more than 50 million copies worldwide and being translated into 53 languages. Several have been adapted for television, in which he has also appeared.. Walliams has written and starred in various television projects, including the sitcom Big School and the drama Partners in Crime.\nThought 5: David Walliams is known for his work with Matt Lucas on the BBC sketch shows Little Britain and Come Fly with Me.\nAction 5: Finish[Matt Lucas]\nObservation 5: Episode finished, reward = 1\n\n",
+                "question_text": "Question: Who is the host of Wall of Fame known for his partnership with?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"Matt Lucas\" is semantically equivalent to the ground truth answer \"Matt Lucas\"."
+            },
+            {
+                "steps": 5,
+                "answer": "Matt Lucas",
+                "gt_answer": "Matt Lucas",
+                "question_idx": 4239,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10685,
+                "output_tokens": 293,
+                "total_tokens": 10978,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1689,
+                        "output_tokens": 35,
+                        "total_tokens": 1724
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1916,
+                        "output_tokens": 102,
+                        "total_tokens": 2018
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2100,
+                        "output_tokens": 53,
+                        "total_tokens": 2153
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2296,
+                        "output_tokens": 42,
+                        "total_tokens": 2338
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2527,
+                        "output_tokens": 35,
+                        "total_tokens": 2562
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 157,
+                        "output_tokens": 26,
+                        "total_tokens": 183
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who is the host of Wall of Fame known for his partnership with?\nThought 1: I need to search \"Wall of Fame\" to find its host, and then search the host to find his partnership.\nAction 1: Search[Wall of Fame]\nObservation 1: A hall of fame, wall of fame, or walk of fame is a list of individuals, achievements, or other entities, usually chosen by a group of electors, to mark their excellence, accomplishments and fame in their field. In some cases, these halls of fame consist of actual halls or museums that enshrine the honorees with sculptures, plaques, and displays of memorabilia and general information regarding the inducted recipients. Sometimes, the honorees' plaques may instead be posted on a wall (hence a \"wall of fame\") or inscribed on a sidewalk (as in a \"walk of fame\", \"walk of stars\", or \"avenue of fame\"). In other cases, the hall of fame is more figurative and consists of a list of names of noteworthy people and their achievements and contributions. The lists are maintained by an organization or community, and may be national, state, local, or private..\nThought 2: The search result for \"Wall of Fame\" describes the general concept of a hall of fame, not a specific TV show or program named \"Wall of Fame.\" I need to clarify if \"Wall of Fame\" refers to a specific program. Since the question asks \"Who is the host of Wall of Fame\", it implies it is a specific show. I will try to search for \"Wall of Fame TV show\" to narrow down the search.\nAction 2: Search[Wall of Fame TV show]\nObservation 2: Could not find Wall of Fame TV show. Similar: ['Wall of Fame (game show)', 'Wall of fame (disambiguation)', 'List of halls and walks of fame', 'Michael DeLorenzo (category Wikipedia articles in need of updating from March 2019)', 'Freddie Prinze (category American actors of Puerto Rican descent)'].\nThought 3: The search result suggests \"Wall of Fame (game show)\". This is likely what the question is referring to. I will search for \"Wall of Fame (game show)\" to find the host.\nAction 3: Search[Wall of Fame (game show)]\nObservation 3: Wall of Fame is a British comedy panel game that was first broadcast on Sky1 in 2011. It is hosted by Little Britain star David Walliams and features Jack Dee, Kate Garraway, with Tamara Ecclestone for the first two episodes then Sara Pascoe took over from episode three, and Andrew Maxwell as regular panellists, alongside two weekly guests.. The premise of the show is the two teams of panellists discuss the week's top 25 most talked about celebrities in the UK.[1]. The coloured backgrounds denote the result of each of the shows:. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us.\nThought 4: The host of Wall of Fame (game show) is David Walliams. Now I need to find who David Walliams is known for his partnership with.\nAction 4: Search[David Walliams]\nObservation 4: David Edward Williams (born 20 August 1971), known professionally as David Walliams (/\u02c8w\u00e6lj\u0259mz/), is an English actor, comedian, writer and television personality. He is best known for his work with Matt Lucas on the BBC sketch shows Little Britain (2003\u20132006) and Come Fly with Me (2010\u20132011), and for serving as a judge on Britain's Got Talent from 2012 to 2022. Walliams is also a successful children's author, with his books selling more than 50 million copies worldwide and being translated into 53 languages. Several have been adapted for television, in which he has also appeared.. Walliams has written and starred in various television projects, including the sitcom Big School and the drama Partners in Crime.\nThought 5: David Walliams is best known for his work with Matt Lucas. Therefore, he is known for his partnership with Matt Lucas.\nAction 5: Finish[Matt Lucas]\nObservation 5: Episode finished, reward = 1\n\n",
+                "question_text": "Question: Who is the host of Wall of Fame known for his partnership with?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"Matt Lucas\" is semantically equivalent to the ground truth answer \"Matt Lucas\"."
+            },
+            {
+                "steps": 5,
+                "answer": "Matt Lucas",
+                "gt_answer": "Matt Lucas",
+                "question_idx": 4239,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10487,
+                "output_tokens": 236,
+                "total_tokens": 10723,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1689,
+                        "output_tokens": 37,
+                        "total_tokens": 1726
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1918,
+                        "output_tokens": 52,
+                        "total_tokens": 1970
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2037,
+                        "output_tokens": 50,
+                        "total_tokens": 2087
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2230,
+                        "output_tokens": 37,
+                        "total_tokens": 2267
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2456,
+                        "output_tokens": 34,
+                        "total_tokens": 2490
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 157,
+                        "output_tokens": 26,
+                        "total_tokens": 183
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Who is the host of Wall of Fame known for his partnership with?\nThought 1: I need to find the host of \"Wall of Fame\" and then find out who that host is known for his partnership with.\nAction 1: Search[Wall of Fame]\nObservation 1: A hall of fame, wall of fame, or walk of fame is a list of individuals, achievements, or other entities, usually chosen by a group of electors, to mark their excellence, accomplishments and fame in their field. In some cases, these halls of fame consist of actual halls or museums that enshrine the honorees with sculptures, plaques, and displays of memorabilia and general information regarding the inducted recipients. Sometimes, the honorees' plaques may instead be posted on a wall (hence a \"wall of fame\") or inscribed on a sidewalk (as in a \"walk of fame\", \"walk of stars\", or \"avenue of fame\"). In other cases, the hall of fame is more figurative and consists of a list of names of noteworthy people and their achievements and contributions. The lists are maintained by an organization or community, and may be national, state, local, or private..\nThought 2: This search result is about the general concept of a \"Wall of Fame\", not the specific show \"Wall of Fame\". I need to refine my search to find the host of the show.\nAction 2: Search[Wall of Fame (TV series)]\nObservation 2: Could not find Wall of Fame (TV series). Similar: ['List of Fame (1982 TV series) episodes', 'Rachael Carpani', 'Wall of Fame (game show)', 'Harry Potter (TV series)', 'List of Amazon Prime Video original programming'].\nThought 3: It seems \"Wall of Fame (TV series)\" is not the correct title. The similar result \"Wall of Fame (game show)\" looks promising. I will search for that.\nAction 3: Search[Wall of Fame (game show)]\nObservation 3: Wall of Fame is a British comedy panel game that was first broadcast on Sky1 in 2011. It is hosted by Little Britain star David Walliams and features Jack Dee, Kate Garraway, with Tamara Ecclestone for the first two episodes then Sara Pascoe took over from episode three, and Andrew Maxwell as regular panellists, alongside two weekly guests.. The premise of the show is the two teams of panellists discuss the week's top 25 most talked about celebrities in the UK.[1]. The coloured backgrounds denote the result of each of the shows:. Main pageContentsCurrent eventsRandom articleAbout WikipediaContact us.\nThought 4: The host of Wall of Fame is David Walliams. I need to find who David Walliams is known for his partnership with.\nAction 4: Search[David Walliams]\nObservation 4: David Edward Williams (born 20 August 1971), known professionally as David Walliams (/\u02c8w\u00e6lj\u0259mz/), is an English actor, comedian, writer and television personality. He is best known for his work with Matt Lucas on the BBC sketch shows Little Britain (2003\u20132006) and Come Fly with Me (2010\u20132011), and for serving as a judge on Britain's Got Talent from 2012 to 2022. Walliams is also a successful children's author, with his books selling more than 50 million copies worldwide and being translated into 53 languages. Several have been adapted for television, in which he has also appeared.. Walliams has written and starred in various television projects, including the sitcom Big School and the drama Partners in Crime.\nThought 5: David Walliams is known for his work with Matt Lucas on the BBC sketch shows Little Britain and Come Fly with Me.\nAction 5: Finish[Matt Lucas]\nObservation 5: Episode finished, reward = 1\n\n",
+                "question_text": "Question: Who is the host of Wall of Fame known for his partnership with?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"Matt Lucas\" is semantically equivalent to the ground truth answer \"Matt Lucas\"."
+            }
+        ],
+        "llm_correct": true,
+        "llm_explanation": "The predicted answer \"Matt Lucas\" is semantically equivalent to the ground truth answer \"Matt Lucas\".",
+        "framework": "majority_voting"
+    }
+]

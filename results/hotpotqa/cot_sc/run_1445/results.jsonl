@@ -1,0 +1,260 @@
+[
+    {
+        "question_idx": 1817,
+        "question_text": "Question: The star in a 1953 epic Metro-Goldwyn-Mayer film adaption of the play by Shakespeare had what occupation?",
+        "answer": "actor",
+        "gt_answer": "American actor, film director and political activist",
+        "em": false,
+        "f1": 0.25,
+        "reward": false,
+        "n_calls": 16,
+        "n_badcalls": 0,
+        "input_tokens": 42147,
+        "output_tokens": 1237,
+        "total_tokens": 43384,
+        "num_traces_run": 3,
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "actor",
+                "em": false,
+                "n_calls": 4,
+                "input_tokens": 8263,
+                "output_tokens": 342
+            },
+            {
+                "trace_num": 2,
+                "answer": "actor",
+                "em": false,
+                "n_calls": 7,
+                "input_tokens": 15417,
+                "output_tokens": 540
+            },
+            {
+                "trace_num": 3,
+                "answer": "actor",
+                "em": false,
+                "n_calls": 5,
+                "input_tokens": 10394,
+                "output_tokens": 291
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 4,
+                "answer": "actor",
+                "gt_answer": "American actor, film director and political activist",
+                "question_idx": 1817,
+                "reward": false,
+                "em": false,
+                "f1": 0.25,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 8263,
+                "output_tokens": 342,
+                "total_tokens": 8605,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1703,
+                        "output_tokens": 61,
+                        "total_tokens": 1764
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1847,
+                        "output_tokens": 115,
+                        "total_tokens": 1962
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2153,
+                        "output_tokens": 82,
+                        "total_tokens": 2235
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2384,
+                        "output_tokens": 21,
+                        "total_tokens": 2405
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 176,
+                        "output_tokens": 63,
+                        "total_tokens": 239
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: The star in a 1953 epic Metro-Goldwyn-Mayer film adaption of the play by Shakespeare had what occupation?\nThought 1: I need to identify the 1953 epic Metro-Goldwyn-Mayer film adaptation of a Shakespeare play, find its star, and then determine that star's occupation.\nAction 1: Search[1953 epic Metro-Goldwyn-Mayer film Shakespeare play]\nObservation 1: Could not find 1953 epic Metro-Goldwyn-Mayer film Shakespeare play. Similar: [\"William Shakespeare's Julius Caesar\", 'Gigi (1958 film)', 'Deborah Kerr (category Metro-Goldwyn-Mayer contract players)', 'Kiss Me Kate (film)', 'Henry V (1989 film)'].\nThought 2: The search for \"1953 epic Metro-Goldwyn-Mayer film Shakespeare play\" was too specific and did not yield direct results. I should try searching for \"1953 Metro-Goldwyn-Mayer Shakespeare film\" or similar to broaden the search, or perhaps search for \"Shakespeare films 1953\" and filter by studio. \"William Shakespeare's Julius Caesar\" is a strong candidate, as it is a Shakespeare play and a film.\nAction 2: Search[Julius Caesar (1953 film)]\nObservation 2: Julius Caesar (billed on-screen as William Shakespeare's Julius Caesar) is a 1953 American film adaptation of William Shakespeare's play Julius Caesar, directed by Joseph L. Mankiewicz and produced by John Houseman for Metro-Goldwyn-Mayer. It stars Marlon Brando as Mark Antony, James Mason as Brutus, John Gielgud as Cassius, Louis Calhern as Julius Caesar, Edmond O'Brien as Casca, Greer Garson as Calpurnia, and Deborah Kerr as Portia.. It opened to positive reviews, and was nominated in five categories at the 26th Academy Awards (including Best Picture and Best Actor for Brando), winning Best Art Direction \u2013 Black-and-White. Brando and Gielgud both won BAFTA Awards, Brando for Best Foreign Actor and Gielgud for Best British Actor..\nThought 3: The 1953 epic Metro-Goldwyn-Mayer film adaptation of a Shakespeare play is \"Julius Caesar\". The question asks for the occupation of \"the star\". Marlon Brando is listed first and won a BAFTA for Best Foreign Actor for his role, suggesting he is \"the star\". I need to find his occupation.\nAction 3: Search[Marlon Brando]\nObservation 3: Marlon Brando Jr. (April 3, 1924 \u2013 July 1, 2004) was an American actor. Widely regarded as one of the greatest and most influential performers in the history of cinema,[1][2] he has received numerous accolades, including two Academy Awards, two Golden Globe Awards, three BAFTAs, a Cannes Film Festival Award, and a Primetime Emmy Award. Brando is credited with being one of the first actors to bring the Stanislavski system of acting and method acting to mainstream audiences.. Brando came under the influence of Stella Adler and Stanislavski's system in the 1940s.\nThought 4: Marlon Brando's occupation was an actor.\nAction 4: Finish[actor]\nObservation 4: Episode finished, reward = 0\n\n",
+                "question_text": "Question: The star in a 1953 epic Metro-Goldwyn-Mayer film adaption of the play by Shakespeare had what occupation?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"actor\" is a correct and concise summary of the ground truth answer \"American actor, film director and political activist\". While the ground truth provides more detail, \"actor\" is the primary occupation and is not vague or missing key information in the context of the question."
+            },
+            {
+                "steps": 7,
+                "answer": "actor",
+                "gt_answer": "American actor, film director and political activist",
+                "question_idx": 1817,
+                "reward": false,
+                "em": false,
+                "f1": 0.25,
+                "n_calls": 7,
+                "n_badcalls": 0,
+                "input_tokens": 15417,
+                "output_tokens": 540,
+                "total_tokens": 15957,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1703,
+                        "output_tokens": 59,
+                        "total_tokens": 1762
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1846,
+                        "output_tokens": 52,
+                        "total_tokens": 1898
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1982,
+                        "output_tokens": 63,
+                        "total_tokens": 2045
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2098,
+                        "output_tokens": 110,
+                        "total_tokens": 2208
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2274,
+                        "output_tokens": 87,
+                        "total_tokens": 2361
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2552,
+                        "output_tokens": 85,
+                        "total_tokens": 2637
+                    },
+                    {
+                        "call_num": 7,
+                        "step": 7,
+                        "type": "thought_action",
+                        "input_tokens": 2786,
+                        "output_tokens": 21,
+                        "total_tokens": 2807
+                    },
+                    {
+                        "call_num": 8,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 176,
+                        "output_tokens": 63,
+                        "total_tokens": 239
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: The star in a 1953 epic Metro-Goldwyn-Mayer film adaption of the play by Shakespeare had what occupation?\nThought 1: I need to find the 1953 epic Metro-Goldwyn-Mayer film adaption of a Shakespeare play, identify the star of that film, and then determine their occupation.\nAction 1: Search[1953 Metro-Goldwyn-Mayer Shakespeare film]\nObservation 1: Could not find 1953 Metro-Goldwyn-Mayer Shakespeare film. Similar: [\"William Shakespeare's Julius Caesar\", 'Gigi (1958 film)', '2025 in film', 'Jules Dassin (category American male film actors)', 'The Band Wagon (category Metro-Goldwyn-Mayer films)'].\nThought 2: The search was too specific. I should try searching for \"1953 Metro-Goldwyn-Mayer film based on Shakespeare\" or similar.\nAction 2: Search[1953 Metro-Goldwyn-Mayer film Shakespeare]\nObservation 2: Could not find 1953 Metro-Goldwyn-Mayer film Shakespeare. Similar: [\"William Shakespeare's Julius Caesar\", 'Gigi (1958 film)', '2025 in film', 'Jules Dassin (category American male film actors)', 'The Band Wagon (category Metro-Goldwyn-Mayer films)'].\nThought 3: It seems my previous searches were still too broad. I need to be more precise about films based on Shakespeare plays. I will search for \"Shakespeare films 1953\" and then filter for Metro-Goldwyn-Mayer.\nAction 3: Search[Shakespeare films 1953]\nObservation 3: Could not find Shakespeare films 1953. Similar: ['List of William Shakespeare screen adaptations', \"William Shakespeare's Julius Caesar\", 'Shakespeare in Love', 'William Shakespeare', 'BBC Television Shakespeare'].\nThought 4: The search results are not directly giving me a specific film. However, I see \"William Shakespeare's Julius Caesar\" in the similar results for my previous searches. Given the context of a 1953 film and Metro-Goldwyn-Mayer, it's highly probable that this is the film in question. I will search for \"William Shakespeare's Julius Caesar 1953\" and check if it was by MGM.\nAction 4: Search[William Shakespeare's Julius Caesar 1953]\nObservation 4: Could not find William Shakespeare's Julius Caesar 1953. Similar: [\"William Shakespeare's Julius Caesar\", 'Julius Caesar (play)', 'Julius Caesar (1970 film)', 'John Houseman', 'Assassination of Julius Caesar'].\nThought 5: It seems the exact title \"William Shakespeare's Julius Caesar 1953\" is not yielding a direct hit. However, \"William Shakespeare's Julius Caesar\" appears consistently. I will search for \"Julius Caesar (1953 film)\" as this is a common naming convention for film adaptations and often includes the studio information.\nAction 5: Search[Julius Caesar (1953 film)]\nObservation 5: Julius Caesar (billed on-screen as William Shakespeare's Julius Caesar) is a 1953 American film adaptation of William Shakespeare's play Julius Caesar, directed by Joseph L. Mankiewicz and produced by John Houseman for Metro-Goldwyn-Mayer. It stars Marlon Brando as Mark Antony, James Mason as Brutus, John Gielgud as Cassius, Louis Calhern as Julius Caesar, Edmond O'Brien as Casca, Greer Garson as Calpurnia, and Deborah Kerr as Portia.. It opened to positive reviews, and was nominated in five categories at the 26th Academy Awards (including Best Picture and Best Actor for Brando), winning Best Art Direction \u2013 Black-and-White. Brando and Gielgud both won BAFTA Awards, Brando for Best Foreign Actor and Gielgud for Best British Actor..\nThought 6: The film is \"Julius Caesar (1953 film)\" by Metro-Goldwyn-Mayer. The question asks about \"the star\". Marlon Brando is listed first in the cast as Mark Antony and was nominated for Best Actor and won a BAFTA, suggesting he is a primary star. I need to find Marlon Brando's occupation.\nAction 6: Search[Marlon Brando]\nObservation 6: Marlon Brando Jr. (April 3, 1924 \u2013 July 1, 2004) was an American actor. Widely regarded as one of the greatest and most influential performers in the history of cinema,[1][2] he has received numerous accolades, including two Academy Awards, two Golden Globe Awards, three BAFTAs, a Cannes Film Festival Award, and a Primetime Emmy Award. Brando is credited with being one of the first actors to bring the Stanislavski system of acting and method acting to mainstream audiences.. Brando came under the influence of Stella Adler and Stanislavski's system in the 1940s.\nThought 7: Marlon Brando's occupation was an actor.\nAction 7: Finish[actor]\nObservation 7: Episode finished, reward = 0\n\n",
+                "question_text": "Question: The star in a 1953 epic Metro-Goldwyn-Mayer film adaption of the play by Shakespeare had what occupation?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"actor\" is a correct and concise summary of the ground truth answer \"American actor, film director and political activist\". While the ground truth provides more detail, \"actor\" is the primary occupation and is not vague or missing key information in the context of the question."
+            },
+            {
+                "steps": 5,
+                "answer": "actor",
+                "gt_answer": "American actor, film director and political activist",
+                "question_idx": 1817,
+                "reward": false,
+                "em": false,
+                "f1": 0.25,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10394,
+                "output_tokens": 291,
+                "total_tokens": 10685,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1703,
+                        "output_tokens": 60,
+                        "total_tokens": 1763
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1852,
+                        "output_tokens": 54,
+                        "total_tokens": 1906
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1992,
+                        "output_tokens": 63,
+                        "total_tokens": 2055
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2246,
+                        "output_tokens": 30,
+                        "total_tokens": 2276
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2425,
+                        "output_tokens": 21,
+                        "total_tokens": 2446
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 176,
+                        "output_tokens": 63,
+                        "total_tokens": 239
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: The star in a 1953 epic Metro-Goldwyn-Mayer film adaption of the play by Shakespeare had what occupation?\nThought 1: I need to identify the 1953 epic Metro-Goldwyn-Mayer film adaptation of a Shakespeare play, find its star, and then determine that star's occupation.\nAction 1: Search[1953 epic Metro-Goldwyn-Mayer film Shakespeare]\nObservation 1: Could not find 1953 epic Metro-Goldwyn-Mayer film Shakespeare. Similar: [\"William Shakespeare's Julius Caesar\", 'Gigi (1958 film)', 'Ben-Hur (1959 film)', 'Mutiny on the Bounty (1935 film)', 'Deborah Kerr (category Metro-Goldwyn-Mayer contract players)'].\nThought 2: The search was too specific. I should try searching for \"1953 Metro-Goldwyn-Mayer Shakespeare film\" or similar to narrow it down.\nAction 2: Search[1953 Metro-Goldwyn-Mayer Shakespeare film]\nObservation 2: Could not find 1953 Metro-Goldwyn-Mayer Shakespeare film. Similar: [\"William Shakespeare's Julius Caesar\", 'Gigi (1958 film)', '2025 in film', 'Jules Dassin (category American male film actors)', 'Greer Garson (category Metro-Goldwyn-Mayer contract players)'].\nThought 3: I need to be more precise about the film. Given the \"epic\" description, I should look for a well-known Shakespeare adaptation from MGM around 1953. \"Julius Caesar\" is a strong candidate.\nAction 3: Search[Julius Caesar (1953 film)]\nObservation 3: Julius Caesar (billed on-screen as William Shakespeare's Julius Caesar) is a 1953 American film adaptation of William Shakespeare's play Julius Caesar, directed by Joseph L. Mankiewicz and produced by John Houseman for Metro-Goldwyn-Mayer. It stars Marlon Brando as Mark Antony, James Mason as Brutus, John Gielgud as Cassius, Louis Calhern as Julius Caesar, Edmond O'Brien as Casca, Greer Garson as Calpurnia, and Deborah Kerr as Portia.. It opened to positive reviews, and was nominated in five categories at the 26th Academy Awards (including Best Picture and Best Actor for Brando), winning Best Art Direction \u2013 Black-and-White. Brando and Gielgud both won BAFTA Awards, Brando for Best Foreign Actor and Gielgud for Best British Actor..\nThought 4: The star of the film is Marlon Brando. I need to find his occupation.\nAction 4: Search[Marlon Brando]\nObservation 4: Marlon Brando Jr. (April 3, 1924 \u2013 July 1, 2004) was an American actor. Widely regarded as one of the greatest and most influential performers in the history of cinema,[1][2] he has received numerous accolades, including two Academy Awards, two Golden Globe Awards, three BAFTAs, a Cannes Film Festival Award, and a Primetime Emmy Award. Brando is credited with being one of the first actors to bring the Stanislavski system of acting and method acting to mainstream audiences.. Brando came under the influence of Stella Adler and Stanislavski's system in the 1940s.\nThought 5: Marlon Brando's occupation was an actor.\nAction 5: Finish[actor]\nObservation 5: Episode finished, reward = 0\n\n",
+                "question_text": "Question: The star in a 1953 epic Metro-Goldwyn-Mayer film adaption of the play by Shakespeare had what occupation?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"actor\" is a correct and concise summary of the ground truth answer \"American actor, film director and political activist\". While the ground truth provides more detail, \"actor\" is the primary occupation and is not vague or missing key information in the context of the question."
+            }
+        ],
+        "llm_correct": true,
+        "llm_explanation": "The predicted answer \"actor\" is a correct and concise summary of the ground truth answer \"American actor, film director and political activist\". While the ground truth provides more detail, \"actor\" is the primary occupation and is not vague or missing key information in the context of the question.",
+        "framework": "cot_sc"
+    }
+]

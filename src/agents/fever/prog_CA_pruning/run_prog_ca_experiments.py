@@ -23,7 +23,7 @@ except ImportError as e:
 
 # Configuration
 MAX_FEVER_DEV_EXAMPLES = 7405
-OUTPUT_FOLDER = './results/fever/gemini/prog_CA_pruning'
+OUTPUT_FOLDER = './results/fever/prog_CA_pruning'
 LOG_FILE = os.path.join(OUTPUT_FOLDER, 'prog_CA_pruning_experiment.log')
 RESULTS_FILE = os.path.join(OUTPUT_FOLDER, 'prog_CA_pruning_results.json')
 

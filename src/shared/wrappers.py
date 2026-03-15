@@ -4,6 +4,7 @@ import gym
 import numpy as np
 import re
 import string
+from decimal import Decimal, InvalidOperation
 from collections import Counter
 
     
@@ -18,6 +19,91 @@ FEVER_SPLIT_FILE = {
   "train": "fever/train.jsonl",
   "dev": "fever/paper_dev.jsonl",
 }
+
+GSM8K_SPLIT_FILE = {
+  "train": "gsm8k/train.jsonl",
+  "test": "gsm8k/test.jsonl",
+}
+
+GSM8K_ANS_RE = re.compile(r"####\s*([^\n]+)")
+GSM8K_NUM_RE = re.compile(r"-?\d[\d,]*(?:\.\d+)?")
+
+
+def normalize_gsm8k_number(value):
+  """Normalize a numeric string to a canonical form for exact GSM8K matching."""
+  if value is None:
+    return None
+
+  text = str(value).strip()
+  if not text:
+    return None
+
+  text = text.replace(",", "")
+  if text.startswith("+"):
+    text = text[1:]
+  # Normalize trailing-dot forms such as "42.".
+  if re.fullmatch(r"-?\d+\.", text):
+    text = text[:-1]
+
+  if not re.fullmatch(r"-?\d*\.?\d+", text):
+    return text.lower()
+
+  try:
+    dec = Decimal(text)
+  except InvalidOperation:
+    return text.lower()
+
+  normalized = format(dec.normalize(), "f")
+  if "." in normalized:
+    normalized = normalized.rstrip("0").rstrip(".")
+  if normalized in {"", "-0"}:
+    normalized = "0"
+  return normalized
+
+
+def parse_gsm8k_ground_truth_answer(answer_text):
+  """
+  Extract the official GSM8K final answer from a solution string using `#### ...`.
+  """
+  if answer_text is None:
+    return None
+  match = GSM8K_ANS_RE.search(str(answer_text))
+  if not match:
+    return None
+  return normalize_gsm8k_number(match.group(1))
+
+
+def parse_gsm8k_prediction_answer(prediction_text):
+  """
+  Extract a predicted numeric answer using GSM8K-style parsing with robust fallback.
+  """
+  if prediction_text is None:
+    return None
+
+  text = str(prediction_text).strip()
+  if not text:
+    return None
+
+  tagged_match = GSM8K_ANS_RE.search(text)
+  if tagged_match:
+    return normalize_gsm8k_number(tagged_match.group(1))
+
+  numeric_matches = GSM8K_NUM_RE.findall(text)
+  if numeric_matches:
+    return normalize_gsm8k_number(numeric_matches[-1])
+
+  return text.lower()
+
+
+def gsm8k_answers_match(prediction_text, ground_truth_text):
+  """
+  Compare predicted and ground-truth GSM8K answers with official-style normalization.
+  """
+  pred = parse_gsm8k_prediction_answer(prediction_text)
+  gt = parse_gsm8k_ground_truth_answer(ground_truth_text)
+  if pred is None or gt is None:
+    return 0
+  return int(pred == gt)
 
 
 class HistoryWrapper(gym.ObservationWrapper):
@@ -202,6 +288,75 @@ class FeverWrapper(gym.Wrapper):
       info.update({'em': reward, 'reward': reward, 'f1': reward})
     return obs, reward, done, info
     
+  def __len__(self):
+    return len(self.data)
+
+
+class GSM8KWrapper(gym.Wrapper):
+  def __init__(self, env, split):
+    super().__init__(env)
+    if split not in GSM8K_SPLIT_FILE:
+      raise ValueError(f"Unknown GSM8K split: {split}. Expected one of {list(GSM8K_SPLIT_FILE)}")
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(script_dir, '..', '..'))
+    data_path = os.path.join(project_root, DATA_DIR, GSM8K_SPLIT_FILE[split])
+
+    with open(data_path, "r", encoding="utf-8") as json_file:
+      json_list = list(json_file)
+
+    data = []
+    for json_str in json_list:
+      record = json.loads(json_str)
+      question = record["question"]
+      raw_answer = record["answer"]
+      gt_answer = parse_gsm8k_ground_truth_answer(raw_answer)
+      data.append((question, raw_answer, gt_answer))
+
+    self.data = data
+    self.data_idx = 0
+    self.split = split
+
+  def reset(self, seed=None, return_info=False, options=None, idx=None):
+    self.env.reset(seed=seed, return_info=return_info, options=options)
+    try:
+      self.env.step('')
+    except:
+      pass
+    self.env.reset(seed=seed, return_info=return_info, options=options)
+    self.data_idx = int(np.random.randint(len(self.data))) if idx is None else idx
+    observation = f"Question: {self.data[self.data_idx][0]}"
+    info = self._get_info()
+    return (observation, info) if return_info else observation
+
+  def _get_info(self):
+    return {
+      "steps": self.steps,
+      "answer": self.answer,
+      "question": self.data[self.data_idx][0],
+      "gsm8k_split": self.split
+    }
+
+  def get_reward(self, info):
+    return gsm8k_answers_match(info.get('answer'), self.data[self.data_idx][1])
+
+  def get_metrics(self, info):
+    reward = self.get_reward(info)
+    return {'reward': reward, 'em': reward, 'f1': reward}
+
+  def step(self, action):
+    obs, _, done, info = self.env.step(action)
+    reward = self.get_reward(info)
+    if done:
+      obs = f"Episode finished, reward = {reward}\n"
+      info.update({
+        "gt_answer": self.data[self.data_idx][2],
+        "gt_answer_raw": self.data[self.data_idx][1],
+        "question_idx": self.data_idx
+      })
+      info.update(self.get_metrics(info))
+    return obs, reward, done, info
+
   def __len__(self):
     return len(self.data)
   

@@ -1,0 +1,244 @@
+[
+    {
+        "question_idx": 2759,
+        "question_text": "Question: What is the company that currently recognizes the sprinting records set by Leni Junker and Florence Griffith-Joyner?",
+        "answer": "World Athletics",
+        "gt_answer": "International Association of Athletics Federations",
+        "em": false,
+        "f1": 0.28571428571428575,
+        "reward": false,
+        "n_calls": 14,
+        "n_badcalls": 0,
+        "input_tokens": 38159,
+        "output_tokens": 1170,
+        "total_tokens": 39329,
+        "num_traces_run": 3,
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "World Athletics",
+                "em": false,
+                "n_calls": 5,
+                "input_tokens": 10793,
+                "output_tokens": 377
+            },
+            {
+                "trace_num": 2,
+                "answer": "World Athletics",
+                "em": false,
+                "n_calls": 4,
+                "input_tokens": 8429,
+                "output_tokens": 354
+            },
+            {
+                "trace_num": 3,
+                "answer": "World Athletics",
+                "em": false,
+                "n_calls": 5,
+                "input_tokens": 10751,
+                "output_tokens": 394
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 5,
+                "answer": "World Athletics",
+                "gt_answer": "International Association of Athletics Federations",
+                "question_idx": 2759,
+                "reward": false,
+                "em": false,
+                "f1": 0.28571428571428575,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10793,
+                "output_tokens": 377,
+                "total_tokens": 11170,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1698,
+                        "output_tokens": 53,
+                        "total_tokens": 1751
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1890,
+                        "output_tokens": 59,
+                        "total_tokens": 1949
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2119,
+                        "output_tokens": 110,
+                        "total_tokens": 2229
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2304,
+                        "output_tokens": 48,
+                        "total_tokens": 2352
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2612,
+                        "output_tokens": 64,
+                        "total_tokens": 2676
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 170,
+                        "output_tokens": 43,
+                        "total_tokens": 213
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the company that currently recognizes the sprinting records set by Leni Junker and Florence Griffith-Joyner?\nThought 1: I need to find the organization that recognizes sprinting records for Leni Junker and Florence Griffith-Joyner. I will search for each athlete and see if their sprinting records are attributed to a particular organization.\nAction 1: Search[Leni Junker]\nObservation 1: Helene \"Leni\" Junker (later Thymm; 8 December 1905 \u2013 9 February 1997) was a German sprint runner who competed at the 1928 Summer Olympics. She won a bronze medal in the 4 \u00d7 100 m, but failed to reach the final of the individual 100 m event. Earlier in 1925 she set a world record in the 100-metre at 12.2 seconds.. This article about an athletics Olympic medalist for Germany is a stub. You can help Wikipedia by adding missing information..\nThought 2: The information about Leni Junker mentions she set a world record, but it doesn't specify which organization recognized it. I'll search for Florence Griffith-Joyner to see if her records are attributed to an organization.\nAction 2: Search[Florence Griffith-Joyner]\nObservation 2: Florence Delorez Griffith Joyner[4] (n\u00e9e Griffith;[2] December 21, 1959 \u2013 September 21, 1998), also known as Flo-Jo, was an American track and field athlete and the fastest woman ever recorded, setting world records in the 100m and 200m in 1988. She was married to Al Joyner, a 1984 Olympic gold medalist in the triple jump. He was also her coach and husband during her success as a four-time Olympic medalist. During the late 1980s, she became a popular figure due to both her record-setting athleticism and eclectic personal style.. Griffith Joyner was born and raised in California.\nThought 3: Neither search result explicitly states the organization that recognizes their sprinting records. Since they are both track and field athletes and set world records, it's highly probable that the International Association of Athletics Federations (IAAF), now World Athletics, would be the body recognizing these records. However, the question asks for the \"company that currently recognizes\" these records, and the search results do not directly state this. I need to find the governing body for track and field world records.\nAction 3: Search[world records track and field governing body]\nObservation 3: Could not find world records track and field governing body. Similar: ['Half marathon world record progression', 'Marathon world record progression', 'List of masters world records in road running', 'Usain Bolt (category Athletes (track and field) at the 2004 Summer Olympics)', 'USA Track & Field'].\nThought 4: The search for \"world records track and field governing body\" did not yield a direct result. I will try a more specific search for the international governing body of athletics.\nAction 4: Search[International Association of Athletics Federations]\nObservation 4: World Athletics (WA), formerly known as the International Amateur Athletic Federation and International Association of Athletics Federations and formerly abbreviated as the IAAF, is the international governing body for the sport of athletics, covering track and field, cross country running, road running, race walking, mountain running, and ultra running. Included in its charge is the standardization of rules and regulations for the sports, certification of athletic facilities, recognition and management of world records, and the organisation and sanctioning of athletics competitions, including the World Athletics Championships. The organisation's current president is Sebastian Coe of the United Kingdom, who was elected to the four-year position in 2015, and re-elected twice in 2019 and 2023 for two further four-year terms.[2][3]. The process to found World Athletics began in Stockholm, Sweden, on 18 July 1912 soon after the completion of the 1912 Summer Olympics in that city. At that meeting, 27 representatives from 17 national federations agreed to meet at a congress in Berlin, Germany, the following year, overseen by Sigfrid Edstr\u00f6m who was to become the fledgling organisation's first president.\nThought 5: World Athletics (formerly IAAF) is the international governing body for athletics and is responsible for recognition and management of world records. Since both Leni Junker and Florence Griffith-Joyner set world records in sprinting, World Athletics would be the company that currently recognizes these records.\nAction 5: Finish[World Athletics]\nObservation 5: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What is the company that currently recognizes the sprinting records set by Leni Junker and Florence Griffith-Joyner?",
+                "llm_correct": true,
+                "llm_explanation": "World Athletics is the current name for the organization formerly known as the International Association of Athletics Federations (IAAF). Therefore, the predicted answer is semantically equivalent to the ground truth."
+            },
+            {
+                "steps": 4,
+                "answer": "World Athletics",
+                "gt_answer": "International Association of Athletics Federations",
+                "question_idx": 2759,
+                "reward": false,
+                "em": false,
+                "f1": 0.28571428571428575,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 8429,
+                "output_tokens": 354,
+                "total_tokens": 8783,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1698,
+                        "output_tokens": 74,
+                        "total_tokens": 1772
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1911,
+                        "output_tokens": 67,
+                        "total_tokens": 1978
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2148,
+                        "output_tokens": 94,
+                        "total_tokens": 2242
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2502,
+                        "output_tokens": 76,
+                        "total_tokens": 2578
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 170,
+                        "output_tokens": 43,
+                        "total_tokens": 213
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the company that currently recognizes the sprinting records set by Leni Junker and Florence Griffith-Joyner?\nThought 1: I need to find the company that recognizes sprinting records for both Leni Junker and Florence Griffith-Joyner. This sounds like a sports governing body. I will start by searching for Leni Junker and then Florence Griffith-Joyner to see if their records are mentioned in relation to a specific organization.\nAction 1: Search[Leni Junker]\nObservation 1: Helene \"Leni\" Junker (later Thymm; 8 December 1905 \u2013 9 February 1997) was a German sprint runner who competed at the 1928 Summer Olympics. She won a bronze medal in the 4 \u00d7 100 m, but failed to reach the final of the individual 100 m event. Earlier in 1925 she set a world record in the 100-metre at 12.2 seconds.. This article about an athletics Olympic medalist for Germany is a stub. You can help Wikipedia by adding missing information..\nThought 2: The article mentions Leni Junker setting a world record in the 100-metre, but it does not specify which organization recognizes this record. I will search for Florence Griffith-Joyner next, and see if her records are tied to a specific organization.\nAction 2: Search[Florence Griffith-Joyner]\nObservation 2: Florence Delorez Griffith Joyner[4] (n\u00e9e Griffith;[2] December 21, 1959 \u2013 September 21, 1998), also known as Flo-Jo, was an American track and field athlete and the fastest woman ever recorded, setting world records in the 100m and 200m in 1988. She was married to Al Joyner, a 1984 Olympic gold medalist in the triple jump. He was also her coach and husband during her success as a four-time Olympic medalist. During the late 1980s, she became a popular figure due to both her record-setting athleticism and eclectic personal style.. Griffith Joyner was born and raised in California.\nThought 3: Thought 3: This article also mentions world records but doesn't explicitly name the recognizing body. Since both are sprinters and set world records, it's highly probable that the same international athletics governing body would recognize their records. The common body for track and field world records is the IAAF, now known as World Athletics. I will search for \"world athletics records\" or \"IAAF records\" to confirm.\nAction 3: Search[World Athletics]\nObservation 3: World Athletics (WA), formerly known as the International Amateur Athletic Federation and International Association of Athletics Federations and formerly abbreviated as the IAAF, is the international governing body for the sport of athletics, covering track and field, cross country running, road running, race walking, mountain running, and ultra running. Included in its charge is the standardization of rules and regulations for the sports, certification of athletic facilities, recognition and management of world records, and the organisation and sanctioning of athletics competitions, including the World Athletics Championships. The organisation's current president is Sebastian Coe of the United Kingdom, who was elected to the four-year position in 2015, and re-elected twice in 2019 and 2023 for two further four-year terms.[2][3]. The process to found World Athletics began in Stockholm, Sweden, on 18 July 1912 soon after the completion of the 1912 Summer Olympics in that city. At that meeting, 27 representatives from 17 national federations agreed to meet at a congress in Berlin, Germany, the following year, overseen by Sigfrid Edstr\u00f6m who was to become the fledgling organisation's first president.\nThought 4: Thought 4: World Athletics (formerly IAAF) is the international governing body for athletics and is responsible for the recognition and management of world records. Since both Leni Junker and Florence Griffith-Joyner set world records in sprinting, it is highly likely that World Athletics is the company (or organization) that recognizes their records.\nAction 4: Finish[World Athletics]\nObservation 4: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What is the company that currently recognizes the sprinting records set by Leni Junker and Florence Griffith-Joyner?",
+                "llm_correct": true,
+                "llm_explanation": "World Athletics is the current name for the organization formerly known as the International Association of Athletics Federations (IAAF). Therefore, the predicted answer is semantically equivalent to the ground truth."
+            },
+            {
+                "steps": 5,
+                "answer": "World Athletics",
+                "gt_answer": "International Association of Athletics Federations",
+                "question_idx": 2759,
+                "reward": false,
+                "em": false,
+                "f1": 0.28571428571428575,
+                "n_calls": 5,
+                "n_badcalls": 0,
+                "input_tokens": 10751,
+                "output_tokens": 394,
+                "total_tokens": 11145,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1698,
+                        "output_tokens": 72,
+                        "total_tokens": 1770
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1909,
+                        "output_tokens": 99,
+                        "total_tokens": 2008
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2178,
+                        "output_tokens": 75,
+                        "total_tokens": 2253
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2327,
+                        "output_tokens": 52,
+                        "total_tokens": 2379
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2469,
+                        "output_tokens": 53,
+                        "total_tokens": 2522
+                    },
+                    {
+                        "call_num": 6,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 170,
+                        "output_tokens": 43,
+                        "total_tokens": 213
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What is the company that currently recognizes the sprinting records set by Leni Junker and Florence Griffith-Joyner?\nThought 1: I need to find the company that recognizes the sprinting records of Leni Junker and Florence Griffith-Joyner. This implies a governing body for athletics. I will start by searching for Leni Junker and Florence Griffith-Joyner to see if their records are mentioned and which organization recognizes them.\nAction 1: Search[Leni Junker]\nObservation 1: Helene \"Leni\" Junker (later Thymm; 8 December 1905 \u2013 9 February 1997) was a German sprint runner who competed at the 1928 Summer Olympics. She won a bronze medal in the 4 \u00d7 100 m, but failed to reach the final of the individual 100 m event. Earlier in 1925 she set a world record in the 100-metre at 12.2 seconds.. This article about an athletics Olympic medalist for Germany is a stub. You can help Wikipedia by adding missing information..\nThought 2: The article mentions Leni Junker set a world record in the 100-metre in 1925, but it doesn't specify the recognizing body. This information is likely too old to be directly associated with a current recognizing body without further context. I will search for Florence Griffith-Joyner next, as her records are more recent and likely to be recognized by a well-known international athletic organization.\nAction 2: Search[Florence Griffith-Joyner]\nObservation 2: Florence Delorez Griffith Joyner[4] (n\u00e9e Griffith;[2] December 21, 1959 \u2013 September 21, 1998), also known as Flo-Jo, was an American track and field athlete and the fastest woman ever recorded, setting world records in the 100m and 200m in 1988. She was married to Al Joyner, a 1984 Olympic gold medalist in the triple jump. He was also her coach and husband during her success as a four-time Olympic medalist. During the late 1980s, she became a popular figure due to both her record-setting athleticism and eclectic personal style.. Griffith Joyner was born and raised in California.\nThought 3: The article mentions Florence Griffith-Joyner setting world records in the 100m and 200m in 1988. I need to find the organization that recognizes these records. I will search for \"world records athletics\" or \"governing body athletics\" to identify the relevant organization.\nAction 3: Search[world records athletics]\nObservation 3: Could not find world records athletics. Similar: ['List of world records in athletics', 'List of world records in masters athletics', \"Men's 100 metres world record progression\", 'List of world under-18 bests in athletics', 'List of world under-20 records in athletics'].\nThought 4: Thought 4: The search \"world records athletics\" did not directly give me the organization. I will try \"List of world records in athletics\" as it might mention the governing body.\nAction 4: Search[List of world records in athletics]\nObservation 4: World records in athletics are ratified by World Athletics. Athletics records comprise the best performances in the sports of track and field, road running and racewalking.. Records are kept for all events contested at the Olympic Games and some others. Unofficial records for some other events are kept by track and field statisticians. The only non-metric track distance for which official records are kept is the mile run..\nThought 5: World Athletics is the organization that ratifies world records in athletics. Since both Leni Junker and Florence Griffith-Joyner set world records in sprinting, World Athletics would be the company that currently recognizes these records.\nAction 5: Finish[World Athletics]\nObservation 5: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What is the company that currently recognizes the sprinting records set by Leni Junker and Florence Griffith-Joyner?",
+                "llm_correct": true,
+                "llm_explanation": "World Athletics is the current name for the organization formerly known as the International Association of Athletics Federations (IAAF). Therefore, the predicted answer is semantically equivalent to the ground truth."
+            }
+        ],
+        "llm_correct": true,
+        "llm_explanation": "World Athletics is the current name for the organization formerly known as the International Association of Athletics Federations (IAAF). Therefore, the predicted answer is semantically equivalent to the ground truth.",
+        "framework": "cot_sc"
+    }
+]

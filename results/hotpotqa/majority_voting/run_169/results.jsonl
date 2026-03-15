@@ -1,0 +1,233 @@
+[
+    {
+        "question_idx": 3191,
+        "question_text": "Question: What profession does Nora Roberts and Elizabeth Hardwick have in common?",
+        "answer": "writer",
+        "gt_answer": "novelist",
+        "em": false,
+        "f1": 0,
+        "reward": false,
+        "n_calls": 12,
+        "n_badcalls": 0,
+        "input_tokens": 24055,
+        "output_tokens": 565,
+        "total_tokens": 24620,
+        "num_traces_run": 3,
+        "individual_votes": [
+            "novelist",
+            "author, writer",
+            "writer"
+        ],
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "novelist",
+                "em": true,
+                "n_calls": 4,
+                "input_tokens": 7925,
+                "output_tokens": 162
+            },
+            {
+                "trace_num": 2,
+                "answer": "author, writer",
+                "em": false,
+                "n_calls": 4,
+                "input_tokens": 7925,
+                "output_tokens": 155
+            },
+            {
+                "trace_num": 3,
+                "answer": "writer",
+                "em": false,
+                "n_calls": 4,
+                "input_tokens": 7925,
+                "output_tokens": 203
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 4,
+                "answer": "novelist",
+                "gt_answer": "novelist",
+                "question_idx": 3191,
+                "reward": true,
+                "em": true,
+                "f1": 1.0,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 7925,
+                "output_tokens": 162,
+                "total_tokens": 8087,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1687,
+                        "output_tokens": 34,
+                        "total_tokens": 1721
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1911,
+                        "output_tokens": 31,
+                        "total_tokens": 1942
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1985,
+                        "output_tokens": 26,
+                        "total_tokens": 2011
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2189,
+                        "output_tokens": 45,
+                        "total_tokens": 2234
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 153,
+                        "output_tokens": 26,
+                        "total_tokens": 179
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What profession does Nora Roberts and Elizabeth Hardwick have in common?\nThought 1: I need to search Nora Roberts and Elizabeth Hardwick, find their professions, then find the profession they have in common.\nAction 1: Search[Nora Roberts]\nObservation 1: Nora Roberts (born Eleanor Marie Robertson on October 10, 1950) is an American author of over 225 novels, known for romance published under her own name.[1] She also writes police procedurals which have elements of science fiction under the name J. D. Robb, and has published as Jill March and (in the U.K.) Sarah Hardesty.. Roberts was born on October 10, 1950, in Silver Spring, Maryland, the youngest of five children.[2] Her parents have Irish ancestry, and she has described herself as \"an Irishwoman through and through\".[3] Her family were avid readers, so books were always important in her life.[4] Although she had always imagined stories from childhood, Roberts did not write in her youth other than essays for school. She does claim to have \"told lies.\nThought 2: Nora Roberts' profession is an author. I need to search Elizabeth Hardwick next and find her profession.\nAction 2: Search[Elizabeth Hardwick]\nObservation 2: Could not find [Elizabeth Hardwick]. Similar: ['Elizabeth Hardwick (writer)', 'Bess of Hardwick', 'Elizabeth Hardwick', 'Charlie Hardwick', 'Gemma Chan'].\nThought 3: I need to search Elizabeth Hardwick (writer) to find her profession.\nAction 3: Search[Elizabeth Hardwick (writer)]\nObservation 3: Elizabeth Bruce Hardwick (July 27, 1916 \u2013 December 2, 2007) was an American literary critic, novelist, and short story writer.[1]. Elizabeth Bruce Hardwick was born as the eighth of eleven children in Lexington, Kentucky, on July 27, 1916, to strict Protestant parents,[1][2] the daughter of Eugene Allen Hardwick, a plumbing and heating contractor, and Mary (n\u00e9e Ramsey) Hardwick.[1]. She graduated from the University of Kentucky with a BA in 1938 and with an MA in 1939. She then entered the PhD program at Columbia University, though withdrew from graduate study in 1941 to concentrate on writing. She was awarded a Guggenheim Fellowship in 1947.[3].\nThought 4: Elizabeth Hardwick's professions are literary critic, novelist, and short story writer. Nora Roberts' profession is an author. Therefore, the profession they have in common is novelist.\nAction 4: Finish[novelist]\nObservation 4: Episode finished, reward = 1\n\n",
+                "question_text": "Question: What profession does Nora Roberts and Elizabeth Hardwick have in common?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"novelist\" is semantically equivalent to the ground truth answer \"novelist\"."
+            },
+            {
+                "steps": 4,
+                "answer": "author, writer",
+                "gt_answer": "novelist",
+                "question_idx": 3191,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 7925,
+                "output_tokens": 155,
+                "total_tokens": 8080,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1687,
+                        "output_tokens": 34,
+                        "total_tokens": 1721
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1911,
+                        "output_tokens": 30,
+                        "total_tokens": 1941
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1984,
+                        "output_tokens": 26,
+                        "total_tokens": 2010
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2188,
+                        "output_tokens": 37,
+                        "total_tokens": 2225
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 155,
+                        "output_tokens": 28,
+                        "total_tokens": 183
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What profession does Nora Roberts and Elizabeth Hardwick have in common?\nThought 1: I need to search Nora Roberts and Elizabeth Hardwick, find their professions, then find the profession they have in common.\nAction 1: Search[Nora Roberts]\nObservation 1: Nora Roberts (born Eleanor Marie Robertson on October 10, 1950) is an American author of over 225 novels, known for romance published under her own name.[1] She also writes police procedurals which have elements of science fiction under the name J. D. Robb, and has published as Jill March and (in the U.K.) Sarah Hardesty.. Roberts was born on October 10, 1950, in Silver Spring, Maryland, the youngest of five children.[2] Her parents have Irish ancestry, and she has described herself as \"an Irishwoman through and through\".[3] Her family were avid readers, so books were always important in her life.[4] Although she had always imagined stories from childhood, Roberts did not write in her youth other than essays for school. She does claim to have \"told lies.\nThought 2: Nora Roberts is an American author. I need to search Elizabeth Hardwick next and find her profession.\nAction 2: Search[Elizabeth Hardwick]\nObservation 2: Could not find [Elizabeth Hardwick]. Similar: ['Elizabeth Hardwick (writer)', 'Bess of Hardwick', 'Elizabeth Hardwick', 'Charlie Hardwick', 'Gemma Chan'].\nThought 3: I need to search Elizabeth Hardwick (writer) to find her profession.\nAction 3: Search[Elizabeth Hardwick (writer)]\nObservation 3: Elizabeth Bruce Hardwick (July 27, 1916 \u2013 December 2, 2007) was an American literary critic, novelist, and short story writer.[1]. Elizabeth Bruce Hardwick was born as the eighth of eleven children in Lexington, Kentucky, on July 27, 1916, to strict Protestant parents,[1][2] the daughter of Eugene Allen Hardwick, a plumbing and heating contractor, and Mary (n\u00e9e Ramsey) Hardwick.[1]. She graduated from the University of Kentucky with a BA in 1938 and with an MA in 1939. She then entered the PhD program at Columbia University, though withdrew from graduate study in 1941 to concentrate on writing. She was awarded a Guggenheim Fellowship in 1947.[3].\nThought 4: Elizabeth Hardwick is an American literary critic, novelist, and short story writer. Both Nora Roberts and Elizabeth Hardwick are authors/writers.\nAction 4: Finish[author, writer]\nObservation 4: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What profession does Nora Roberts and Elizabeth Hardwick have in common?",
+                "llm_correct": true,
+                "llm_explanation": "\"Author\" and \"writer\" are direct synonyms for \"novelist\" and refer to the same profession."
+            },
+            {
+                "steps": 4,
+                "answer": "writer",
+                "gt_answer": "novelist",
+                "question_idx": 3191,
+                "reward": false,
+                "em": false,
+                "f1": 0,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 7925,
+                "output_tokens": 203,
+                "total_tokens": 8128,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1687,
+                        "output_tokens": 34,
+                        "total_tokens": 1721
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1911,
+                        "output_tokens": 29,
+                        "total_tokens": 1940
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 1983,
+                        "output_tokens": 30,
+                        "total_tokens": 2013
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2191,
+                        "output_tokens": 56,
+                        "total_tokens": 2247
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 153,
+                        "output_tokens": 54,
+                        "total_tokens": 207
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What profession does Nora Roberts and Elizabeth Hardwick have in common?\nThought 1: I need to search Nora Roberts and Elizabeth Hardwick, find their professions, then find the profession they have in common.\nAction 1: Search[Nora Roberts]\nObservation 1: Nora Roberts (born Eleanor Marie Robertson on October 10, 1950) is an American author of over 225 novels, known for romance published under her own name.[1] She also writes police procedurals which have elements of science fiction under the name J. D. Robb, and has published as Jill March and (in the U.K.) Sarah Hardesty.. Roberts was born on October 10, 1950, in Silver Spring, Maryland, the youngest of five children.[2] Her parents have Irish ancestry, and she has described herself as \"an Irishwoman through and through\".[3] Her family were avid readers, so books were always important in her life.[4] Although she had always imagined stories from childhood, Roberts did not write in her youth other than essays for school. She does claim to have \"told lies.\nThought 2: Nora Roberts is an author. I need to search Elizabeth Hardwick next and find her profession.\nAction 2: Search[Elizabeth Hardwick]\nObservation 2: Could not find [Elizabeth Hardwick]. Similar: ['Elizabeth Hardwick (writer)', 'Bess of Hardwick', 'Elizabeth Hardwick', 'Charlie Hardwick', 'Gemma Chan'].\nThought 3: I need to search for \"Elizabeth Hardwick (writer)\" to find information about her profession.\nAction 3: Search[Elizabeth Hardwick (writer)]\nObservation 3: Elizabeth Bruce Hardwick (July 27, 1916 \u2013 December 2, 2007) was an American literary critic, novelist, and short story writer.[1]. Elizabeth Bruce Hardwick was born as the eighth of eleven children in Lexington, Kentucky, on July 27, 1916, to strict Protestant parents,[1][2] the daughter of Eugene Allen Hardwick, a plumbing and heating contractor, and Mary (n\u00e9e Ramsey) Hardwick.[1]. She graduated from the University of Kentucky with a BA in 1938 and with an MA in 1939. She then entered the PhD program at Columbia University, though withdrew from graduate study in 1941 to concentrate on writing. She was awarded a Guggenheim Fellowship in 1947.[3].\nThought 4: Elizabeth Hardwick is a literary critic, novelist, and short story writer. Nora Roberts is an author. \"Author\" is a general term that encompasses novelists and short story writers. Therefore, they both share the profession of being a writer.\nAction 4: Finish[writer]\nObservation 4: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What profession does Nora Roberts and Elizabeth Hardwick have in common?",
+                "llm_correct": false,
+                "llm_explanation": "\"Novelist\" is a specific type of \"writer.\" While \"writer\" is not incorrect, \"novelist\" is more precise and fully answers the question. The predicted answer is a broader category, missing the specific profession."
+            }
+        ],
+        "llm_correct": true,
+        "llm_explanation": "A novelist is a type of writer, so \"writer\" is a broader term that encompasses \"novelist.\" In this context, it is semantically equivalent and still answers the question correctly.",
+        "framework": "majority_voting"
+    }
+]

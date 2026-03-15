@@ -1,0 +1,249 @@
+[
+    {
+        "question_idx": 1587,
+        "question_text": "Question: Which member of Northern Kings was born on 14 January 1966?",
+        "answer": "Marko Hietala",
+        "gt_answer": "Marco Hietala",
+        "em": false,
+        "f1": 0.5,
+        "reward": false,
+        "n_calls": 14,
+        "n_badcalls": 0,
+        "input_tokens": 30527,
+        "output_tokens": 881,
+        "total_tokens": 31408,
+        "num_traces_run": 3,
+        "individual_votes": [
+            "Marko Hietala",
+            "Marko Hietala",
+            "Marko Hietala"
+        ],
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "Marko Hietala",
+                "em": false,
+                "n_calls": 6,
+                "input_tokens": 13282,
+                "output_tokens": 361
+            },
+            {
+                "trace_num": 2,
+                "answer": "Marko Hietala",
+                "em": false,
+                "n_calls": 4,
+                "input_tokens": 8485,
+                "output_tokens": 244
+            },
+            {
+                "trace_num": 3,
+                "answer": "Marko Hietala",
+                "em": false,
+                "n_calls": 4,
+                "input_tokens": 8455,
+                "output_tokens": 236
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 6,
+                "answer": "Marko Hietala",
+                "gt_answer": "Marco Hietala",
+                "question_idx": 1587,
+                "reward": false,
+                "em": false,
+                "f1": 0.5,
+                "n_calls": 6,
+                "n_badcalls": 0,
+                "input_tokens": 13282,
+                "output_tokens": 361,
+                "total_tokens": 13643,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1693,
+                        "output_tokens": 53,
+                        "total_tokens": 1746
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1972,
+                        "output_tokens": 57,
+                        "total_tokens": 2029
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2059,
+                        "output_tokens": 57,
+                        "total_tokens": 2116
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2286,
+                        "output_tokens": 61,
+                        "total_tokens": 2347
+                    },
+                    {
+                        "call_num": 5,
+                        "step": 5,
+                        "type": "thought_action",
+                        "input_tokens": 2428,
+                        "output_tokens": 57,
+                        "total_tokens": 2485
+                    },
+                    {
+                        "call_num": 6,
+                        "step": 6,
+                        "type": "thought_action",
+                        "input_tokens": 2679,
+                        "output_tokens": 41,
+                        "total_tokens": 2720
+                    },
+                    {
+                        "call_num": 7,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 165,
+                        "output_tokens": 35,
+                        "total_tokens": 200
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Which member of Northern Kings was born on 14 January 1966?\nThought 1: I need to search for \"Northern Kings\" to find its members. Then, for each member, I will search for their birthdate and check if it is January 14, 1966.\nAction 1: Search[Northern Kings]\nObservation 1: Northern Kings is a Finnish symphonic metal cover supergroup, made up of four well known musicians: Jarkko Ahola from Ter\u00e4sbetoni, ex-Dreamtale, Marko Hietala from Tarot, ex-Nightwish, Tony Kakko from Sonata Arctica and Juha-Pekka Lepp\u00e4luoto from Charon, Harmaja and ex-Poisonblack.. Their first single, \"We Don't Need Another Hero\" (originally performed by Tina Turner), was released in 2007, followed by their debut album Reborn. In late 2008, their second album Rethroned was released, headlined by the single \"Kiss from a Rose\" (originally performed by Seal).[1] They last released a single \"Lapponia\" in 2010.. On 18 June 2022, Northern Kings made a comeback after being on hiatus for 12 years. The band performed at the 'Tuhdimmat Tahdit festival' in Nokia, Finland.[2].\nThought 2: The members of Northern Kings are Jarkko Ahola, Marko Hietala, Tony Kakko, and Juha-Pekka Lepp\u00e4luoto. I need to check their birthdates.\nAction 2: Search[Jarkko Ahola birthdate]\nObservation 2: Could not find Jarkko Ahola birthdate. Similar: ['List of musical supergroups'].\nThought 3: I couldn't find the birthdate directly by searching \"Jarkko Ahola birthdate\". I will try searching for \"Jarkko Ahola\" and then looking for his birthdate in the resulting passage.\nAction 3: Search[Jarkko Ahola]\nObservation 3: Jarkko Kalevi Ahola (born 24 August 1977) is a Finnish performing artist, composer and singer.. Born in Toijala, he is the vocalist and bass player and one of the three songwriters of the band Ter\u00e4sbetoni. He is also a member of a Finnish symphonic metal cover supergroup Northern Kings together with Marko Hietala from Nightwish, Tarot and Sapattivuosi, Tony Kakko from Sonata Arctica and Juha-Pekka Lepp\u00e4luoto from Charon and Harmaja.. Other bands Ahola has been involved with are Dreamtale, Cosmic Spell and Helmisetti. In addition, Ahola has taken part in the Raskasta Joulua project incorporating the sound of metal to Christmas carols.\nThought 4: Jarkko Ahola was born on August 24, 1977. This is not January 14, 1966. Now I will check Marko Hietala's birthdate.\nAction 4: Search[Marko Hietala birthdate]\nObservation 4: Could not find Marko Hietala birthdate. Similar: ['Nightwish (section 2001\u20132003: Arrival of Hietala and symphonic elements with Century Child)', 'Udo Dirkschneider', 'Sharon den Adel', '2024 in heavy metal music', 'List of musical supergroups'].\nThought 5: I couldn't find the birthdate directly by searching \"Marko Hietala birthdate\". I will try searching for \"Marko Hietala\" and then looking for his birthdate in the resulting passage.\nAction 5: Search[Marko Hietala]\nObservation 5: Marko Tapani \"Marco\" Hietala (born 14 January 1966) is a Finnish heavy metal vocalist, bassist and songwriter. Internationally, he is best known as the former bassist, male vocalist and secondary composer to Tuomas Holopainen, of the symphonic metal band Nightwish.[2] He is also the vocalist and bassist as well as composer and lyricist for the heavy metal band Tarot.[3]. He is also a member of the supergroup Northern Kings, and portrayed one of the main characters in Ayreon's 2013 album The Theory of Everything.. Marko Hietala was born in Tervo,[4] and is the youngest child of the Hietala family. Hietala lived in Tervo until the age of 15, after which he moved to Kuopio to study classical guitar, vocals and musical theory in high school.\nThought 6: Marko Hietala was born on January 14, 1966. This matches the birthdate in the question.\nAction 6: Finish[Marko Hietala]\nObservation 6: Episode finished, reward = 0\n\n",
+                "question_text": "Question: Which member of Northern Kings was born on 14 January 1966?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"Marko Hietala\" is a common alternative spelling for \"Marco Hietala\". Both refer to the same individual."
+            },
+            {
+                "steps": 4,
+                "answer": "Marko Hietala",
+                "gt_answer": "Marco Hietala",
+                "question_idx": 1587,
+                "reward": false,
+                "em": false,
+                "f1": 0.5,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 8485,
+                "output_tokens": 244,
+                "total_tokens": 8729,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1693,
+                        "output_tokens": 53,
+                        "total_tokens": 1746
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1972,
+                        "output_tokens": 60,
+                        "total_tokens": 2032
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2202,
+                        "output_tokens": 57,
+                        "total_tokens": 2259
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2453,
+                        "output_tokens": 39,
+                        "total_tokens": 2492
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 165,
+                        "output_tokens": 35,
+                        "total_tokens": 200
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Which member of Northern Kings was born on 14 January 1966?\nThought 1: I need to search for \"Northern Kings\" to find its members. Then, for each member, I will search for their birth date to identify who was born on 14 January 1966.\nAction 1: Search[Northern Kings]\nObservation 1: Northern Kings is a Finnish symphonic metal cover supergroup, made up of four well known musicians: Jarkko Ahola from Ter\u00e4sbetoni, ex-Dreamtale, Marko Hietala from Tarot, ex-Nightwish, Tony Kakko from Sonata Arctica and Juha-Pekka Lepp\u00e4luoto from Charon, Harmaja and ex-Poisonblack.. Their first single, \"We Don't Need Another Hero\" (originally performed by Tina Turner), was released in 2007, followed by their debut album Reborn. In late 2008, their second album Rethroned was released, headlined by the single \"Kiss from a Rose\" (originally performed by Seal).[1] They last released a single \"Lapponia\" in 2010.. On 18 June 2022, Northern Kings made a comeback after being on hiatus for 12 years. The band performed at the 'Tuhdimmat Tahdit festival' in Nokia, Finland.[2].\nThought 2: The members of Northern Kings are Jarkko Ahola, Marko Hietala, Tony Kakko, and Juha-Pekka Lepp\u00e4luoto. I need to find the birth date for each of these individuals.\nAction 2: Search[Jarkko Ahola]\nObservation 2: Jarkko Kalevi Ahola (born 24 August 1977) is a Finnish performing artist, composer and singer.. Born in Toijala, he is the vocalist and bass player and one of the three songwriters of the band Ter\u00e4sbetoni. He is also a member of a Finnish symphonic metal cover supergroup Northern Kings together with Marko Hietala from Nightwish, Tarot and Sapattivuosi, Tony Kakko from Sonata Arctica and Juha-Pekka Lepp\u00e4luoto from Charon and Harmaja.. Other bands Ahola has been involved with are Dreamtale, Cosmic Spell and Helmisetti. In addition, Ahola has taken part in the Raskasta Joulua project incorporating the sound of metal to Christmas carols.\nThought 3: Jarkko Ahola was born on 24 August 1977. This is not 14 January 1966. I will search for the next member, Marko Hietala.\nAction 3: Search[Marko Hietala]\nObservation 3: Marko Tapani \"Marco\" Hietala (born 14 January 1966) is a Finnish heavy metal vocalist, bassist and songwriter. Internationally, he is best known as the former bassist, male vocalist and secondary composer to Tuomas Holopainen, of the symphonic metal band Nightwish.[2] He is also the vocalist and bassist as well as composer and lyricist for the heavy metal band Tarot.[3]. He is also a member of the supergroup Northern Kings, and portrayed one of the main characters in Ayreon's 2013 album The Theory of Everything.. Marko Hietala was born in Tervo,[4] and is the youngest child of the Hietala family. Hietala lived in Tervo until the age of 15, after which he moved to Kuopio to study classical guitar, vocals and musical theory in high school.\nThought 4: Marko Hietala was born on 14 January 1966. This matches the date in the question.\nAction 4: Finish[Marko Hietala]\nObservation 4: Episode finished, reward = 0\n\n",
+                "question_text": "Question: Which member of Northern Kings was born on 14 January 1966?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"Marko Hietala\" is a common alternative spelling for \"Marco Hietala\". Both refer to the same individual."
+            },
+            {
+                "steps": 4,
+                "answer": "Marko Hietala",
+                "gt_answer": "Marco Hietala",
+                "question_idx": 1587,
+                "reward": false,
+                "em": false,
+                "f1": 0.5,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 8455,
+                "output_tokens": 236,
+                "total_tokens": 8691,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1693,
+                        "output_tokens": 39,
+                        "total_tokens": 1732
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1958,
+                        "output_tokens": 66,
+                        "total_tokens": 2024
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2194,
+                        "output_tokens": 57,
+                        "total_tokens": 2251
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2445,
+                        "output_tokens": 39,
+                        "total_tokens": 2484
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 165,
+                        "output_tokens": 35,
+                        "total_tokens": 200
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: Which member of Northern Kings was born on 14 January 1966?\nThought 1: I need to find the members of Northern Kings and their birth dates to identify who was born on 14 January 1966.\nAction 1: Search[Northern Kings]\nObservation 1: Northern Kings is a Finnish symphonic metal cover supergroup, made up of four well known musicians: Jarkko Ahola from Ter\u00e4sbetoni, ex-Dreamtale, Marko Hietala from Tarot, ex-Nightwish, Tony Kakko from Sonata Arctica and Juha-Pekka Lepp\u00e4luoto from Charon, Harmaja and ex-Poisonblack.. Their first single, \"We Don't Need Another Hero\" (originally performed by Tina Turner), was released in 2007, followed by their debut album Reborn. In late 2008, their second album Rethroned was released, headlined by the single \"Kiss from a Rose\" (originally performed by Seal).[1] They last released a single \"Lapponia\" in 2010.. On 18 June 2022, Northern Kings made a comeback after being on hiatus for 12 years. The band performed at the 'Tuhdimmat Tahdit festival' in Nokia, Finland.[2].\nThought 2: I have the names of the four members: Jarkko Ahola, Marko Hietala, Tony Kakko, and Juha-Pekka Lepp\u00e4luoto. I need to find their birth dates. I will search for each member individually.\nAction 2: Search[Jarkko Ahola]\nObservation 2: Jarkko Kalevi Ahola (born 24 August 1977) is a Finnish performing artist, composer and singer.. Born in Toijala, he is the vocalist and bass player and one of the three songwriters of the band Ter\u00e4sbetoni. He is also a member of a Finnish symphonic metal cover supergroup Northern Kings together with Marko Hietala from Nightwish, Tarot and Sapattivuosi, Tony Kakko from Sonata Arctica and Juha-Pekka Lepp\u00e4luoto from Charon and Harmaja.. Other bands Ahola has been involved with are Dreamtale, Cosmic Spell and Helmisetti. In addition, Ahola has taken part in the Raskasta Joulua project incorporating the sound of metal to Christmas carols.\nThought 3: Jarkko Ahola was born on 24 August 1977. This is not 14 January 1966. I will search for the next member, Marko Hietala.\nAction 3: Search[Marko Hietala]\nObservation 3: Marko Tapani \"Marco\" Hietala (born 14 January 1966) is a Finnish heavy metal vocalist, bassist and songwriter. Internationally, he is best known as the former bassist, male vocalist and secondary composer to Tuomas Holopainen, of the symphonic metal band Nightwish.[2] He is also the vocalist and bassist as well as composer and lyricist for the heavy metal band Tarot.[3]. He is also a member of the supergroup Northern Kings, and portrayed one of the main characters in Ayreon's 2013 album The Theory of Everything.. Marko Hietala was born in Tervo,[4] and is the youngest child of the Hietala family. Hietala lived in Tervo until the age of 15, after which he moved to Kuopio to study classical guitar, vocals and musical theory in high school.\nThought 4: Marko Hietala was born on 14 January 1966. This matches the date in the question.\nAction 4: Finish[Marko Hietala]\nObservation 4: Episode finished, reward = 0\n\n",
+                "question_text": "Question: Which member of Northern Kings was born on 14 January 1966?",
+                "llm_correct": true,
+                "llm_explanation": "The predicted answer \"Marko Hietala\" is a common alternative spelling for \"Marco Hietala\". Both refer to the same individual."
+            }
+        ],
+        "llm_correct": true,
+        "llm_explanation": "The predicted answer \"Marko Hietala\" is a common alternative spelling for \"Marco Hietala\". Both refer to the same individual.",
+        "framework": "majority_voting"
+    }
+]

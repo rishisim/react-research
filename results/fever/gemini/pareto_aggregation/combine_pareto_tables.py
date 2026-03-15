@@ -1,83 +1,77 @@
 import pandas as pd
+import json
 import os
 
 def main():
-    base_dir = "results/fever"
-    output_dir = os.path.join(base_dir, "pareto_aggregation")
-    output_file = os.path.join(output_dir, "pareto_summary.csv")
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    gemini_dir = os.path.dirname(base_dir)  # results/fever/gemini
+    output_file = os.path.join(base_dir, "pareto_summary.csv")
     
-    # Create output directory if it doesn't exist
-    os.makedirs(output_dir, exist_ok=True)
+    # Find all seed*_mixed directories
+    seed_dirs = sorted([
+        d for d in os.listdir(gemini_dir)
+        if os.path.isdir(os.path.join(gemini_dir, d)) and d.startswith("seed") and "_mixed" in d
+    ])
+    
+    if not seed_dirs:
+        print("No seed*_mixed directories found.")
+        return
+    
+    print(f"Found seed directories: {seed_dirs}")
+    
+    # JSON result files to look for
+    json_files = [
+        'react.json', 'cot_sc.json', 'majority_voting.json',
+        'reflexion.json', 'self_reflection.json', 'action_prune.json'
+    ]
     
     all_data = []
     
-    # List all subdirectories in results/fever
-    if not os.path.exists(base_dir):
-        print(f"Directory {base_dir} does not exist.")
-        return
-
-    # Helper function to find pareto_table.csv recursively
-    def find_pareto_files(directory):
-        pareto_files = []
-        for root, dirs, files in os.walk(directory):
-            for file in files:
-                if file == "pareto_table.csv":
-                    pareto_files.append(os.path.join(root, file))
-        return pareto_files
-
-    frameworks = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d))]
-    
-    for framework in frameworks:
-        # Skip the aggregation folder itself if it exists
-        if framework == "pareto_aggregation":
-            continue
-            
-        framework_path = os.path.join(base_dir, framework)
-        pareto_files = find_pareto_files(framework_path)
+    for seed_dir_name in seed_dirs:
+        seed_path = os.path.join(gemini_dir, seed_dir_name)
         
-        for file_path in pareto_files:
+        for json_file in json_files:
+            filepath = os.path.join(seed_path, json_file)
+            if not os.path.exists(filepath):
+                continue
+            
             try:
-                df = pd.read_csv(file_path)
+                with open(filepath, 'r') as f:
+                    data = json.load(f)
                 
-                # Check if required columns exist before proceeding
-                required_cols = ['question_idx', 'em', 'f1', 'total_tokens']
-                if not all(col in df.columns for col in required_cols):
-                    print(f"Skipping {file_path}: Missing columns. Found: {df.columns.tolist()}")
+                if not isinstance(data, list):
                     continue
-
-                # Add framework column if not present (it usually is, but good to ensure/overwrite for consistency)
-                # If 'framework' is already there, we might want to trust it or overwrite it with the directory name.
-                # The user requirement implies we might need to rely on the 'framework' column in the csv,
-                # OR set it based on the folder. The prompt asks to combine pareto CSVs.
-                # Let's check if 'framework' exists, if so use it, if not use directory name.
-                if 'framework' not in df.columns:
-                     df['framework'] = framework
                 
-                # Select specific columns
-                cols_to_keep = ['question_idx', 'framework', 'em', 'f1', 'total_tokens']
-                df_subset = df[cols_to_keep].copy()
-
-                # Rename self_reflection to Trajectory-Conditioned Answer Revision (TCAR)
-                df_subset['framework'] = df_subset['framework'].replace('self_reflection', 'Trajectory-Conditioned Answer Revision (TCAR)')
-
+                for item in data:
+                    framework = item.get('framework', json_file.replace('.json', ''))
+                    
+                    # Rename self_reflection -> TCAR
+                    if framework == 'self_reflection':
+                        framework = 'Trajectory-Conditioned Answer Revision (TCAR)'
+                    
+                    row = {
+                        'question_idx': item.get('question_idx', ''),
+                        'framework': framework,
+                        'em': item.get('em', 0),
+                        'f1': item.get('f1', 0),
+                        'total_tokens': item.get('total_tokens', 0),
+                    }
+                    all_data.append(row)
                 
-                all_data.append(df_subset)
-                print(f"Processed {file_path} (Rows: {len(df_subset)})")
+                print(f"  {seed_dir_name}/{json_file}: {len(data)} entries")
                 
             except Exception as e:
-                print(f"Error processing {file_path}: {e}")
-
+                print(f"  Error processing {seed_dir_name}/{json_file}: {e}")
+    
     if all_data:
-        combined_df = pd.concat(all_data, ignore_index=True)
-        combined_df.to_csv(output_file, index=False)
+        df = pd.DataFrame(all_data)
+        df.to_csv(output_file, index=False)
         print(f"\nSuccessfully created {output_file}")
-        print(f"Total rows: {len(combined_df)}")
-        try:
-            print(combined_df.head(2).to_markdown(index=False, numalign="left", stralign="left"))
-        except ImportError:
-            print(combined_df.head(2))
+        print(f"Total rows: {len(df)}")
+        print(f"\nFramework counts:")
+        print(df['framework'].value_counts().to_string())
     else:
-        print("No pareto_table.csv files found or processed.")
+        print("No data found to process.")
 
 if __name__ == "__main__":
     main()

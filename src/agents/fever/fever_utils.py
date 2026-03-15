@@ -54,31 +54,6 @@ def llm(prompt, stop=["\n"], num_traces=1):
     default_token_usage = {'input_tokens': 0, 'output_tokens': 0, 'total_tokens': 0}
 
     temperature_setting = 0.0 if num_traces == 1 else 0.7
-    
-    active_model = os.environ.get("ACTIVE_MODEL", "gemini-2.5-flash")
-    if "qwen" in active_model.lower():
-        import openai
-        oai_client = openai.OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
-        try:
-            oai_response = oai_client.completions.create(
-                model=active_model,
-                prompt=prompt,
-                temperature=temperature_setting,
-                max_tokens=512,
-                top_p=1.0,
-                stop=stop
-            )
-            text_response = oai_response.choices[0].text
-            token_usage = {
-                'input_tokens': oai_response.usage.prompt_tokens if hasattr(oai_response.usage, 'prompt_tokens') else 0,
-                'output_tokens': oai_response.usage.completion_tokens if hasattr(oai_response.usage, 'completion_tokens') else 0,
-                'total_tokens': oai_response.usage.total_tokens if hasattr(oai_response.usage, 'total_tokens') else 0
-            }
-            return text_response, token_usage
-        except Exception as e:
-            print(f"[ERROR] LLM call failed for Qwen: {e}")
-            return "Error from Qwen", default_token_usage
-
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=prompt,

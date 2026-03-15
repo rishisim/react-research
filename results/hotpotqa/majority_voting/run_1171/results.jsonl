@@ -1,0 +1,217 @@
+[
+    {
+        "question_idx": 2050,
+        "question_text": "Question: What Chinese company helped develop the aircraft that preceded the Chengdu J-7?",
+        "answer": "Shenyang Aircraft Corporation",
+        "gt_answer": "Chengdu Aircraft Corporation",
+        "em": false,
+        "f1": 0.6666666666666666,
+        "reward": false,
+        "n_calls": 10,
+        "n_badcalls": 0,
+        "input_tokens": 20446,
+        "output_tokens": 1578,
+        "total_tokens": 22024,
+        "num_traces_run": 3,
+        "individual_votes": [
+            "Shenyang Aircraft Factory",
+            "Shenyang Aircraft Corporation",
+            "Chengdu Aircraft Industrial Corporation"
+        ],
+        "trace_summaries": [
+            {
+                "trace_num": 1,
+                "answer": "Shenyang Aircraft Factory",
+                "em": false,
+                "n_calls": 4,
+                "input_tokens": 8223,
+                "output_tokens": 550
+            },
+            {
+                "trace_num": 2,
+                "answer": "Shenyang Aircraft Corporation",
+                "em": false,
+                "n_calls": 3,
+                "input_tokens": 6055,
+                "output_tokens": 432
+            },
+            {
+                "trace_num": 3,
+                "answer": "Chengdu Aircraft Industrial Corporation",
+                "em": false,
+                "n_calls": 3,
+                "input_tokens": 5859,
+                "output_tokens": 450
+            }
+        ],
+        "full_traces": [
+            {
+                "steps": 4,
+                "answer": "Shenyang Aircraft Factory",
+                "gt_answer": "Chengdu Aircraft Corporation",
+                "question_idx": 2050,
+                "reward": false,
+                "em": false,
+                "f1": 0.3333333333333333,
+                "n_calls": 4,
+                "n_badcalls": 0,
+                "input_tokens": 8223,
+                "output_tokens": 550,
+                "total_tokens": 8773,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1684,
+                        "output_tokens": 62,
+                        "total_tokens": 1746
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1935,
+                        "output_tokens": 102,
+                        "total_tokens": 2037
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2136,
+                        "output_tokens": 112,
+                        "total_tokens": 2248
+                    },
+                    {
+                        "call_num": 4,
+                        "step": 4,
+                        "type": "thought_action",
+                        "input_tokens": 2301,
+                        "output_tokens": 73,
+                        "total_tokens": 2374
+                    },
+                    {
+                        "call_num": 5,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 167,
+                        "output_tokens": 201,
+                        "total_tokens": 368
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What Chinese company helped develop the aircraft that preceded the Chengdu J-7?\nThought 1: Thought 1: I need to find the aircraft that preceded the Chengdu J-7, and determine which Chinese company helped develop it. First, I should search for Chengdu J-7 to understand its background.\n\nAction 1: Search[Chengdu J-7]\nObservation 1: The Chengdu J-7 (Chinese: \u6b7c-7; pinyin: Ji\u0101n-7; third generation export version J-7; NATO reporting name: Fishcan[2]) is a Chinese fighter aircraft. It is a license-built derivative of the Soviet Mikoyan-Gurevich MiG-21, and thus shares many similarities with that aircraft.[3] The aircraft is armed  with infrared homing air-to-air missiles and is mainly designed for short range air-to-air combat. The aircraft is also used for close air support.. On 30 March 1962, the Soviet Union and China signed a technology transference arrangement on the MiG-21. Allegedly, while various kits, components, completed aircraft and associated documents were delivered to the Shenyang Aircraft Factory, the design documentation was incomplete, and Chinese designers made efforts to reverse engineer the aircraft.\nThought 2: Thought 2: The Chengdu J-7 is a license-built derivative of the Soviet Mikoyan-Gurevich MiG-21. Therefore, the aircraft that preceded it is the MiG-21. I need to find which Chinese company helped develop the MiG-21 in China, or if it was developed with assistance from a Chinese company.\n\nAction 2: Search[Mikoyan-Gurevich MiG-21 Chinese development]\nObservation 2: Could not find Mikoyan-Gurevich MiG-21 Chinese development. Similar: ['Mikoyan-Gurevich MiG-23', 'Mikoyan-Gurevich MiG-25', 'Mikoyan-Gurevich MiG-15', 'Mikoyan-Gurevich MiG-9', 'Mikoyan-Gurevich MiG-19'].\nThought 3: Thought 3: Since the MiG-21 was originally a Soviet design, and the Chengdu J-7 was a license-built version in China, the development of the MiG-21 in China was based on Soviet technology. The Chinese company involved in producing the MiG-21 (and thus the predecessor to the Chengdu J-7) was the Shenyang Aircraft Factory, as mentioned in the observation for the Chengdu J-7.\n\nAction 3: Lookup[Shenyang Aircraft Factory]\nObservation 3: (Result 1 / 4) Allegedly, while various kits, components, completed aircraft and associated documents were delivered to the Shenyang Aircraft Factory, the design documentation was incomplete, and Chinese designers made efforts to reverse engineer the aircraft.\nThought 4: Thought 4: The Shenyang Aircraft Factory was involved in the production and reverse engineering of the MiG-21, which preceded the Chengdu J-7. Therefore, the Chinese company that helped develop the aircraft preceding the Chengdu J-7 is the Shenyang Aircraft Factory.\n\nAction 4: Finish[Shenyang Aircraft Factory]\nObservation 4: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What Chinese company helped develop the aircraft that preceded the Chengdu J-7?",
+                "llm_correct": false,
+                "llm_explanation": "The ground truth answer is \"Chengdu Aircraft Corporation,\" which is the Chinese company responsible for developing the aircraft that preceded the Chengdu J-7 (specifically, the Shenyang J-6, which was based on the MiG-19). The predicted answer, \"Shenyang Aircraft Factory,\" refers to a different entity\u2014Shenyang Aircraft Corporation (or Factory), which was involved in the original production of the MiG-19 and its derivatives, not the Chengdu J-7's predecessor. While Shenyang Aircraft Factory is historically associated with the MiG-19 (the basis for the J-6), the question specifically asks for the company that helped develop the aircraft that preceded the Chengdu J-7, and that role belongs to Chengdu Aircraft Corporation, which developed the J-7 based on the MiG-21. The predicted answer names a different organization and thus is not semantically equivalent."
+            },
+            {
+                "steps": 3,
+                "answer": "Shenyang Aircraft Corporation",
+                "gt_answer": "Chengdu Aircraft Corporation",
+                "question_idx": 2050,
+                "reward": false,
+                "em": false,
+                "f1": 0.6666666666666666,
+                "n_calls": 3,
+                "n_badcalls": 0,
+                "input_tokens": 6055,
+                "output_tokens": 432,
+                "total_tokens": 6487,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1684,
+                        "output_tokens": 48,
+                        "total_tokens": 1732
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1920,
+                        "output_tokens": 129,
+                        "total_tokens": 2049
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2284,
+                        "output_tokens": 115,
+                        "total_tokens": 2399
+                    },
+                    {
+                        "call_num": 4,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 167,
+                        "output_tokens": 140,
+                        "total_tokens": 307
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What Chinese company helped develop the aircraft that preceded the Chengdu J-7?\nThought 1: Thought 1: I need to find the aircraft that preceded the Chengdu J-7, and identify which Chinese company helped develop it.  \nAction 1: Search[Chengdu J-7]\nObservation 1: The Chengdu J-7 (Chinese: \u6b7c-7; pinyin: Ji\u0101n-7; third generation export version J-7; NATO reporting name: Fishcan[2]) is a Chinese fighter aircraft. It is a license-built derivative of the Soviet Mikoyan-Gurevich MiG-21, and thus shares many similarities with that aircraft.[3] The aircraft is armed  with infrared homing air-to-air missiles and is mainly designed for short range air-to-air combat. The aircraft is also used for close air support.. On 30 March 1962, the Soviet Union and China signed a technology transference arrangement on the MiG-21. Allegedly, while various kits, components, completed aircraft and associated documents were delivered to the Shenyang Aircraft Factory, the design documentation was incomplete, and Chinese designers made efforts to reverse engineer the aircraft.\nThought 2: Thought 2: The aircraft that preceded the Chengdu J-7 is the Mikoyan-Gurevich MiG-21, as the Chengdu J-7 is a license-built derivative of the MiG-21. I need to find which Chinese company helped develop the MiG-21 in China, but the MiG-21 was originally developed by the Soviet Union. The text mentions that the design documentation was incomplete and Chinese designers reverse engineered the aircraft, but it does not name the Chinese company involved in the development.\n\nAction 2: Search[Shenyang Aircraft Factory]\nObservation 2: Shenyang Aircraft Corporation (SAC) is a Chinese aircraft manufacturer in Shenyang, Liaoning and a subsidiary of AVIC. Founded in 1951 as the classified 112 Factory, it is the oldest aircraft manufacturer in the People's Republic of China.[2] The company mainly focuses on designing and manufacturing civilian and military aircraft and related components including jet engines, as well as UAVs such as SYAC UAV.[3]. Aircraft produced by SAC include J-5, JJ-1, J-8, J-11, J-15, J-16, and J-35.[4][5]. On 27 November 2007, Cessna announced that the Cessna 162 Light Sport Aircraft would be produced by the Shenyang Aircraft Corporation.[6] The first production Cessna 162 took flight at Shenyang on 17 September 2009. The aircraft was not a success and production ended in January 2014 after 192 were sold.[7][8][9].\nThought 3: Thought 3: The Shenyang Aircraft Factory (now Shenyang Aircraft Corporation) was involved in the production and reverse engineering of the MiG-21 in China, as mentioned in the observation of the Chengdu J-7 search. Since the MiG-21 was the aircraft that preceded the Chengdu J-7, and the Shenyang Aircraft Factory was responsible for its development in China, it is the Chinese company that helped develop the aircraft preceding the Chengdu J-7.\n\nAction 3: Finish[Shenyang Aircraft Corporation]\nObservation 3: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What Chinese company helped develop the aircraft that preceded the Chengdu J-7?",
+                "llm_correct": false,
+                "llm_explanation": "The ground truth answer is the Chengdu Aircraft Corporation, which is the Chinese company responsible for developing the aircraft that preceded the Chengdu J-7 (the Shenyang J-6). The predicted answer, Shenyang Aircraft Corporation, is incorrect because it refers to a different Chinese aerospace company. Shenyang Aircraft Corporation developed the J-6, which was the predecessor to the J-7, but the J-7 itself was developed by Chengdu Aircraft Corporation. Therefore, the predicted answer names a different entity than the ground truth, even though both are Chinese aircraft manufacturers. The confusion between the two companies leads to a mismatch in the correct entity."
+            },
+            {
+                "steps": 3,
+                "answer": "Chengdu Aircraft Industrial Corporation",
+                "gt_answer": "Chengdu Aircraft Corporation",
+                "question_idx": 2050,
+                "reward": false,
+                "em": false,
+                "f1": 0.8571428571428571,
+                "n_calls": 3,
+                "n_badcalls": 0,
+                "input_tokens": 5859,
+                "output_tokens": 450,
+                "total_tokens": 6309,
+                "llm_calls": [
+                    {
+                        "call_num": 1,
+                        "step": 1,
+                        "type": "thought_action",
+                        "input_tokens": 1684,
+                        "output_tokens": 48,
+                        "total_tokens": 1732
+                    },
+                    {
+                        "call_num": 2,
+                        "step": 2,
+                        "type": "thought_action",
+                        "input_tokens": 1920,
+                        "output_tokens": 84,
+                        "total_tokens": 2004
+                    },
+                    {
+                        "call_num": 3,
+                        "step": 3,
+                        "type": "thought_action",
+                        "input_tokens": 2088,
+                        "output_tokens": 137,
+                        "total_tokens": 2225
+                    },
+                    {
+                        "call_num": 4,
+                        "step": "judge",
+                        "type": "llm_judge",
+                        "input_tokens": 167,
+                        "output_tokens": 181,
+                        "total_tokens": 348
+                    }
+                ],
+                "traj": "Solve a question answering task with interleaving Thought, Action, Observation steps. Thought can reason about the current situation, and Action can be three types: \n(1) Search[entity], which searches the exact entity on Wikipedia and returns the first paragraph if it exists. If not, it will return some similar entities to search.\n(2) Lookup[keyword], which returns the next sentence containing keyword in the current passage.\n(3) Finish[answer], which returns the answer and finishes the task.\nHere are some examples.\nIf the question is based on a false premise or the information needed to answer is not available, answer \"null\".\nQuestion: What is the elevation range for the area that the eastern sector of the Colorado orogeny extends into?\nThought 1: I need to search Colorado orogeny, find the area that the eastern sector of the Colorado orogeny extends into, then find the elevation range of the area.\nAction 1: Search[Colorado orogeny]\nObservation 1: The Colorado orogeny was an episode of mountain building (an orogeny) in Colorado and surrounding areas.\nThought 2: It does not mention the eastern sector. So I need to look up eastern sector.\nAction 2: Lookup[eastern sector]\nObservation 2: (Result 1 / 1) The eastern sector extends into the High Plains and is called the Central Plains orogeny.\nThought 3: The eastern sector of Colorado orogeny extends into the High Plains. So I need to search High Plains and find its elevation range.\nAction 3: Search[High Plains]\nObservation 3: High Plains refers to one of two distinct land regions:\nThought 4: I need to instead search High Plains (United States).\nAction 4: Search[High Plains (United States)]\nObservation 4: The High Plains are a subregion of the Great Plains. From east to west, the High Plains rise in elevation from around 1,800 to 7,000 ft (550 to 2,130 m).[3]\nThought 5: High Plains rise in elevation from around 1,800 to 7,000 ft, so the answer is 1,800 to 7,000 ft.\nAction 5: Finish[1,800 to 7,000 ft]\nQuestion: Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?\nThought 1: The question simplifies to \"The Simpsons\" character Milhouse is named after who. I only need to search Milhouse and find who it is named after.\nAction 1: Search[Milhouse]\nObservation 1: Milhouse Mussolini Van Houten is a recurring character in the Fox animated television series The Simpsons voiced by Pamela Hayden and created by Matt Groening.\nThought 2: The paragraph does not tell who Milhouse is named after, maybe I can look up \"named after\".\nAction 2: Lookup[named after]\nObservation 2: (Result 1 / 1) Milhouse was named after U.S. president Richard Nixon, whose middle name was Milhous. \nThought 3: Milhouse was named after U.S. president Richard Nixon, so the answer is Richard Nixon.\nAction 3: Finish[Richard Nixon]\nQuestion: Which documentary is about Finnish rock groups, Adam Clayton Powell or The Saimaa Gesture?\nThought 1: I need to search Adam Clayton Powell and The Saimaa Gesture, and find which documentary is about Finnish rock groups.\nAction 1: Search[Adam Clayton Powell]\nObservation 1: Could not find [Adam Clayton Powell]. Similar: ['Adam Clayton Powell III', 'Seventh Avenue (Manhattan)', 'Adam Clayton Powell Jr. State Office Building', 'Isabel Washington Powell', 'Adam Powell', 'Adam Clayton Powell (film)', 'Giancarlo Esposito'].\nThought 2: To find the documentary, I can search Adam Clayton Powell (film).\nAction 2: Search[Adam Clayton Powell (film)]\nObservation 2: Adam Clayton Powell is a 1989 American documentary film directed by Richard Kilberg.\nThe film is about the rise and fall of influential African-American politician Adam Clayton Powell Jr.[3][4] It was later aired as part of the PBS series The American Experience.\nThought 3: Adam Clayton Powell (film) is a documentary about an African-American politician, not Finnish rock groups. So the documentary about Finnish rock groups must instead be The Saimaa Gesture.\nAction 3: Finish[The Saimaa Gesture]\nQuestion: What profession does Nicholas Ray and Elia Kazan have in common?\nThought 1: I need to search Nicholas Ray and Elia Kazan, find their professions, then find the profession they have in common.\nAction 1: Search[Nicholas Ray]\nObservation 1: Nicholas Ray (born Raymond Nicholas Kienzle Jr., August 7, 1911 \u2013 June 16, 1979) was an American film director, screenwriter, and actor best known for the 1955 film Rebel Without a Cause.\nThought 2: Professions of Nicholas Ray are director, screenwriter, and actor. I need to search Elia Kazan next and find his professions.\nAction 2: Search[Elia Kazan]\nObservation 2: Elia Kazan was an American film and theatre director, producer, screenwriter and actor.\nThought 3: Professions of Elia Kazan are director, producer, screenwriter, and actor. So profession Nicholas Ray and Elia Kazan have in common is director, screenwriter, and actor.\nAction 3: Finish[director, screenwriter, actor]\nQuestion: Which magazine was started first Arthur's Magazine or First for Women?\nThought 1: I need to search Arthur's Magazine and First for Women, and find which was started first.\nAction 1: Search[Arthur's Magazine]\nObservation 1: Arthur's Magazine (1844-\u0080\u00931846) was an American literary periodical published in Philadelphia in the 19th century. \nThought 2: Arthur's Magazine was started in 1844. I need to search First for Women next.\nAction 2: Search[First for Women]\nObservation 2: First for Women is a woman's magazine published by Bauer Media Group in the USA.[1] The magazine was started in 1989. \nThought 3: First for Women was started in 1989. 1844 (Arthur's Magazine) < 1989 (First for Women), so Arthur's Magazine was started first.\nAction 3: Finish[Arthur's Magazine]\nQuestion: Were Pavel Urysohn and Leonid Levin known for the same type of work?\nThought 1: I need to search Pavel Urysohn and Leonid Levin, find their types of work, then find if they are the same.\nAction 1: Search[Pavel Urysohn]\nObservation 1: Pavel Samuilovich Urysohn (February 3, 1898 \u00e2\u0080\u0093 August 17, 1924) was a Soviet mathematician who is best known for his contributions in dimension theory.\nThought 2: Pavel Urysohn is a mathematician. I need to search Leonid Levin next and find its type of work.\nAction 2: Search[Leonid Levin]\nObservation 2: Leonid Anatolievich Levin is a Soviet-American mathematician and computer scientist. \nThought 3: Leonid Levin is a mathematician and computer scientist. So Pavel Urysohn and Leonid Levin have the same type of work. \nAction 3: Finish[yes]\nQuestion: What Chinese company helped develop the aircraft that preceded the Chengdu J-7?\nThought 1: Thought 1: I need to find which aircraft preceded the Chengdu J-7, and then determine which Chinese company helped develop it.  \nAction 1: Search[Chengdu J-7]\nObservation 1: The Chengdu J-7 (Chinese: \u6b7c-7; pinyin: Ji\u0101n-7; third generation export version J-7; NATO reporting name: Fishcan[2]) is a Chinese fighter aircraft. It is a license-built derivative of the Soviet Mikoyan-Gurevich MiG-21, and thus shares many similarities with that aircraft.[3] The aircraft is armed  with infrared homing air-to-air missiles and is mainly designed for short range air-to-air combat. The aircraft is also used for close air support.. On 30 March 1962, the Soviet Union and China signed a technology transference arrangement on the MiG-21. Allegedly, while various kits, components, completed aircraft and associated documents were delivered to the Shenyang Aircraft Factory, the design documentation was incomplete, and Chinese designers made efforts to reverse engineer the aircraft.\nThought 2: Thought 2: The Chengdu J-7 is a license-built derivative of the Soviet Mikoyan-Gurevich MiG-21. Therefore, the aircraft that preceded it is the MiG-21. I now need to find which Chinese company helped develop the MiG-21 in China.\n\nAction 2: Search[MiG-21 Chinese development]\nObservation 2: Could not find MiG-21 Chinese development. Similar: ['List of Mikoyan-Gurevich MiG-21 variants', 'Mikoyan MiG-29', 'Mikoyan-Gurevich MiG-21', 'Mikoyan MiG-35', 'Mikoyan MiG-29M'].\nThought 3: Thought 3: Since the MiG-21 was developed in the Soviet Union, and the Chengdu J-7 is a license-built version of the MiG-21, the Chinese company responsible for its development in China would be the one that manufactured the J-7. The Chengdu J-7 was developed by the Chengdu Aircraft Industrial Corporation (CAC), which is part of the Aviation Industry Corporation of China (AVIC). Therefore, the company that helped develop the aircraft preceding the Chengdu J-7 (the MiG-21) in China was Chengdu Aircraft Industrial Corporation.\n\nAction 3: Finish[Chengdu Aircraft Industrial Corporation]\nObservation 3: Episode finished, reward = 0\n\n",
+                "question_text": "Question: What Chinese company helped develop the aircraft that preceded the Chengdu J-7?",
+                "llm_correct": false,
+                "llm_explanation": "The Ground Truth Answer is \"Chengdu Aircraft Corporation,\" which is the correct entity responsible for developing the aircraft that preceded the Chengdu J-7 (the Shenyang J-6, which the J-7 was based on). The Predicted Answer, \"Chengdu Aircraft Industrial Corporation,\" is a close variant but not semantically equivalent. \"Chengdu Aircraft Industrial Corporation\" is not the correct or standard name for the entity involved in the J-7's development. The correct and historically accurate name is \"Chengdu Aircraft Corporation\" (also known as Factory 132). While the two names are similar and may refer to related entities, \"Industrial Corporation\" is not an acceptable alias for \"Aircraft Corporation\" in this context, as it introduces a material difference in identity. Therefore, the prediction is not semantically equivalent."
+            }
+        ],
+        "llm_correct": false,
+        "llm_explanation": "The ground truth answer is the Chengdu Aircraft Corporation, which is the Chinese company responsible for developing the aircraft that preceded the Chengdu J-7 (the Shenyang J-6). The predicted answer, Shenyang Aircraft Corporation, is incorrect because it refers to a different Chinese aerospace company. Shenyang Aircraft Corporation developed the J-6, which was the predecessor to the J-7, but the J-7 itself was developed by Chengdu Aircraft Corporation. Therefore, the predicted answer names a different entity than the ground truth, even though both are Chinese aircraft manufacturers. The confusion between the two companies leads to a mismatch in the correct entity.",
+        "framework": "majority_voting"
+    }
+]
